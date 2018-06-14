@@ -1,0 +1,88 @@
+{% extends "layout_nonav.html" %}
+{% block body_content %}
+
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <div class="row">
+      <div class="form six columns offset-by-three">
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+          <fieldset>
+            <p id="form_title">Sign up for codon</p>
+            <div>
+              {{ form.username.label }}
+              {% if form.username.errors %}
+                {{ form.username(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.username.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.username(class="u-full-width") }}
+              {% endif %}
+            </div>
+            <div>
+              {{ form.email.label }}
+              {% if form.email.errors %}
+                {{ form.email(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.email.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.email(class="u-full-width") }}
+              {% endif %}
+            </div>
+            <div>
+              {{ form.name.label }}
+              {% if form.name.errors %}
+                {{ form.name(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.name.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.name(class="u-full-width") }}
+              {% endif %}
+            </div>
+            <div>
+              {{ form.password.label }}
+              {% if form.password.errors %}
+                {{ form.password(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.password.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.password(class="u-full-width") }}
+              {% endif %}
+            </div>
+            <div>
+              {{ form.confirm_password.label }}
+              {% if form.confirm_password.errors %}
+                {{ form.confirm_password(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.confirm_password.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.confirm_password(class="u-full-width") }}
+              {% endif %}
+            </div>
+          </fieldset>
+          <div>
+            {{ form.submit }}
+          </div>
+          <div>
+            <small>Already have an account? <a href="{{ url_for("users.login") }}">Login</a></small>
+          </div>
+        </form>
+      </div>
+    </div>
+
+{% endblock body_content %}

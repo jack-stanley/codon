@@ -1,0 +1,53 @@
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    {% extends "layout_nonav.html" %}
+    {% block body_content %}
+    <div class="row">
+      <div class="form six columns offset-by-three">
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+          <fieldset>
+            <p id="form_title">Login to codon<p>
+            <div>
+              {{ form.email.label }}
+              {% if form.email.errors %}
+                {{ form.email(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.email.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.email(class="u-full-width") }}
+              {% endif %}
+            </div>
+            <div>
+              {{ form.password.label }}
+              {% if form.password.errors %}
+                {{ form.password(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.password.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.password(class="u-full-width") }}
+              {% endif %}
+            </div>
+            <small>Forgot password? <a href="{{ url_for("users.reset_request") }}">Reset</a></small>
+            <div style="padding-top:20px;">
+              {{ form.remember(class="form-check-input") }}
+              {{ form.remember.label(class="form-check-label") }}
+            </div>
+          </fieldset>
+          <div>
+            {{ form.submit }}
+          </div>
+          <div>
+            <small>Need an account? <a href="{{ url_for("users.register") }}">Register</a></small>
+          </div>
+        </form>
+      </div>
+    </div>
+
+{% endblock body_content %}

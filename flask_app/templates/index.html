@@ -1,0 +1,56 @@
+{% extends "layout_nonav.html" %}
+{% block body_content %}
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="title">
+    <h1><a href="/">codon<img src="static/images/favicon.png"></a></h1>
+  </div>
+  <div class="hero">
+    <img src="static/images/dna2.svg">
+  </div>
+  <div class="slogan">
+    <h2>the directory of biological parts</h2>
+  </div>
+  <div class="row login_home">
+    <div class="twelve columns">
+      <a href="{{ url_for("main.browse") }}"><button>Browse</button></a>
+      {% if current_user.is_authenticated %}
+      {% else %}
+      <p><a href="{{ url_for("users.login") }}" style="margin-top:20px;font-size:25px;color:#BF78E4;text-decoration:overline;">Login</a></p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="info_container">
+    <div class="row">
+      <div class="four columns">
+        <img src="static/images/decentralized.svg">
+        <p>DECENTRALIZED</p>
+        <p class="blurb">Codon is simply a decentralized directory of genetic information. The links are stored using <a href="https://datproject.org/" target="_blank">Dat</a>, a peer-to-peer file sharing service built for science. Anyone can host the directory, making it very permanent.</p>
+        <hr>
+      </div>
+      <div class="four columns">
+        <img src="static/images/ethereum.svg">
+        <p>INCENTIVIZED</p>
+        <p class="blurb">Users are able to earn rewards for voting on the usefulness of links on the network, as well as for adding usefull links. All rewards will be paid in BASE, an ERC-20 compliant token on the <a href="https://www.ethereum.org/" target="_blank">Ethereum</a> network.</p>
+        <hr>
+      </div>
+      <div class="four columns">
+        <img src="static/images/secure.svg">
+        <p>USER CURATED</p>
+        <p class="blurb">Codon relies on the consesus of the users when determining the most useful and interesting parts. Irrelevent or spam links will be hidden while links showcasing important biological parts stay visible</p>
+        <hr>
+      </div>
+    </div>
+  </div>
+
+  <div class="extra_links">
+  <div class="row">
+    <div class="twelve columns extra">
+      <p>Please read our <a href="{{ url_for("main.about") }}">about</a> page for more information</p>
+    </div>
+  </div>
+</div>
+
+{% endblock body_content %}

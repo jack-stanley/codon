@@ -1,0 +1,46 @@
+{% extends "layout_nav.html" %}
+{% block body_content %}
+
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="row">
+    <div class="form six columns offset-by-three">
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset>
+          <p id="form_title">{{ legend }}<p>
+          <div>
+            {{ form.title.label }}
+            {% if form.title.errors %}
+              {{ form.title(style="border-color:#f55f5f;") }}
+              <div>
+                {% for error in form.title.errors %}
+                  <span id="error">{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.title }}
+            {% endif %}
+          </div>
+          <div>
+            {{ form.content.label }}
+            {% if form.content.errors %}
+              {{ form.content(style="border-color:#f55f5f;") }}
+              <div>
+                {% for error in form.content.errors %}
+                  <span id="error">{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.content }}
+            {% endif %}
+          </div>
+        </fieldset>
+        <div>
+          {{ form.submit }}
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock body_content %}

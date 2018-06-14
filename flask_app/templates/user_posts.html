@@ -1,0 +1,56 @@
+{% extends "layout_nav.html" %}
+{% block body_content %}
+
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <div style="margin-top:30px;" class="seven columns offset-by-five">
+      <h2>{{ posts.total }}
+        {% if posts.total == 1%}
+          post by
+        {% else %}
+          posts by
+        {% endif %}
+        {% if user.name %}
+          {{ user.name }}:
+        {% else %}
+          {{ user.username }}:
+        {% endif %}
+      </h2>
+    </div>
+    <div class="row browse_row">
+      <div class="four columns trending_bar">
+        <h3>About user</h3>
+        <p>Item 1</p>
+        <p>Item 2</p>
+        <p>Item 3</p>
+      </div>
+      {% for post in posts.items %}
+        <div class="seven columns offset-by-five browse_post">
+          <div class="nine columns browse_author">
+            <h5><a href="{{ url_for("posts.post", post_id = post.id) }}">{{ post.title }}</a></h5>
+            {% if post.author.name %}
+              <p>By <a href="{{ url_for("users.user_posts", username = post.author.username) }}">{{ post.author.name }}</a></p>
+            {% else %}
+              <p>By <a href="{{ url_for("users.user_posts", username = post.author.username) }}">{{ post.author.username }}</a></p>
+            {% endif %}
+              <br><p>{{ post.date_posted.strftime("%B %-d, %Y") }}</p>
+          </div>
+        </div>
+      {% endfor %}
+      <div class="twelve columns page_nums">
+        {% for page_num in posts.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 2) %}
+          {% if page_num %}
+            {% if posts.page == page_num %}
+              <a id="current_page" href="{{ url_for("users.user_posts", username = user.username, page = page_num)}}">{{ page_num}}</a>
+            {% else %}
+              <a href="{{ url_for("users.user_posts", username = user.username, page = page_num)}}">{{ page_num}}</a>
+            {% endif %}
+          {% else %}
+            ...
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+
+{% endblock body_content %}

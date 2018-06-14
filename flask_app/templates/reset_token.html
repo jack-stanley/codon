@@ -1,0 +1,48 @@
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    {% extends "layout_nonav.html" %}
+    {% block body_content %}
+    <div class="row">
+      <div class="form six columns offset-by-three">
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+          <fieldset>
+            <p id="form_title">Reset your password<p>
+            <div>
+              {{ form.password.label }}
+              {% if form.password.errors %}
+                {{ form.password(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.password.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.password(class="u-full-width") }}
+              {% endif %}
+            </div>
+            <div>
+              {{ form.confirm_password.label }}
+              {% if form.confirm_password.errors %}
+                {{ form.confirm_password(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.confirm_password.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.confirm_password(class="u-full-width") }}
+              {% endif %}
+            </div>
+          </fieldset>
+          <div>
+            {{ form.submit }}
+          </div>
+          <div>
+            <small>Need an account? <a href="{{ url_for("users.register") }}">Register</a></small>
+          </div>
+        </form>
+      </div>
+    </div>
+
+{% endblock body_content %}
