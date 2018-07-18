@@ -35,6 +35,19 @@
               {{ form.content }}
             {% endif %}
           </div>
+          <div>
+            {{ form.tags.label }}
+            {% if form.tags.errors %}
+              {{ form.tags(style="border-color:#f55f5f;") }}
+              <div>
+                {% for error in form.tags.errors %}
+                  <span id="error">{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.tags(placeholder="proteins, glucose, etc") }}
+            {% endif %}
+          </div>
         </fieldset>
         <div>
           {{ form.submit }}

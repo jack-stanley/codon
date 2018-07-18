@@ -35,13 +35,27 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.name}', '{self.image_file}')"
 
+class Project(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    project_title = db.Column(db.String(400), nullable = False)
+    date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    summary = db.Column(db.Text, nullable = False)
+    headings = db.Column(db.Text)
+    posts = db.relationship("Post", backref = "overall_project", lazy = True)
+    tags = db.Column(db.Text, nullable = False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
+
+    def __repr__(self):
+        return f"Project('{self.project_title}', '{self.date_created}')"
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(400), nullable = False)
-    date_posted = db.Column(db.DateTime, nullable = False,
-        default = datetime.utcnow)
+    date_posted = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     content = db.Column(db.Text, nullable = False)
+    tags = db.Column(db.Text, nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
+    project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)
 
     def __repr__(self):
         return f"User('{self.title}', '{self.date_posted}')"

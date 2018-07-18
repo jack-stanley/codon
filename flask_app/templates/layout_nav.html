@@ -23,8 +23,7 @@
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="/static/css/normalize.css">
   <link rel="stylesheet" href="/static/css/skeleton.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/static/css/remodal.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">  <link rel="stylesheet" href="/static/css/remodal.css">
   <link rel="stylesheet" href="/static/css/remodal-default-theme.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 
@@ -51,7 +50,7 @@
       {% else %}
         <a href="{{ url_for("main.browse") }}"><img src="/static/images/favicon.png"></a>
       {% endif %}
-        <a href="javascript:void(0);" onclick="myFunction()" class="fa fa-bars" ></a>
+        <a href="javascript:void(0);" onclick="menuFunction()" class="fa fa-bars" ></a>
         <div id="nav_menu_item" class="nav_menu_item">
           <a href="{{ url_for("main.about") }}"><p>About</p></a>
           {% if current_user.is_authenticated %}

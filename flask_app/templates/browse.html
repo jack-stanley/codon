@@ -13,7 +13,11 @@
       </div>
       {% for post in posts.items %}
         <div class="seven columns offset-by-five browse_post">
-          <div class="nine columns browse_author">
+          <div class="one column vials">
+            <i class="fas fa-vial"></i>
+            <span class="">45</span>
+          </div>
+          <div class="eight columns browse_author">
             <a href="{{ url_for("posts.post", post_id = post.id) }}"><h5>{{ post.title }}</h5></a>
             {% if post.author.name %}
               <p>By <a href="{{ url_for("users.user_posts", username = post.author.username) }}">{{ post.author.name }}</a></p>

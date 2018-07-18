@@ -19,7 +19,7 @@
                   {% endfor %}
                 </div>
               {% else %}
-                {{ form.username(class="u-full-width") }}
+                {{ form.username(class="u-full-width", placeholder="examplename") }}
               {% endif %}
             </div>
             <div>
@@ -32,7 +32,7 @@
                   {% endfor %}
                 </div>
               {% else %}
-                {{ form.email(class="u-full-width") }}
+                {{ form.email(class="u-full-width", placeholder="example@email.com") }}
               {% endif %}
             </div>
             <div>
@@ -45,7 +45,7 @@
                   {% endfor %}
                 </div>
               {% else %}
-                {{ form.name(class="u-full-width") }}
+                {{ form.name(class="u-full-width", placeholder="Example Inc.") }}
               {% endif %}
             </div>
             <div>

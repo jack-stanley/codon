@@ -344,15 +344,15 @@ footer img {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 30%;
-    padding-right: 30%
-    padding-right: auto;
+    padding-right: 30%;
     border-radius: 13px;
   }
   .nav_menu_item.responsive p {
     display: block;
     float: none;
-    text-align: left;
+    text-align: center;
     color: whitesmoke;
+    margin-right: 0px;
   }
 }
 
@@ -375,6 +375,7 @@ footer img {
 @media only screen and (max-width: 600px) {
     .profile h1 {
     text-align: center;
+    margin-left: 0px;
     }
 }
 
@@ -512,6 +513,33 @@ textarea {
   margin-left: 30px;
 }
 
+.fa-vial {
+  font-size: 30px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  color: lightgrey;
+  cursor: pointer;
+}
+
+.coloured {
+  color: #BF78E4;
+}
+
+.fa-vial:hover {
+    color: #BF78E4;
+}
+
+.vials {
+  font-size: 20px;
+  color: lightgrey;
+}
+
+@media only screen and (max-width: 600px) {
+    .vials span {
+      margin-left: 20px;
+    };
+}
+
 .trending_bar {
   position: fixed;
   background-color: white;
@@ -624,6 +652,16 @@ textarea {
 
 .post_contents #edit:hover {
   background-color: #BF78E4;
+}
+
+#disqus_thread {
+  padding: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+    #disqus_thread {
+      padding: 10px;
+    };
 }
 
 .page_nums {
