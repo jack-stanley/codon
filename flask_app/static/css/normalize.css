@@ -39,7 +39,7 @@ main, /* 2 */
 menu,
 nav,
 section,
-summary { /* 1 */
+abstract { /* 1 */
   display: block;
 }
 

@@ -1,0 +1,84 @@
+{% extends "layout_nav.html" %}
+{% block body_content %}
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="remodal" data-remodal-id="modal">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h1><b>DELETE</b>&nbsp;&nbsp;project?</h1>
+    <p>
+      Are you sure you want to delete this project?
+    </p>
+    <br>
+    <!-- <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button> -->
+    <form action="{{ url_for("projects.delete_project", project_id = project.id) }}", method="POST">
+      <input class="remodal-confirm" type="submit" value="DELETE">
+    </form>
+  </div>
+
+    <div style="position: relative; height:600px; overflow:hidden; text-overflow: ellipsis;" class="twelve columns">
+      <div style="background-image: url({{ project_pic }})" class="twelve columns project_banner">
+      </div>
+      <div class="project_header twelve columns">
+        <h1><b>{{ project.project_title }}</b></h1>
+      </div>
+    </div>
+  <div class="three columns abstract_bar">
+    <a href="{{ url_for("users.user_projects", username = project.author.username) }}"><img class="project_profile_pic" src="{{ profile_pic }}"></img></a>
+    {% if project.author.name %}
+      <a href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.name }}</b></h4></a>
+    {% else %}
+      <a href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.username }}</b></h4></a>
+    {% endif %}
+    {% if project.author == current_user %}
+      <a href="{{ url_for("articles.new_article", project_id = project.id) }}" <i class="fas fa-file-medical new_file"></i></a>
+    {% endif %}
+    <small>Created: {{ project.date_created.strftime("%B %-d, %Y") }}</small>
+    {% if project.date_edited %}
+      <small>Last edited: {{ project.date_edited.strftime("%B %-d, %Y") }}</small>
+    {% endif %}
+    <i class="fas fa-vial tubes"></i>
+    <span>45</span>
+    <hr>
+    <p>{{ project.abstract }}</p>
+    <hr>
+    <span>Tags: {{ project.tags }}</span>
+    <br>
+    {% if project.author == current_user %}
+        <a href="{{ url_for("projects.update_project", project_id = project.id) }}"><button id="edit">Edit</button></a>
+        <a href="#modal"><button id="delete">Delete</button></a>
+    {% endif %}
+
+  </div>
+  {% for heading in headings_title %}
+    <div class="seven columns offset-by-four article_wrapper">
+      <div class="row">
+        <div class="project_heading six columns">
+          <h3><b>{{ heading }}</b></h3>
+        </div>
+      </div>
+      {% for item in headings %}
+        {% if item.heading == heading %}
+          {% for article in articles %}
+            {% if article.header == item %}
+              <div class="five columns article_post">
+                <div class="twelve columns">
+                  <div style="overflow: hidden; height: 100px">
+                    <a href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
+                  </div>
+                  {% if article.date_edited %}
+                    <span>Edited: {{ article.date_posted.strftime("%B %-d, %Y") }}</span>
+                  {% else %}
+                    <span>Created: {{ article.date_posted.strftime("%B %-d, %Y") }}</span>
+                  {% endif %}
+                  <hr class="hr_project">
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endfor %}
+
+{% endblock body_content %}

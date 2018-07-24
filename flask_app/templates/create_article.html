@@ -1,0 +1,72 @@
+{% extends "layout_nav.html" %}
+{% block body_content %}
+
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="row">
+    <div class="form six columns offset-by-three">
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset>
+          <p id="form_title">{{ legend }}<p>
+          <div>
+            {{ form.title.label }}
+            {% if form.title.errors %}
+              {{ form.title(style="border-color:#f55f5f;") }}
+              <div>
+                {% for error in form.title.errors %}
+                  <span id="error">{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.title }}
+            {% endif %}
+          </div>
+          <div>
+            {{ form.content.label }}
+            {% if form.content.errors %}
+              {{ form.content(style="border-color:#f55f5f;") }}
+              <div>
+                {% for error in form.content.errors %}
+                  <span id="error">{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.content }}
+            {% endif %}
+          </div>
+          <div>
+            {{ form.heading.label }}
+            {% if form.heading.errors %}
+              {{ form.heading(style="border-color:#f55f5f;") }}
+              <div>
+                {% for error in form.heading.errors %}
+                  <span id="error">{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.heading(placeholder="Other") }}
+            {% endif %}
+          </div>
+          <div>
+            {{ form.heading_order.label }}
+            {% if form.heading_order.errors %}
+              {{ form.heading_order(style="border-color:#f55f5f;") }}
+              <div>
+                {% for error in form.heading_order.errors %}
+                  <span id="error">{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.heading_order(placeholder="3") }}
+            {% endif %}
+          </div>
+        </fieldset>
+        <div>
+          {{ form.submit }}
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock body_content %}

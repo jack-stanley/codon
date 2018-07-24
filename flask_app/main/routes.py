@@ -1,5 +1,5 @@
-from flask import render_template, request, Blueprint
-from flask_app.models import Post
+from flask import render_template, request, Blueprint, url_for
+from flask_app.models import Project
 
 main = Blueprint("main", __name__)
 
@@ -15,5 +15,5 @@ def about():
 @main.route("/browse")
 def browse():
     page = request.args.get("page", 1, type = int)
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page = page, per_page = 5)
-    return render_template("browse.html", title = "Browse", posts = posts)
+    projects = Project.query.order_by(Project.date_created.desc()).paginate(page = page, per_page = 5)
+    return render_template("browse.html", title = "Browse", projects = projects)

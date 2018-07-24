@@ -13,10 +13,10 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(30), unique = True, nullable = False)
     email = db.Column(db.String(200), unique = True, nullable = False)
     name = db.Column(db.String(60), nullable = True)
-    image_file = db.Column(db.String(20), nullable = False,
-        default = "default_pic.jpg")
+    image_file = db.Column(db.String(20), nullable = False, default = "default_pic.jpg")
     password = db.Column(db.String(60), nullable = False)
-    posts = db.relationship("Post", backref = "author", lazy = True)
+    articles = db.relationship("Article", backref = "author", lazy = True)
+    projects = db.relationship("Project", backref = "author", lazy = True)
 
     def get_reset_token(self, expires_sec = 1800):
         s = Serializer(current_app.config["SECRET_KEY"], expires_sec)
@@ -31,7 +31,6 @@ class User(db.Model, UserMixin):
             return None
         return User.query.get(user_id)
 
-
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.name}', '{self.image_file}')"
 
@@ -39,23 +38,36 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     project_title = db.Column(db.String(400), nullable = False)
     date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
-    summary = db.Column(db.Text, nullable = False)
-    headings = db.Column(db.Text)
-    posts = db.relationship("Post", backref = "overall_project", lazy = True)
+    date_edited = db.Column(db.DateTime, nullable = True)
+    abstract = db.Column(db.Text, nullable = False)
+    articles = db.relationship("Article", backref = "overall_project", lazy = True)
+    headings = db.relationship("Heading", backref = "overall_project", lazy = True)
+    banner_image = db.Column(db.String(20), nullable = False, default = "default_banner.png")
     tags = db.Column(db.Text, nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
 
     def __repr__(self):
         return f"Project('{self.project_title}', '{self.date_created}')"
 
-class Post(db.Model):
+class Article(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(400), nullable = False)
     date_posted = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    date_edited = db.Column(db.DateTime, nullable = True)
     content = db.Column(db.Text, nullable = False)
-    tags = db.Column(db.Text, nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)
+    heading_id = db.Column(db.Integer, db.ForeignKey("heading.id"), nullable = False)
 
     def __repr__(self):
         return f"User('{self.title}', '{self.date_posted}')"
+
+class Heading(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    heading = db.Column(db.String(100), nullable = False, default = "Other")
+    order = db.Column(db.Integer, nullable = False, default = "100")
+    project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)
+    articles = db.relationship("Article", backref = "header", lazy = True)
+
+    def __repr__(self):
+        return f"Project('{self.heading}')"
