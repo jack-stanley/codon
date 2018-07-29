@@ -43,39 +43,78 @@
 
 <body>
 
-  <div class="row nav_bar">
-    <div class="twelve columns">
-      {% if request.path == url_for("main.browse") %}
-        <a href="{{ url_for("main.index") }}"><img src="/static/images/favicon.png"></a>
-      {% else %}
-        <a href="{{ url_for("main.browse") }}"><img src="/static/images/favicon.png"></a>
-      {% endif %}
-        <a href="javascript:void(0);" onclick="menuFunction()" class="fa fa-bars" ></a>
-        <div id="nav_menu_item" class="nav_menu_item">
-          <a href="{{ url_for("main.about") }}"><p>About</p></a>
-          {% if current_user.is_authenticated %}
-            <a href="{{ url_for("users.account") }}"><p>Account</p></a>
-            <a href="{{ url_for("projects.new_project") }}"><p>Create</p></a>
-          {% else %}
-            <a href="{{ url_for("users.login") }}"><p>Login</p></a>
-          {% endif %}
-        </div>
-    </div>
-  </div>
+  <div class="wrapper">
 
-  {% with messages = get_flashed_messages(with_categories = True) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <div class="row">
-          <div class="four columns offset-by-four alert">
-            {{ message }}
+    <div class="row nav_bar">
+      <div class="twelve columns">
+        {% if request.path == url_for("main.browse") %}
+          <a class="nav_img" href="{{ url_for("main.index") }}"><img src="/static/images/favicon.png"></a>
+        {% else %}
+          <a class="nav_img" href="{{ url_for("main.browse") }}"><img src="/static/images/favicon.png"></a>
+        {% endif %}
+        <form method="POST" action="" class="search_form">
+          <fieldset>
+            {{ search_form.hidden_tag() }}
+            <div>
+              {% if search_form.search_query.errors %}
+                {{ search_form.search_query(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in search_form.search_query.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ search_form.search_query(class="u-full-width", placeholder="Search codon") }}
+              {% endif %}
+            </div>
+          </fieldset>
+        </form>
+        {% if current_user.is_authenticated %}
+          <i class="fas fa-plus actions"></i>
+          <img src="/static/images/profile_pics/{{ current_user.image_file }}" class="user_img click_user"></img>
+          <i class="fas fa-circle plus_circle"></i>
+          <i class="fas fa-circle account_circle"></i>
+          <div class="dropdown create_dropdown">
+            <a href="{{ url_for("projects.new_project") }}">New Project</a>
           </div>
-        </div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
+          <div class="dropdown account_dropdown">
+            {% if current_user.name %}
+              <span>{{ current_user.name }} <br>({{ current_user.username }})</span><br><br>
+            {% else %}
+              <span>{{ current_user.username }}</span><br><br>
+            {% endif %}
+            <a href="{{ url_for("users.account") }}">My Account</a><br><br>
+            <a href="{{ url_for("users.user_projects", username = current_user.username) }}">My Projects</a><br><br>
+            <a href="{{ url_for("users.logout") }}">Logout</a>
+          </div>
+        {% else %}
+          <i class="fas fa-user-circle actions click_user"></i>
+          <i class="fas fa-circle plus_circle"></i>
+          <i class="fas fa-circle account_circle"></i>
+          <div class="dropdown account_dropdown">
+            <a href="{{ url_for("users.login") }}">Login</a><br><br>
+            <a href="{{ url_for("users.register") }}">Sign Up</a><br><br>
+            <a href="{{ url_for("main.about") }}">About Codon</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
 
-  {% block body_content %} {% endblock %}
+    {% with messages = get_flashed_messages(with_categories = True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="row">
+            <div class="four columns offset-by-four alert">
+              {{ message }}
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block body_content %} {% endblock %}
+
+  </div>
 
   <footer>
     <div class="row">
@@ -83,7 +122,7 @@
         <p class="copyright">&copy; 2018 codon | A project by Plasmid Group</p>
       </div>
       <div class="four columns">
-        <p class="footer_links"><a href="{{ url_for("main.index") }}">Home</a> | <a href="{{ url_for("main.about") }}">About</a></a></p>
+        <p class="footer_links"><a href="{{ url_for("main.index") }}">Home</a> | <a href="{{ url_for("main.browse") }}">Browse</a> | <a href="{{ url_for("main.about") }}">About</a></a></p>
       </div>
       <div class="social four columns">
         <a target='_blank' href="https://github.com/steamer360/codon"><img alt="Github" src="/static/images/github.svg"></a><a target='_blank' href="https://twitter.com/codonproject"><img alt="Twitter" src="/static/images/twitter.svg"></a><a target='_blank' href="https://medium.com/codonproject/"><img alt="Blog" src="/static/images/medium.svg"></a>

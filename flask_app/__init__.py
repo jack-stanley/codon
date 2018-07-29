@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_app.config import Config
+from flask_msearch import Search
 
 ############
 db = SQLAlchemy()
@@ -22,6 +23,8 @@ def create_app(config_class = Config):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
+    search = Search()
+    search.init_app(app)
 
     from flask_app.users.routes import users
     from flask_app.articles.routes import articles

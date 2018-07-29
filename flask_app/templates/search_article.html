@@ -1,0 +1,42 @@
+{% extends "layout_nav.html" %}
+{% block body_content %}
+
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<div class="three columns search_type">
+  <p>Search type:</p>
+  <a href="{{ url_for("main.search", search_type = "project_search", search_query = search_query) }}">Projects</a><br><br>
+  <a id="selected_search"  href="{{ url_for("main.search", search_type = "article_search", search_query = search_query) }}">Articles</a><br><br>
+  <a href="{{ url_for("main.search", search_type = "user_search", search_query = search_query) }}">Users</a>
+</div>
+
+{% for article in articles.items %}
+  <div class="seven columns offset-by-five browse_project">
+    <div class="six columns browse_author">
+      <b>Project:</b> <a href="{{ url_for("projects.project", project_id = article.project_id) }}"<p>{{ article.overall_project.project_title }}</p></a>
+      <a href="{{ url_for("articles.article", article_id = article.id, project_id = article.project_id) }}"><h5>{{ article.title }}</h5></a>
+      {% if article.author.name %}
+        <p>By <a href="{{ url_for("users.user_projects", username = article.author.username) }}">{{ article.author.name }}</a></p>
+      {% else %}
+        <p>By <a href="{{ url_for("users.user_projects", username = article.author.username) }}">{{ article.author.username }}</a></p>
+      {% endif %}
+        <br><p>{{ article.date_posted.strftime("%B %-d, %Y") }}</p>
+    </div>
+  </div>
+{% endfor %}
+<div class="twelve columns page_nums">
+  {% for page_num in articles.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 2) %}
+    {% if page_num %}
+      {% if articles.page == page_num %}
+        <a id="current_page" href="{{ url_for("main.browse", page = page_num)}}">{{ page_num}}</a>
+      {% else %}
+        <a href="{{ url_for("main.browse", page = page_num)}}">{{ page_num}}</a>
+      {% endif %}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
+</div>
+
+
+{% endblock body_content %}

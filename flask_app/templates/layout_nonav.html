@@ -43,30 +43,34 @@
 </head>
 
 <body>
-  {% if request.path != url_for("main.index") %}
-    <div class="row subpage_logo">
-      <div class="six columns">
-        <h2><a href="/">codon<img src="/static/images/favicon.png"></a></h2>
-      </div>
-      <div class="six columns">
-        <h3><span style="color:#BF78E4;">{{ title }}</span></h3>
-      </div>
-    </div>
-  {% endif %}
 
-  {% with messages = get_flashed_messages(with_categories = True) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <div class="row">
-          <div class="four columns offset-by-four alert">
-            {{ message }}
-          </div>
+  <div class="wrapper">
+
+    {% if request.path != url_for("main.index") %}
+      <div class="row subpage_logo">
+        <div class="six columns">
+          <h2><a href="/">codon<img src="/static/images/favicon.png"></a></h2>
         </div>
-      {% endfor %}
+        <div class="six columns">
+          <h3><span style="color:#BF78E4;">{{ title }}</span></h3>
+        </div>
+      </div>
     {% endif %}
-  {% endwith %}
 
-  {% block body_content %} {% endblock %}
+    {% with messages = get_flashed_messages(with_categories = True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="row">
+            <div class="four columns offset-by-four alert">
+              {{ message }}
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block body_content %} {% endblock %}
+  </div>
 
   <footer>
     <div class="row">
@@ -74,7 +78,7 @@
         <p class="copyright">&copy; 2018 codon | A project by Plasmid Group</p>
       </div>
       <div class="four columns">
-        <p class="footer_links"><a href="{{ url_for("main.index") }}">Home</a> | <a href="{{ url_for("main.about") }}">About</a></a></p>
+        <p class="footer_links"><a href="{{ url_for("main.index") }}">Home</a> | <a href="{{ url_for("main.browse") }}">Browse</a> | <a href="{{ url_for("main.about") }}">About</a></a></p>
       </div>
       <div class="social four columns">
         <a target='_blank' href="https://github.com/steamer360/codon"><img alt="Github" src="/static/images/github.svg"></a><a target='_blank' href="https://twitter.com/codonproject"><img alt="Twitter" src="/static/images/twitter.svg"></a><a target='_blank' href="https://medium.com/codonproject/"><img alt="Blog" src="/static/images/medium.svg"></a>

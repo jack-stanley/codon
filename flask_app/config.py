@@ -1,4 +1,5 @@
 import os
+from whoosh.analysis import StemmingAnalyzer
 
 class Config:
     ### Turn these into environment variables later
@@ -9,3 +10,8 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    MSEARCH_INDEX_NAME = "whoosh_index"
+    # simple,whoosh
+    MSEARCH_BACKEND = "whoosh"
+    # auto create or update index
+    MSEARCH_ENABLE = True

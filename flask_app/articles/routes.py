@@ -3,19 +3,28 @@ from flask_login import current_user, login_required
 from flask_app import db
 from flask_app.models import Article, Heading, Project
 from flask_app.articles.forms import ArticleForm
+from flask_app.main.forms import SearchForm
 from datetime import datetime
 
 articles = Blueprint("articles", __name__)
 
-@articles.route("/project/<int:project_id>/article/<int:article_id>")
+@articles.route("/project/<int:project_id>/article/<int:article_id>", methods = ["GET", "POST"])
 def article(article_id, project_id):
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        search_query = search_form.search_query.data
+        return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     project = Project.query.get_or_404(project_id)
     article = Article.query.get_or_404(article_id)
-    return render_template("article.html", title = article.title, article = article, project = project)
+    return render_template("article.html", title = article.title, article = article, project = project, search_form = search_form)
 
 @articles.route("/project/<int:project_id>/article/new", methods = ["GET", "POST"])
 @login_required
 def new_article(project_id):
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        search_query = search_form.search_query.data
+        return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     form = ArticleForm()
     project = Project.query.get_or_404(project_id)
     if project.author != current_user:
@@ -50,11 +59,15 @@ def new_article(project_id):
         db.session.commit()
         flash(f"Your article has been created.")
         return redirect(url_for("articles.article", article_id = article.id, project_id = project.id))
-    return render_template("create_article.html", form = form, legend = "Create Article")
+    return render_template("create_article.html", form = form, legend = "Create Article", search_form = search_form)
 
 @articles.route("/project/<int:project_id>/article/<int:article_id>/update", methods = ["GET", "POST"])
 @login_required
 def update_article(article_id, project_id):
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        search_query = search_form.search_query.data
+        return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     project = Project.query.get_or_404(project_id)
     article = Article.query.get_or_404(article_id)
     heading = Heading.query.get_or_404(article.header.id)
@@ -79,7 +92,7 @@ def update_article(article_id, project_id):
         form.content.data = article.content
         form.heading.data = heading.heading
         form.heading_order.data = heading.order
-    return render_template("create_article.html", form = form, legend = "Update Article")
+    return render_template("create_article.html", form = form, legend = "Update Article", search_form = search_form)
 
 @articles.route("/project/<int:project_id>/article/<int:article_id>/delete", methods = ["POST"])
 @login_required
@@ -87,6 +100,7 @@ def delete_article(article_id, project_id):
     project = Project.query.get_or_404(project_id)
     article = Article.query.get_or_404(article_id)
     heading = Heading.query.get_or_404(article.header.id)
+    project.date_edited = datetime.utcnow()
     if article.author != current_user:
         abort(403)
     db.session.delete(article)

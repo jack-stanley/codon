@@ -9,6 +9,8 @@ def load_user(user_id):
     return User.query.get((int(user_id)))
 
 class User(db.Model, UserMixin):
+    __searchable__ = ["username", "name"]
+
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(30), unique = True, nullable = False)
     email = db.Column(db.String(200), unique = True, nullable = False)
@@ -35,6 +37,8 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.name}', '{self.image_file}')"
 
 class Project(db.Model):
+    __searchable__ = ["project_title", "abstract"]
+
     id = db.Column(db.Integer, primary_key = True)
     project_title = db.Column(db.String(400), nullable = False)
     date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
@@ -42,14 +46,16 @@ class Project(db.Model):
     abstract = db.Column(db.Text, nullable = False)
     articles = db.relationship("Article", backref = "overall_project", lazy = True)
     headings = db.relationship("Heading", backref = "overall_project", lazy = True)
+    tags = db.relationship("Tag", backref = "overall_project", lazy = True)
     banner_image = db.Column(db.String(20), nullable = False, default = "default_banner.png")
-    tags = db.Column(db.Text, nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
 
     def __repr__(self):
         return f"Project('{self.project_title}', '{self.date_created}')"
 
 class Article(db.Model):
+    __searchable__ = ["title", "content"]
+
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(400), nullable = False)
     date_posted = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
@@ -60,7 +66,7 @@ class Article(db.Model):
     heading_id = db.Column(db.Integer, db.ForeignKey("heading.id"), nullable = False)
 
     def __repr__(self):
-        return f"User('{self.title}', '{self.date_posted}')"
+        return f"Article('{self.title}', '{self.date_posted}')"
 
 class Heading(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -70,4 +76,11 @@ class Heading(db.Model):
     articles = db.relationship("Article", backref = "header", lazy = True)
 
     def __repr__(self):
-        return f"Project('{self.heading}')"
+        return f"Heading('{self.heading}')"
+
+class Tag(db.Model):
+    __searchable__ = ["tag"]
+
+    id = db.Column(db.Integer, primary_key = True)
+    tag = db.Column(db.String, nullable = False)
+    project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)

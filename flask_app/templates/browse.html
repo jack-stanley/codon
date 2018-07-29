@@ -25,7 +25,7 @@
               <br><p>{{ project.date_created.strftime("%B %-d, %Y") }}</p>
           </div>
           <a href="{{ url_for("projects.project", project_id = project.id) }}">
-            <div style="background-image: url('static/images/project_pics/{{ project.banner_image }}');" class="four columns browse_banner">
+            <div style="background-image: url('/static/images/project_pics/{{ project.banner_image }}');" class="four columns browse_banner">
             </div>
           </a>
         </div>

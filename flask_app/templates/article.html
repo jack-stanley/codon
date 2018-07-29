@@ -20,6 +20,7 @@
       <div class="row inner_contents">
         <div class="eight columns article_title">
           <h3>{{ article.title }}</h3>
+          <h6><a href="{{ url_for("projects.project", project_id = project.id)}}">{{ project.project_title }}</h6>
           {% if article.author == current_user %}
               <a href="{{ url_for("articles.update_article", article_id = article.id, project_id = project.id) }}"><button id="edit">Edit</button></a>
               <a href="#modal"><button id="delete">Delete</button></a>

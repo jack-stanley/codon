@@ -2,6 +2,10 @@
   font-family: Raleway
 }
 
+body, html {
+  height: 100%;
+}
+
 a {
   text-decoration: none;
   color: #7A1EA9;
@@ -9,6 +13,10 @@ a {
 
 a:hover {
   color: black;
+}
+
+.wrapper {
+  min-height: 100%;
 }
 
 .alert {
@@ -199,7 +207,8 @@ a:hover {
 }
 
 footer {
-  margin-top: 70px;
+  position: relative;
+  clear: both;
 }
 
 footer .copyright {
@@ -312,77 +321,132 @@ footer img {
 .nav_bar {
   background-color: white;
   box-shadow: 0px 5px 5px white;
+  position: relative;
 }
 
-.nav_bar img {
-  height: 55px;
+.nav_img img {
+  height: 35px;
   margin-top: 15px;
-  margin-left: 40px;
+  margin-left: 4%;
+  margin-bottom: 5px;
 }
 
-.nav_bar p {
-  margin-right: 40px;
+.nav_bar .actions {
   font-size: 25px;
-  color: #BF78E4;
-  text-align: center;
-  float: right;
+  color: grey;
+  right: 150px;
   margin-top: 20px;
+  position: absolute;
+  cursor: pointer;
 }
 
-.nav_menu_item {
-  display: inline;
+@media only screen and (max-width: 600px) {
+    .nav_bar .actions {
+      right: 80px;
+    };
 }
 
-.fa.fa-bars {
+.user_img {
+  border-radius: 50%;
+  position: absolute;
+  right: 75px;
+  border: solid 2px;
+  border-color: grey;
+  height: 30px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+    .user_img {
+      right: 30px;
+    };
+}
+
+.user_img:hover {
+  border-color: #BF78E4;
+}
+
+.fa-user-circle {
+  position: absolute;
+  right: 75px !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .fa-user-circle {
+      right: 30px !important;
+    };
+}
+
+.nav_bar .actions:hover {
+  color: #BF78E4;
+}
+
+.nav_bar .dropdown {
+  position: absolute;
+  z-index: 1200;
+  float: right;
+  background-color: white;
+  padding: 20px;
+  right: 3%;
+  min-width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   display: none;
+}
+
+.nav_bar .plus_circle, .account_circle {
+  margin-top: 28px;
+  color: #BF78E4;
+  font-size: 10px;
+}
+
+.nav_bar .plus_circle {
+  right: 190px;
+  position: absolute;
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .nav_bar .plus_circle {
+      right: 110px;
+    };
+}
+
+.nav_bar .account_circle {
+  right: 50px;
+  position: absolute;
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .nav_bar .account_circle {
+      right: 10px;
+    };
 }
 
 .nav_bar a {
   color: #BF78E4;
-  font-size: 30px;
 }
 
-@media screen and (max-width: 600px) {
-  .nav_menu_item {
-    display: none;
-  }
-  .fa.fa-bars {
-    display: block;
-    float: none;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 25px;
-    width: 23px;
-  }
-  .nav_bar img {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-  }
+.search_form {
+  position: absolute;
+  margin-left: 20vw;
+  display: inline;
+  margin-top: 13px;
 }
 
-@media screen and (max-width: 600px) {
-  .nav_menu_item.responsive {
-    display: block;
-    float: none;
-    background-color: #BF78E4;
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-bottom: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 30%;
-    padding-right: 30%;
-    border-radius: 5px;
-  }
-  .nav_menu_item.responsive p {
-    display: block;
-    float: none;
-    text-align: center;
-    color: whitesmoke;
-    margin-right: 0px;
-  }
+@media only screen and (max-width: 680px) {
+    .search_form {
+      margin-left: 10vw;
+    };
+}
+
+.search_form input {
+  width: 40vw !important;
+  background-color: #efefef !important;
+  border: none !important;
 }
 
 .profile {
@@ -564,6 +628,7 @@ textarea {
 
 .coloured {
   color: #BF78E4 !important;
+  border-color: #BF78E4;
 }
 
 .fa-vial:hover {
@@ -617,13 +682,15 @@ textarea {
 }
 
 @media only screen and (max-width: 600px) {
+    .article_title {
+      text-align: center;
+    };
+}
+
+@media only screen and (max-width: 600px) {
     .article_contents {
       margin-right: 0px;
       margin-left: 0px;
-    };
-
-    .inner_contents {
-      padding: 10px;
     };
 }
 
@@ -635,7 +702,6 @@ textarea {
 
 .article_author {
   font-size: 17px;
-  margin-top: 5px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -656,6 +722,18 @@ textarea {
 
 .article_author #username {
   color: grey;
+}
+
+@media only screen and (max-width: 900px) {
+    .author_pic {
+      margin-right: 50px;
+    };
+}
+
+@media only screen and (max-width: 900px) {
+    .article_author {
+      margin-left: 0px !important;
+    };
 }
 
 .author_pic img {
@@ -685,6 +763,12 @@ textarea {
   border: 5px;
   border-radius: 5px;
   background-color: whitesmoke;
+}
+
+@media only screen and (max-width: 600px) {
+    .article_contents button {
+      margin-left: 20px;
+    };
 }
 
 .article_contents #delete:hover {
@@ -742,8 +826,7 @@ textarea {
   z-index: 600;
   text-align: center;
   margin-top: 30px;
-  padding: 20px;
-  padding-left: 300px;
+  padding: 50px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -761,8 +844,9 @@ textarea {
 .article_wrapper {
   margin-bottom: 50px;
   background-color: white;
-  margin-top: 15px;
+  margin-top: 630px;
   border-radius: 5px;
+  position: absolute;
 }
 
 .article_post {
@@ -799,38 +883,19 @@ textarea {
 
 .abstract_bar {
   background-color: white;
-  margin-top: 40px;
+  margin-top: 30px;
   margin-bottom: 20px;
   border-radius: 5px;
   padding: 30px;
-  position: fixed;
   text-align: center;
-  max-height: 670px;
-  margin-bottom: 10px;
-  overflow-y: scroll;
+  margin-bottom: 30px;
+  position: relative;
 }
-
-.abstract_bar::-webkit-scrollbar-track
-{
-	background-color: white;
-}
-
-.abstract_bar::-webkit-scrollbar
-{
-	width: 5px;
-  border-radius: 5px;
-}
-
-.abstract_bar::-webkit-scrollbar-thumb
-{
-	border: 5px solid lightgrey;
-}
-
 
 @media only screen and (max-width: 600px) {
     .abstract_bar {
       position: static;
-      max-height: none;
+      margin-top: 30px;
     };
 }
 
@@ -898,4 +963,47 @@ textarea {
   font-size: 50px;
   margin-bottom: 40px;
   margin-top: 20px;
+}
+
+.search_type {
+  position: fixed;
+  margin-top: 30px;
+  display: block;
+  background-color: white;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+    .search_type {
+      position: static;
+    };
+}
+
+.search_type a {
+  color: black;
+  padding-left: 30px;
+  font-size: 20px;
+  padding-right: 60%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.search_type a:hover {
+  color: #BF78E4;
+}
+
+#selected_search {
+  color: #BF78E4;
+  background-color: whitesmoke;
+  border-right-style: solid;
+}
+
+.search_type p {
+  font-size: 25px;
+}
+
+.search_image img {
+  border-radius: 50%;
+  height: 100px;
 }

@@ -3,12 +3,17 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask_app import db, bcrypt
 from flask_app.models import User, Project
 from flask_app.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
+from flask_app.main.forms import SearchForm
 from flask_app.users.utils import save_picture, send_reset_email
 
 users = Blueprint("users", __name__)
 
 @users.route("/register", methods = ["GET", "POST"])
 def register():
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        search_query = search_form.search_query.data
+        return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     if current_user.is_authenticated:
         return redirect(url_for("main.browse"))
     form = RegistrationForm()
@@ -24,10 +29,14 @@ def register():
         # Second one in flash is a class that can be used w/ CSS #
         return redirect(url_for("users.login"))
 
-    return render_template("register.html", title = "Register", form = form)
+    return render_template("register.html", title = "Register", form = form, search_form = search_form)
 
 @users.route("/login", methods = ["GET", "POST"])
 def login():
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        search_query = search_form.search_query.data
+        return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     if current_user.is_authenticated:
         return redirect(url_for("main.browse"))
     form = LoginForm()
@@ -39,7 +48,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for("main.browse"))
         else:
             flash(f"Login unsuccessful", "failure")
-    return render_template("login.html", title = "Login", form = form)
+    return render_template("login.html", title = "Login", form = form, search_form = search_form)
 
 
 @users.route("/logout")
@@ -50,6 +59,10 @@ def logout():
 @users.route("/account", methods = ["GET", "POST"])
 @login_required
 def account():
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        search_query = search_form.search_query.data
+        return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
@@ -66,17 +79,25 @@ def account():
         form.email.data = current_user.email
         form.name.data = current_user.name
     profile_pic = url_for("static", filename = "images/profile_pics/" + current_user.image_file)
-    return render_template("account.html", title = "Account", profile_pic = profile_pic, form = form)
+    return render_template("account.html", title = "Account", profile_pic = profile_pic, form = form, search_form = search_form)
 
-@users.route("/a/<string:username>")
+@users.route("/a/<string:username>", methods = ["GET", "POST"])
 def user_projects(username):
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        search_query = search_form.search_query.data
+        return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     page = request.args.get("page", 1, type = int)
     user = User.query.filter_by(username = username).first_or_404()
     projects = Project.query.filter_by(author = user).order_by(Project.date_created.desc()).paginate(page = page, per_page = 5)
-    return render_template("user_projects.html", title = "Author projects", projects = projects, user = user)
+    return render_template("user_projects.html", title = "Author projects", projects = projects, user = user, search_form = search_form)
 
 @users.route("/reset_password", methods = ["GET", "POST"])
 def reset_request():
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        search_query = search_form.search_query.data
+        return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     if current_user.is_authenticated:
         return redirect(url_for("main.browse"))
     form = RequestResetForm()
@@ -85,10 +106,14 @@ def reset_request():
         send_reset_email(user)
         flash(f"An email has been sent with instructions to reset your password.")
         return redirect(url_for("users.login"))
-    return render_template("reset_request.html", form = form, title = "Password Reset")
+    return render_template("reset_request.html", form = form, title = "Password Reset", search_form = search_form)
 
 @users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        search_query = search_form.search_query.data
+        return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     if current_user.is_authenticated:
         return redirect(url_for("main.browse"))
     user = User.verify_reset_token(token)
@@ -105,4 +130,4 @@ def reset_token(token):
         flash(f"Your password has been updated. You are now able to login.", "success")
         # Second one in flash is a class that can be used w/ CSS #
         return redirect(url_for("users.login"))
-    return render_template("reset_token.html", form = form, title = "Password Reset")
+    return render_template("reset_token.html", form = form, title = "Password Reset", search_form = search_form)
