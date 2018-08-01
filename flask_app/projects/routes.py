@@ -48,14 +48,6 @@ def project(project_id):
     articles = Article.query.filter_by(overall_project = project).order_by(Article.date_posted.desc())
     headings = Heading.query.filter_by(overall_project = project).order_by(Heading.order.asc())
     tags = Tag.query.filter_by(overall_project = project)
-    tags_len = Tag.query.filter_by(overall_project = project).count
-
-    t = ""
-    for item in tags:
-        if item == tags[0]:
-            t = t + item.tag
-        elif tags_len != 1:
-            t = t + ", " + item.tag
 
     h = []
     for heading in headings:
@@ -67,7 +59,7 @@ def project(project_id):
 
     project_pic = url_for("static", filename = "images/project_pics/" + project.banner_image)
     profile_pic = url_for("static", filename = "images/profile_pics/" + project.author.image_file)
-    return render_template("project.html", search_form = search_form, title = project.project_title, project = project, articles = articles, headings_title = unique, headings = headings, project_tags = t, project_pic = project_pic, profile_pic = profile_pic)
+    return render_template("project.html", search_form = search_form, title = project.project_title, project = project, articles = articles, headings_title = unique, headings = headings, project_tags = tags, project_pic = project_pic, profile_pic = profile_pic)
 
 @projects.route("/project/<int:project_id>/update", methods = ["GET", "POST"])
 @login_required

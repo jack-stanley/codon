@@ -1,5 +1,5 @@
 from flask import render_template, request, Blueprint, url_for, redirect
-from flask_app.models import Project, Article, User
+from flask_app.models import Project, Article, User, Tag
 from flask_app.main.forms import SearchForm
 
 main = Blueprint("main", __name__)
@@ -36,7 +36,7 @@ def search(search_query, search_type):
     search_form = SearchForm()
     if search_form.validate_on_submit():
         search_query = search_form.search_query.data
-        return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
+        return redirect(url_for("main.search", search_query = search_query, search_type = search_type))
     else:
         search_form.search_query.data = search_query
 
@@ -51,5 +51,6 @@ def search(search_query, search_type):
     if search_type == "user_search":
         users = User.query.msearch(f"{search_query}").paginate(page = page, per_page = 20)
         return render_template("search_user.html", search_query = search_query, search_type = search_type, search_form = search_form, users = users)
-
-    # tags = .....
+    if search_type == "tag_search":
+        tags = Tag.query.filter_by(tag = search_query).paginate(page = page, per_page = 20)
+        return render_template("search_tags.html", search_query = search_query, search_type = search_type, search_form = search_form, tags = tags)

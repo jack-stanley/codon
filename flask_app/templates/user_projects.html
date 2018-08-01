@@ -3,7 +3,23 @@
 
 <!-- Primary Page Layout
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <div style="margin-top:30px;" class="seven columns offset-by-five">
+  <div class="four columns about_bar">
+    <img src="{{ url_for("static", filename = "images/profile_pics/" + user.image_file) }}">
+    {% if user.name %}
+      <h3>{{ user.name }}</h3>
+      <h6>({{ user.username }})</h6>
+    {% else %}
+    <h3>{{ user.username }}</h3>
+    {% endif %}
+    <h5>About</h5>
+    {% if user.organization %}
+      <p><b>Organization:</b> {{ user.organization }}</p>
+    {% endif %}
+    {% if user.about %}
+      <p>{{ user.about }}</p>
+    {% endif %}
+  </div>
+    <div style="margin-top:30px;text-align:center;" class="six columns offset-by-four">
       <h2>{{ projects.total }}
         {% if projects.total == 1%}
           project by
@@ -17,29 +33,26 @@
         {% endif %}
       </h2>
     </div>
-    <div class="row browse_row">
-      <div class="four columns trending_bar">
-        <h3>About user</h3>
-        <p>Item 1</p>
-        <p>Item 2</p>
-        <p>Item 3</p>
-      </div>
       {% for project in projects.items %}
-        <div class="seven columns offset-by-five browse_project">
-          <div class="one column">
-            <i class="fas fa-vial"></i>
-            <span>45</span>
-          </div>
-          <div class="eight columns browse_author">
-            <h5><a href="{{ url_for("projects.project", project_id = project.id) }}">{{ project.title }}</a></h5>
-            {% if project.author.name %}
-              <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a></p>
-            {% else %}
-              <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
-            {% endif %}
-              <br><p>{{ project.date_created.strftime("%B %-d, %Y") }}</p>
-          </div>
+      <div class="seven columns offset-by-five browse_project">
+        <div class="one column vials">
+          <i class="fas fa-vial"></i>
+          <span class="">45</span>
         </div>
+        <div class="six columns browse_author">
+          <a href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>
+          {% if project.author.name %}
+            <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a></p>
+          {% else %}
+            <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
+          {% endif %}
+            <br><p>{{ project.date_created.strftime("%B %-d, %Y") }}</p>
+        </div>
+        <a href="{{ url_for("projects.project", project_id = project.id) }}">
+          <div style="background-image: url('/static/images/project_pics/{{ project.banner_image }}');" class="four columns browse_banner">
+          </div>
+        </a>
+      </div>
       {% endfor %}
       <div class="twelve columns page_nums">
         {% for page_num in projects.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 2) %}
@@ -54,7 +67,6 @@
           {% endif %}
         {% endfor %}
       </div>
-    </div>
 
 
 {% endblock body_content %}

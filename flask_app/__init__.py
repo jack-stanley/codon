@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_app.config import Config
 from flask_msearch import Search
+from wtf_tinymce import wtf_tinymce
 
 ############
 db = SQLAlchemy()
@@ -25,6 +26,7 @@ def create_app(config_class = Config):
     mail.init_app(app)
     search = Search()
     search.init_app(app)
+    wtf_tinymce.init_app(app)
 
     from flask_app.users.routes import users
     from flask_app.articles.routes import articles

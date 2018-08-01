@@ -5,40 +5,40 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 <div class="three columns search_type">
   <p>Search type:</p>
-  <a id="selected_search" href="{{ url_for("main.search", search_type = "project_search", search_query = search_query) }}">Projects</a><br><br>
+  <a href="{{ url_for("main.search", search_type = "project_search", search_query = search_query) }}">Projects</a><br><br>
   <a href="{{ url_for("main.search", search_type = "article_search", search_query = search_query) }}">Articles</a><br><br>
   <a href="{{ url_for("main.search", search_type = "user_search", search_query = search_query) }}">Users</a><br><br>
-  <a href="{{ url_for("main.search", search_type = "tag_search", search_query = search_query) }}">Tags</a><br>
+  <a id="selected_search" href="{{ url_for("main.search", search_type = "tag_search", search_query = search_query) }}">Tags</a><br><br>
   <div style="padding-left:30px;">
     <span style="color:grey">Search for a specific project tag</span>
   </div>
 </div>
 
-{% for project in projects.items %}
+{% for tag in tags.items %}
   <div class="seven columns offset-by-five browse_project">
     <div class="one column vials">
       <i class="fas fa-vial"></i>
       <span class="">45</span>
     </div>
     <div class="six columns browse_author">
-      <a href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>
-      {% if project.author.name %}
-        <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a></p>
+      <a href="{{ url_for("projects.project", project_id = tag.project_id) }}"><h5>{{ tag.overall_project.project_title }}</h5></a>
+      {% if tag.overall_project.author.name %}
+        <p>By <a href="{{ url_for("users.user_projects", username = tag.overall_project.author.username) }}">{{ tag.overall_project.author.name }}</a></p>
       {% else %}
-        <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
+        <p>By <a href="{{ url_for("users.user_projects", username = tag.overall_project.author.username) }}">{{ tag.overall_project.author.username }}</a></p>
       {% endif %}
-        <br><p>{{ project.date_created.strftime("%B %-d, %Y") }}</p>
+        <br><p>{{ tag.overall_project.date_created.strftime("%B %-d, %Y") }}</p>
     </div>
-    <a href="{{ url_for("projects.project", project_id = project.id) }}">
-      <div style="background-image: url('/static/images/project_pics/{{ project.banner_image }}');" class="four columns browse_banner">
+    <a href="{{ url_for("projects.project", project_id = tag.project_id) }}">
+      <div style="background-image: url('/static/images/project_pics/{{ tag.overall_project.banner_image }}');" class="four columns browse_banner">
       </div>
     </a>
   </div>
 {% endfor %}
 <div class="twelve columns page_nums">
-  {% for page_num in projects.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 2) %}
+  {% for page_num in tags.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 2) %}
     {% if page_num %}
-      {% if projects.page == page_num %}
+      {% if tags.page == page_num %}
         <a id="current_page" href="{{ url_for("main.browse", page = page_num)}}">{{ page_num}}</a>
       {% else %}
         <a href="{{ url_for("main.browse", page = page_num)}}">{{ page_num}}</a>

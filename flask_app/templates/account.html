@@ -21,10 +21,24 @@
         </div>
       {% endif %}
       <div class="twelve columns">
-        <p>{{ current_user.email }}</p>
+        <p><b>Email:</b> {{ current_user.email }}</p>
       </div>
+      {% if current_user.organization %}
+        <div class="twelve columns">
+          <p><b>Organization:</b> {{ current_user.organization }}</p>
+        </div>
+      {% endif %}
+      {% if current_user.about %}
+        <div class="twelve columns">
+          <p><b>About:</b> {{ current_user.about }}</p>
+        </div>
+      {% else %}
+      <div class="twelve columns">
+        <p><b>About:</b> <i>Currently no about section, you can add one by editing your profile below.</i></p>
+      </div>
+      {% endif %}
       <div class="twelve columns" id="sign_out_button">
-          <p><a href="{{ url_for("users.logout") }}">Sign out</a></p>
+          <p><a href="{{ url_for("users.logout") }}">Logout</a></p>
       </div>
     </div>
 
@@ -74,6 +88,32 @@
                   </div>
                 {% else %}
                   {{ form.name(class="u-full-width") }}
+                {% endif %}
+              </div>
+              <div>
+                {{ form.organization.label }}
+                {% if form.organization.errors %}
+                  {{ form.organization(style="border-color:#f55f5f;") }}
+                  <div>
+                    {% for error in form.organization.errors %}
+                      <span id="error">{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.organization(class="u-full-width", placeholder="Example Inc.") }}
+                {% endif %}
+              </div>
+              <div>
+                {{ form.about.label }}
+                {% if form.about.errors %}
+                  {{ form.about(style="border-color:#f55f5f;") }}
+                  <div>
+                    {% for error in form.about.errors %}
+                      <span id="error">{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.about }}
                 {% endif %}
               </div>
               <div>

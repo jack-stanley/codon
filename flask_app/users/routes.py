@@ -71,6 +71,8 @@ def account():
         current_user.username = form.username.data
         current_user.email = form.email.data
         current_user.name = form.name.data
+        current_user.organization = form.organization.data
+        current_user.about = form.about.data
         db.session.commit()
         flash(f"Your account has been updated.", "success")
         return redirect(url_for("users.account"))
@@ -78,6 +80,8 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
         form.name.data = current_user.name
+        form.organization.data = current_user.organization
+        form.about.data = current_user.about
     profile_pic = url_for("static", filename = "images/profile_pics/" + current_user.image_file)
     return render_template("account.html", title = "Account", profile_pic = profile_pic, form = form, search_form = search_form)
 

@@ -1,5 +1,6 @@
 {% extends "layout_nav.html" %}
 {% block body_content %}
+  {% import 'wtf_tinymce/editor.html' as tinymce with context %}
 
 <!-- Primary Page Layout
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -68,5 +69,8 @@
       </form>
     </div>
   </div>
+
+  {{ super() }}
+  {{ tinymce.init_wtf_tinymce() }}
 
 {% endblock body_content %}

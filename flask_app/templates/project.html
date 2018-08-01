@@ -42,7 +42,11 @@
     <hr>
     <p>{{ project.abstract }}</p>
     <hr>
-    <span>Tags: {{ project_tags }}</span>
+    <span>Tags:
+      {% for tag in project_tags %}
+        <a class="tag_links" href="{{ url_for("main.search", search_query = tag.tag, search_type = "tag_search") }}">{{ tag.tag }}</a>
+      {% endfor %}
+    </span>
     <br>
     {% if project.author == current_user %}
         <a href="{{ url_for("projects.update_project", project_id = project.id) }}"><button id="edit">Edit</button></a>
