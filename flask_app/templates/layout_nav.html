@@ -52,23 +52,25 @@
         {% else %}
           <a class="nav_img" href="{{ url_for("main.browse") }}"><img src="/static/images/favicon.png"></a>
         {% endif %}
-        <form method="POST" action="" class="search_form">
-          <fieldset>
-            {{ search_form.hidden_tag() }}
-            <div>
-              {% if search_form.search_query.errors %}
-                {{ search_form.search_query(style="border-color:#f55f5f;") }}
-                <div>
-                  {% for error in search_form.search_query.errors %}
-                    <span id="error">{{ error }}</span>
-                  {% endfor %}
-                </div>
-              {% else %}
-                {{ search_form.search_query(class="u-full-width", placeholder="Search codon") }}
-              {% endif %}
-            </div>
-          </fieldset>
-        </form>
+        {% if search_form %}
+          <form method="POST" action="" class="search_form">
+            <fieldset>
+              {{ search_form.hidden_tag() }}
+              <div>
+                {% if search_form.search_query.errors %}
+                  {{ search_form.search_query(style="border-color:#f55f5f;") }}
+                  <div>
+                    {% for error in search_form.search_query.errors %}
+                      <span id="error">{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ search_form.search_query(class="u-full-width", placeholder="Search codon") }}
+                {% endif %}
+              </div>
+            </fieldset>
+          {% endif %}
+          </form>
         {% if current_user.is_authenticated %}
           <i class="fas fa-plus actions"></i>
           <img src="/static/images/profile_pics/{{ current_user.image_file }}" class="user_img click_user"></img>

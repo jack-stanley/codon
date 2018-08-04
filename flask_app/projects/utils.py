@@ -2,6 +2,9 @@ import os
 import secrets
 from PIL import Image, ImageOps
 from flask import url_for, current_app
+from flask_app.models import Tube, Project, User
+from flask_app import db
+from flask_login import current_user, login_required
 
 def save_banner(form_picture):
     random_hex = secrets.token_hex(8)

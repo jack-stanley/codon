@@ -49,6 +49,19 @@
             {% endif %}
           </div>
           <div>
+            {{ form.collaborators.label }}
+            {% if form.collaborators.errors %}
+              {{ form.collaborators(style="border-color:#f55f5f;") }}
+              <div>
+                {% for error in form.collaborators.errors %}
+                  <span id="error">{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.collaborators(placeholder="user1, user2, etc") }}
+            {% endif %}
+          </div>
+          <div>
             {{ form.banner_image.label }}
             {{ form.banner_image }}
           </div>

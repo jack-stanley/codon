@@ -1,14 +1,14 @@
 $(document).ready(function() {
 
-  $("name").click(function() {
-    $("i").toggleClass("fa-caret-up");
-    $(".update-form").slideToggle("medium");
-    $(".update-button").slideToggle("medium");
-  });
-
   $(".fa-vial").click(function() {
     $(this).toggleClass("coloured");
     $(this).next().toggleClass("coloured");
+    //Add a for loop to add and subtract votes as the user clicks
+
+    $.post("/tubes/" + $(this).attr("project_id") + "/" + $(this).attr("user_id"), {
+                user_id: $(this).attr("user_id"),
+                project_id: $(this).attr("project_id")
+            });
   });
 
   $(".fa-plus").click(function() {

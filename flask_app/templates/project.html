@@ -30,11 +30,18 @@
     {% else %}
       <a href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.username }}</b></h4></a>
     {% endif %}
-    {% if project.author == current_user %}
+    {% if collabs != [""] %}
+      Collaborators:
+      {% for collab in collabs %}
+        <a href="{{ url_for("users.user_projects", username = collab) }}">{{ collab }}</a> |
+      {% endfor %}
+    {% endif %}
+    <br>
+    {% if project.author == current_user or current_user.username in collabs %}
       <a href="{{ url_for("articles.new_article", project_id = project.id) }}" <i class="fas fa-file-medical new_file"></i></a>
     {% endif %}
     <small>Created: {{ project.date_created.strftime("%B %-d, %Y") }}</small>
-    {% if project.date_edited %}
+    {% if project.date_edited != project.date_created %}
       <small>Last edited: {{ project.date_edited.strftime("%B %-d, %Y") }}</small>
     {% endif %}
     <i class="fas fa-vial tubes"></i>
@@ -52,37 +59,113 @@
         <a href="{{ url_for("projects.update_project", project_id = project.id) }}"><button id="edit">Edit</button></a>
         <a href="#modal"><button id="delete">Delete</button></a>
     {% endif %}
-
   </div>
-  {% for heading in headings_title %}
-    <div class="seven columns offset-by-four article_wrapper">
-      <div class="row">
-        <div class="project_heading six columns">
-          <h3><b>{{ heading }}</b></h3>
+
+<div class="seven columns article_container">
+  {% if articles_intro %}
+      <div class="twelve columns article_wrapper">
+        <div class="row">
+          <div class="project_heading six columns">
+            <h3><b>Introduction</b></h3>
+          </div>
         </div>
-      </div>
-      {% for item in headings %}
-        {% if item.heading == heading %}
-          {% for article in articles %}
-            {% if article.header == item %}
-              <div class="five columns article_post">
-                <div class="twelve columns">
-                  <div style="overflow: hidden; height: 100px">
-                    <a href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
-                  </div>
-                  {% if article.date_edited %}
-                    <span>Edited: {{ article.date_posted.strftime("%B %-d, %Y") }}</span>
-                  {% else %}
-                    <span>Created: {{ article.date_posted.strftime("%B %-d, %Y") }}</span>
-                  {% endif %}
-                  <hr class="hr_project">
-                </div>
+        {% for article in articles_intro %}
+          <div class="five columns article_post">
+            <div class="twelve columns">
+              <div style="overflow: hidden; height: 100px">
+                <a href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
               </div>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-      {% endfor %}
-    </div>
-  {% endfor %}
+                {% if article.edited_by %}
+                  <span>Edited by: {{ article.edited_by }}</span>
+                {% else %}
+                  <span>Created by: {{ article.author.username }}</span>
+                {% endif %}
+                <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
+              <hr class="hr_project">
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if articles_main %}
+      <div class="twelve columns article_wrapper">
+        <div class="row">
+          <div class="project_heading six columns">
+            <h3><b>Main</b></h3>
+          </div>
+        </div>
+        {% for article in articles_main %}
+          <div class="five columns article_post">
+            <div class="twelve columns">
+              <div style="overflow: hidden; height: 100px">
+                <a href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
+              </div>
+                {% if article.edited_by %}
+                  <span>Edited by: {{ article.edited_by }}</span>
+                {% else %}
+                  <span>Created by: {{ article.author.username }}</span>
+                {% endif %}
+                <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
+              <hr class="hr_project">
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if articles_resources %}
+      <div class="twelve columns article_wrapper">
+        <div class="row">
+          <div class="project_heading six columns">
+            <h3><b>Resources</b></h3>
+          </div>
+        </div>
+        {% for article in articles_resources %}
+          <div class="five columns article_post">
+            <div class="twelve columns">
+              <div style="overflow: hidden; height: 100px">
+                <a href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
+              </div>
+                {% if article.edited_by %}
+                  <span>Edited by: {{ article.edited_by }}</span>
+                {% else %}
+                  <span>Created by: {{ article.author.username }}</span>
+                {% endif %}
+                <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
+              <hr class="hr_project">
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if articles_misc %}
+      <div class="twelve columns article_wrapper">
+        <div class="row">
+          <div class="project_heading six columns">
+            <h3><b>Miscellaneous</b></h3>
+          </div>
+        </div>
+        {% for article in articles_misc %}
+          <div class="five columns article_post">
+            <div class="twelve columns">
+              <div style="overflow: hidden; height: 100px">
+                <a href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
+              </div>
+                {% if article.edited_by %}
+                  <span>Edited by: {{ article.edited_by }}</span>
+                {% else %}
+                  <span>Created by: {{ article.author.username }}</span>
+                {% endif %}
+                <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
+              <hr class="hr_project">
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
 
 {% endblock body_content %}

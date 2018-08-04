@@ -48,9 +48,9 @@
           {{ form.hidden_tag() }}
           <fieldset>
             <name>
-              <p style="display:inline; font-size: 23px;" id="form_title">Edit account info ▼</p>
+              <p style="display:inline; font-size: 23px;" id="form_title">Edit account info</p>
             </name>
-            <div class="update-form" style="display:none;">
+            <div class="update-form">
               <div>
                 {{ form.username.label }}
                 {% if form.username.errors %}
@@ -87,7 +87,7 @@
                     {% endfor %}
                   </div>
                 {% else %}
-                  {{ form.name(class="u-full-width") }}
+                  {{ form.name(class="u-full-width", placeholder="Example Name") }}
                 {% endif %}
               </div>
               <div>

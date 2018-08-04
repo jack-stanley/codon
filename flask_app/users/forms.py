@@ -9,7 +9,8 @@ class RegistrationForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired(),
         Length(min = 2, max = 30), Regexp('^\w+$', message="Username must contain only letters, numbers, or underscore")])
     email = StringField("Email", validators = [DataRequired(), Email()])
-    name = StringField("Name/Organization (optional)", validators = [Length(max = 60)])
+    name = StringField("Name (optional)", validators = [Length(max = 60)])
+    organization = StringField("Organization (optional)", validators = [Length(max = 160)])
     password = PasswordField("Password", validators = [DataRequired(),
         Length(min = 5)])
     confirm_password = PasswordField("Confirm Password",

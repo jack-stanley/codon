@@ -24,7 +24,7 @@
       {% else %}
         <p>By <a href="{{ url_for("users.user_projects", username = article.author.username) }}">{{ article.author.username }}</a></p>
       {% endif %}
-        <br><p>{{ article.date_posted.strftime("%B %-d, %Y") }}</p>
+        <br><p>{{ article.date_edited.strftime("%B %-d, %Y") }}</p>
     </div>
   </div>
 {% endfor %}

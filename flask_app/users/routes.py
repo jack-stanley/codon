@@ -11,16 +11,16 @@ users = Blueprint("users", __name__)
 @users.route("/register", methods = ["GET", "POST"])
 def register():
     search_form = SearchForm()
-    if search_form.validate_on_submit():
+    if search_form.submit_search.data and search_form.validate_on_submit():
         search_query = search_form.search_query.data
         return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     if current_user.is_authenticated:
         return redirect(url_for("main.browse"))
     form = RegistrationForm()
-    if form.validate_on_submit():
+    if form.submit.data and form.validate_on_submit():
         hashed_pw = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
         user = User(username = form.username.data, email = form.email.data,
-            name = form.name.data, password = hashed_pw)
+            name = form.name.data, organization = form.organization.data, password = hashed_pw)
 
         db.session.add(user)
         db.session.commit()
@@ -34,13 +34,13 @@ def register():
 @users.route("/login", methods = ["GET", "POST"])
 def login():
     search_form = SearchForm()
-    if search_form.validate_on_submit():
+    if search_form.submit_search.data and search_form.validate_on_submit():
         search_query = search_form.search_query.data
         return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     if current_user.is_authenticated:
         return redirect(url_for("main.browse"))
     form = LoginForm()
-    if form.validate_on_submit():
+    if form.submit.data and form.validate_on_submit():
         user = User.query.filter_by(email = form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember = form.remember.data)
@@ -60,11 +60,11 @@ def logout():
 @login_required
 def account():
     search_form = SearchForm()
-    if search_form.validate_on_submit():
+    if search_form.submit_search.data and search_form.validate_on_submit():
         search_query = search_form.search_query.data
         return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     form = UpdateAccountForm()
-    if form.validate_on_submit():
+    if form.submit.data and form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
             current_user.image_file = picture_file
@@ -88,7 +88,7 @@ def account():
 @users.route("/a/<string:username>", methods = ["GET", "POST"])
 def user_projects(username):
     search_form = SearchForm()
-    if search_form.validate_on_submit():
+    if search_form.submit_search.data and search_form.validate_on_submit():
         search_query = search_form.search_query.data
         return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     page = request.args.get("page", 1, type = int)
@@ -99,13 +99,13 @@ def user_projects(username):
 @users.route("/reset_password", methods = ["GET", "POST"])
 def reset_request():
     search_form = SearchForm()
-    if search_form.validate_on_submit():
+    if search_form.submit_search.data and search_form.validate_on_submit():
         search_query = search_form.search_query.data
         return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     if current_user.is_authenticated:
         return redirect(url_for("main.browse"))
     form = RequestResetForm()
-    if form.validate_on_submit():
+    if form.submit.data and form.validate_on_submit():
         user = User.query.filter_by(email = form.email.data).first()
         send_reset_email(user)
         flash(f"An email has been sent with instructions to reset your password.")
@@ -115,7 +115,7 @@ def reset_request():
 @users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
     search_form = SearchForm()
-    if search_form.validate_on_submit():
+    if search_form.submit_search.data and search_form.validate_on_submit():
         search_query = search_form.search_query.data
         return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     if current_user.is_authenticated:
@@ -125,7 +125,7 @@ def reset_token(token):
         flash(f"That is an invalid or expired token")
         return redirect(url_for("users.reset_request"))
     form = ResetPasswordForm()
-    if form.validate_on_submit():
+    if form.submit.data and form.validate_on_submit():
         hashed_pw = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
 
         user.password = hashed_pw

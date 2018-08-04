@@ -45,7 +45,20 @@
                   {% endfor %}
                 </div>
               {% else %}
-                {{ form.name(class="u-full-width", placeholder="Example Inc.") }}
+                {{ form.name(class="u-full-width", placeholder="Example Name") }}
+              {% endif %}
+            </div>
+            <div>
+              {{ form.organization.label }}
+              {% if form.organization.errors %}
+                {{ form.organization(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.organization.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.organization(class="u-full-width", placeholder="Example Inc.") }}
               {% endif %}
             </div>
             <div>

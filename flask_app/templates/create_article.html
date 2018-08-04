@@ -37,29 +37,16 @@
             {% endif %}
           </div>
           <div>
-            {{ form.heading.label }}
-            {% if form.heading.errors %}
-              {{ form.heading(style="border-color:#f55f5f;") }}
+            {{ form.section.label }}
+            {% if form.section.errors %}
+              {{ form.section(style="border-color:#f55f5f;") }}
               <div>
-                {% for error in form.heading.errors %}
+                {% for error in form.section.errors %}
                   <span id="error">{{ error }}</span>
                 {% endfor %}
               </div>
             {% else %}
-              {{ form.heading(placeholder="Other") }}
-            {% endif %}
-          </div>
-          <div>
-            {{ form.heading_order.label }}
-            {% if form.heading_order.errors %}
-              {{ form.heading_order(style="border-color:#f55f5f;") }}
-              <div>
-                {% for error in form.heading_order.errors %}
-                  <span id="error">{{ error }}</span>
-                {% endfor %}
-              </div>
-            {% else %}
-              {{ form.heading_order(placeholder="3") }}
+              {{ form.section() }}
             {% endif %}
           </div>
         </fieldset>

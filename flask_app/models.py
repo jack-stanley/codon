@@ -47,8 +47,9 @@ class Project(db.Model):
     date_edited = db.Column(db.DateTime, nullable = True)
     abstract = db.Column(db.Text, nullable = False)
     articles = db.relationship("Article", backref = "overall_project", lazy = True)
-    headings = db.relationship("Heading", backref = "overall_project", lazy = True)
     tags = db.relationship("Tag", backref = "overall_project", lazy = True)
+    collaborators = db.Column(db.Text, nullable = True)
+    tubes = db.relationship("Tube", backref = "tubes", lazy = True)
     banner_image = db.Column(db.String(20), nullable = False, default = "default_banner.png")
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
 
@@ -63,26 +64,25 @@ class Article(db.Model):
     date_posted = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     date_edited = db.Column(db.DateTime, nullable = True)
     content = db.Column(db.Text, nullable = True)
+    section = db.Column(db.Text, nullable = False)
+    edited_by = db.Column(db.Text, nullable = True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)
-    heading_id = db.Column(db.Integer, db.ForeignKey("heading.id"), nullable = False)
 
     def __repr__(self):
         return f"Article('{self.title}', '{self.date_posted}')"
-
-class Heading(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    heading = db.Column(db.String(100), nullable = False, default = "Other")
-    order = db.Column(db.Integer, nullable = False, default = "100")
-    project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)
-    articles = db.relationship("Article", backref = "header", lazy = True)
-
-    def __repr__(self):
-        return f"Heading('{self.heading}')"
 
 class Tag(db.Model):
     __searchable__ = ["tag"]
 
     id = db.Column(db.Integer, primary_key = True)
     tag = db.Column(db.String, nullable = False)
+    project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)
+
+    def __repr__(self):
+        return f"Tag('{self.tag}')"
+
+class Tube(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = True)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)

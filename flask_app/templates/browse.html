@@ -12,8 +12,8 @@
       {% for project in projects.items %}
         <div class="seven columns offset-by-five browse_project">
           <div class="one column vials">
-            <i class="fas fa-vial"></i>
-            <span class="">45</span>
+            <i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
+            <span class=" {{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
           </div>
           <div class="six columns browse_author">
             <a href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>
@@ -22,7 +22,11 @@
             {% else %}
               <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
             {% endif %}
+            {% if project.date_edited != project.date_created %}
+              <br><p>{{ project.date_edited.strftime("%B %-d, %Y") }}</p>
+            {% else %}
               <br><p>{{ project.date_created.strftime("%B %-d, %Y") }}</p>
+            {% endif %}
           </div>
           <a href="{{ url_for("projects.project", project_id = project.id) }}">
             <div style="background-image: url('/static/images/project_pics/{{ project.banner_image }}');" class="four columns browse_banner">
