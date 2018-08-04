@@ -1,14 +1,26 @@
 $(document).ready(function() {
 
   $(".fa-vial").click(function() {
-    $(this).toggleClass("coloured");
-    $(this).next().toggleClass("coloured");
-    //Add a for loop to add and subtract votes as the user clicks
+    if ($(this).attr("user_id") != "not_authenticated") {
+      if ($(this).next().attr("class") == "coloured" ) {
+        var current_score = parseInt($(this).next().text())
+        subtract_score = current_score - 1
+        $(this).next().text(subtract_score)
+      } else {
+        var current_score = parseInt($(this).next().text())
+        add_score = current_score + 1
+        $(this).next().text(add_score)
+      }
 
-    $.post("/tubes/" + $(this).attr("project_id") + "/" + $(this).attr("user_id"), {
-                user_id: $(this).attr("user_id"),
-                project_id: $(this).attr("project_id")
-            });
+      $(this).toggleClass("coloured");
+      $(this).next().toggleClass("coloured");
+      //Add a for loop to add and subtract votes as the user clicks
+
+      $.post("/tubes/" + $(this).attr("project_id") + "/" + $(this).attr("user_id"), {
+                  user_id: $(this).attr("user_id"),
+                  project_id: $(this).attr("project_id")
+              });
+      }
   });
 
   $(".fa-plus").click(function() {

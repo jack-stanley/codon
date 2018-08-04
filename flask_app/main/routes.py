@@ -31,7 +31,10 @@ def browse():
         return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
     page = request.args.get("page", 1, type = int)
     projects = Project.query.order_by(Project.date_edited.desc()).paginate(page = page, per_page = 20)
-    user_id = current_user.id
+    if current_user.is_authenticated:
+        user_id = current_user.id
+    else:
+        user_id = "not_authenticated"
     def toggle_colour(project_id, user_id):
         if Tube.query.filter_by(project_id = project_id, user_id = user_id).first() is not None:
             return "coloured"
