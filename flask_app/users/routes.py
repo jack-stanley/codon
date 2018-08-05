@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_app import db, bcrypt
-from flask_app.models import User, Project
+from flask_app.models import User, Project, Tube
 from flask_app.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from flask_app.main.forms import SearchForm
 from flask_app.users.utils import save_picture, send_reset_email
@@ -94,7 +94,21 @@ def user_projects(username):
     page = request.args.get("page", 1, type = int)
     user = User.query.filter_by(username = username).first_or_404()
     projects = Project.query.filter_by(author = user).order_by(Project.date_created.desc()).paginate(page = page, per_page = 5)
-    return render_template("user_projects.html", title = "Author projects", projects = projects, user = user, search_form = search_form)
+    if current_user.is_authenticated:
+        user_id = current_user.id
+    else:
+        user_id = "not_authenticated"
+    def toggle_colour(project_id, user_id):
+        if Tube.query.filter_by(project_id = project_id, user_id = user_id).first() is not None:
+            return "coloured"
+        else:
+            return ""
+    def tube_count(project_id):
+        if Tube.query.filter_by(project_id = project_id).all() is None:
+            return 0
+        else:
+            return Tube.query.filter_by(project_id = project_id).count()
+    return render_template("user_projects.html", tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, title = "Author projects", projects = projects, user = user, search_form = search_form)
 
 @users.route("/reset_password", methods = ["GET", "POST"])
 def reset_request():

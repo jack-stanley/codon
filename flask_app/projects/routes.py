@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, abort, Blueprint
 from flask_login import current_user, login_required
 from flask_app import db
-from flask_app.models import Project, Article, Tag, User
+from flask_app.models import Project, Article, Tag, User, Tube
 from flask_app.projects.forms import ProjectForm
 from flask_app.main.forms import SearchForm
 from flask_app.projects.utils import save_banner
@@ -58,9 +58,24 @@ def project(project_id):
     for item in split_tags_list:
         c.append(item)
 
+    if current_user.is_authenticated:
+        user_id = current_user.id
+    else:
+        user_id = "not_authenticated"
+    def toggle_colour(project_id, user_id):
+        if Tube.query.filter_by(project_id = project_id, user_id = user_id).first() is not None:
+            return "coloured"
+        else:
+            return ""
+    def tube_count(project_id):
+        if Tube.query.filter_by(project_id = project_id).all() is None:
+            return 0
+        else:
+            return Tube.query.filter_by(project_id = project_id).count()
+
     project_pic = url_for("static", filename = "images/project_pics/" + project.banner_image)
     profile_pic = url_for("static", filename = "images/profile_pics/" + project.author.image_file)
-    return render_template("project.html", articles_intro = articles_intro, articles_main = articles_main, articles_resources = articles_resources, articles_misc = articles_misc, collabs = c, search_form = search_form, title = project.project_title, project = project, project_tags = tags, project_pic = project_pic, profile_pic = profile_pic)
+    return render_template("project.html", tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, articles_intro = articles_intro, articles_main = articles_main, articles_resources = articles_resources, articles_misc = articles_misc, collabs = c, search_form = search_form, title = project.project_title, project = project, project_tags = tags, project_pic = project_pic, profile_pic = profile_pic)
 
 @projects.route("/project/<int:project_id>/update", methods = ["GET", "POST"])
 @login_required
@@ -116,12 +131,15 @@ def delete_project(project_id):
     project = Project.query.get_or_404(project_id)
     articles = Article.query.filter_by(overall_project = project)
     tags = Tag.query.filter_by(overall_project = project)
+    tubes = Tube.query.filter_by(overall_project = project)
     if project.author != current_user:
         abort(403)
     for article in articles:
         db.session.delete(article)
     for tag in tags:
         db.session.delete(tag)
+    for tube in tubes:
+        db.session.delete(tube)
     db.session.delete(project)
     db.session.commit()
     flash(f"Your project has been successfully deleted.")

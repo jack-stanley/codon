@@ -2,10 +2,14 @@ $(document).ready(function() {
 
   $(".fa-vial").click(function() {
     if ($(this).attr("user_id") != "not_authenticated") {
+
+      var project_identity = $(this).attr("project_id")
+
       if ($(this).next().attr("class") == "coloured" ) {
         var current_score = parseInt($(this).next().text())
         subtract_score = current_score - 1
         $(this).next().text(subtract_score)
+        $([project_id = project_identity]).next().text(subtract_score)
       } else {
         var current_score = parseInt($(this).next().text())
         add_score = current_score + 1
@@ -14,7 +18,6 @@ $(document).ready(function() {
 
       $(this).toggleClass("coloured");
       $(this).next().toggleClass("coloured");
-      //Add a for loop to add and subtract votes as the user clicks
 
       $.post("/tubes/" + $(this).attr("project_id") + "/" + $(this).attr("user_id"), {
                   user_id: $(this).attr("user_id"),

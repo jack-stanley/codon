@@ -4,13 +4,23 @@
 <!-- Primary Page Layout
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
       <div class="four columns trending_bar">
-        <h3>Trending</h3>
-        <p>Item 1</p>
-        <p>Item 2</p>
-        <p>Item 3</p>
+        <h3>Trending Projects (24hrs)</h3>
+        <ol>
+          {% for project in trending_projects %}
+            <li style="font-size:20px;">{% if current_user.is_authenticated %}
+              <i style="margin-left:20px;" user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
+            {% else %}
+              <a href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
+            {% endif %}
+            <span style="margin-right:20px;" class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
+            <a href="{{ url_for("projects.project", project_id = project.id) }}">{{ project.project_title }}</a>
+            </li>
+          {% endfor %}
+        </ol>
       </div>
+    <div class="seven columns">
       {% for project in projects.items %}
-        <div class="seven columns offset-by-five browse_project">
+        <div class="twelve columns browse_project">
           <div class="one column vials">
             {% if current_user.is_authenticated %}
               <i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
@@ -38,6 +48,7 @@
           </a>
         </div>
       {% endfor %}
+    </div>
       <div class="twelve columns page_nums">
         {% for page_num in projects.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 2) %}
           {% if page_num %}

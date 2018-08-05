@@ -13,32 +13,47 @@
     <span style="color:grey">Search for a specific project tag</span>
   </div>
 </div>
-
-{% for project in projects.items %}
-  <div class="seven columns offset-by-five browse_project">
-    <div class="one column vials">
-      <i class="fas fa-vial"></i>
-      <span class="">45</span>
-    </div>
-    <div class="six columns browse_author">
-      <a href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>
-      {% if project.author.name %}
-        <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a></p>
+<div class="seven columns offset-by-four">
+  <div style="margin-top:30px; margin-left: 30px;" class="twelve columns">
+    <h2>{{ count }}
+      {% if count == 1%}
+        project found for project search
       {% else %}
-        <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
+        projects found for project search
       {% endif %}
-      {% if project.date_edited %}
-        <br><p>{{ project.date_edited.strftime("%B %-d, %Y") }}</p>
-      {% else %}
-        <br><p>{{ project.date_created.strftime("%B %-d, %Y") }}</p>
-      {% endif %}
-    </div>
-    <a href="{{ url_for("projects.project", project_id = project.id) }}">
-      <div style="background-image: url('/static/images/project_pics/{{ project.banner_image }}');" class="four columns browse_banner">
-      </div>
-    </a>
+    </h2>
   </div>
-{% endfor %}
+  {% for project in projects.items %}
+    <div class="twelve columns browse_project">
+      <div class="one column vials">
+        {% if current_user.is_authenticated %}
+          <i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
+        {% else %}
+          <a href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
+        {% endif %}
+        <span class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
+      </div>
+      <div class="six columns browse_author">
+        <a href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>
+        {% if project.author.name %}
+          <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a></p>
+        {% else %}
+          <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
+        {% endif %}
+        {% if project.date_edited %}
+          <br><p>{{ project.date_edited.strftime("%B %-d, %Y") }}</p>
+        {% else %}
+          <br><p>{{ project.date_created.strftime("%B %-d, %Y") }}</p>
+        {% endif %}
+      </div>
+      <a href="{{ url_for("projects.project", project_id = project.id) }}">
+        <div style="background-image: url('/static/images/project_pics/{{ project.banner_image }}');" class="four columns browse_banner">
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
 <div class="twelve columns page_nums">
   {% for page_num in projects.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 2) %}
     {% if page_num %}

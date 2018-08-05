@@ -49,7 +49,8 @@ class Project(db.Model):
     articles = db.relationship("Article", backref = "overall_project", lazy = True)
     tags = db.relationship("Tag", backref = "overall_project", lazy = True)
     collaborators = db.Column(db.Text, nullable = True)
-    tubes = db.relationship("Tube", backref = "tubes", lazy = True)
+    tubes = db.relationship("Tube", backref = "overall_project", lazy = True)
+    tubes_count = db.Column(db.Integer, nullable = False, default = 0)
     banner_image = db.Column(db.String(20), nullable = False, default = "default_banner.png")
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
 
@@ -84,5 +85,6 @@ class Tag(db.Model):
 
 class Tube(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    date = db.Column(db.DateTime, nullable = False, default = datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = True)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)

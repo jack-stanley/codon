@@ -37,8 +37,12 @@
         {% for project in projects.items %}
         <div class="twelve columns browse_project">
           <div class="one column vials">
-            <i class="fas fa-vial"></i>
-            <span class="">45</span>
+            {% if current_user.is_authenticated %}
+              <i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
+            {% else %}
+              <a href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
+            {% endif %}
+            <span class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
           </div>
           <div class="six columns browse_author">
             <a href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>

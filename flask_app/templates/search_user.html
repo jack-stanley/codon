@@ -14,21 +14,32 @@
   </div>
 </div>
 
-{% for user in users.items %}
-  <div class="seven columns offset-by-five browse_project">
-    <div class="one columns search_image">
-      <a href="{{ url_for("users.user_projects", username = user.username) }}"><img src="{{ url_for("static", filename = "images/profile_pics/" + user.image_file) }}"></a>
-    </div>
-    <div class="six columns offset-by-one browse_author">
-      {% if user.name %}
-        <h5><a href="{{ url_for("users.user_projects", username = user.username) }}">{{ user.name }}</a></h5>
-        <p>({{ user.username }})</p>
+<div class="seven columns offset-by-four">
+  <div style="margin-top:30px; margin-left: 30px;" class="twelve columns">
+    <h2>{{ count }}
+      {% if count == 1%}
+        user found for user search
       {% else %}
-        <h5><a href="{{ url_for("users.user_projects", username = user.username) }}">{{ user.username }}</a></h5>
+        users found for user search
       {% endif %}
-    </div>
+    </h2>
   </div>
-{% endfor %}
+  {% for user in users.items %}
+    <div class="twelve columns browse_project">
+      <div class="one columns search_image">
+        <a href="{{ url_for("users.user_projects", username = user.username) }}"><img src="{{ url_for("static", filename = "images/profile_pics/" + user.image_file) }}"></a>
+      </div>
+      <div class="six columns offset-by-one browse_author">
+        {% if user.name %}
+          <h5><a href="{{ url_for("users.user_projects", username = user.username) }}">{{ user.name }}</a></h5>
+          <p>({{ user.username }})</p>
+        {% else %}
+          <h5><a href="{{ url_for("users.user_projects", username = user.username) }}">{{ user.username }}</a></h5>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
 <div class="twelve columns page_nums">
   {% for page_num in users.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 2) %}
     {% if page_num %}

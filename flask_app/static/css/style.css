@@ -636,7 +636,7 @@ textarea {
 }
 
 .vials {
-  font-size: 20px;
+  font-size: 30px;
   color: lightgrey;
 }
 
@@ -647,19 +647,12 @@ textarea {
 }
 
 .trending_bar {
-  position: fixed;
   background-color: white;
   margin-top: 30px;
   margin-bottom: 20px;
   border-radius: 5px;
   padding: 30px;
   margin-right:
-}
-
-@media only screen and (max-width: 600px) {
-    .trending_bar {
-      position: static
-    };
 }
 
 .article_contents {

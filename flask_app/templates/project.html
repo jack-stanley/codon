@@ -44,8 +44,12 @@
     {% if project.date_edited != project.date_created %}
       <small>Last edited: {{ project.date_edited.strftime("%B %-d, %Y") }}</small>
     {% endif %}
-    <i class="fas fa-vial tubes"></i>
-    <span>45</span>
+    {% if current_user.is_authenticated %}
+      <i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
+    {% else %}
+      <a href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
+    {% endif %}
+    <span class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
     <hr>
     <p>{{ project.abstract }}</p>
     <hr>
