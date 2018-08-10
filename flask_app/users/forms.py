@@ -24,7 +24,7 @@ class RegistrationForm(FlaskForm):
 
     def validate_email(self, email):
         user = User.query.filter_by(email = email.data).first()
-        if user:
+        if user and user.confirmed == True:
             raise ValidationError("That email is used on another account.")
 
 class LoginForm(FlaskForm):
@@ -37,7 +37,6 @@ class LoginForm(FlaskForm):
 class UpdateAccountForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired(),
         Length(min = 2, max = 30)])
-    email = StringField("Email", validators = [DataRequired(), Email()])
     name = StringField("Name (optional)", validators = [Length(max = 60)])
     organization = StringField("Organization (optional)", validators = [Length(max = 160)])
     about = TextAreaField("About user (2000 characters max.)", validators = [Length(max = 2000)])
@@ -70,3 +69,17 @@ class ResetPasswordForm(FlaskForm):
     confirm_password = PasswordField("Confirm Password",
         validators = [DataRequired(), Length(min = 5), EqualTo("password")])
     submit = SubmitField("Reset Password")
+
+class ChangePasswordForm(FlaskForm):
+    email = StringField("Enter email to confirm", validators = [DataRequired(), Email()])
+    password = PasswordField("Password", validators = [DataRequired(),
+        Length(min = 5)])
+    confirm_password = PasswordField("Confirm Password",
+        validators = [DataRequired(), Length(min = 5), EqualTo("password")])
+    submit_change = SubmitField("Change")
+
+class DeleteAccountForm(FlaskForm):
+    username = StringField("Username", validators = [DataRequired(), Length(min = 2, max = 30)])
+    email =  StringField("Enter email to confirm", validators = [DataRequired(), Email()])
+    password = PasswordField("Password", validators = [DataRequired(), Length(min = 5)])
+    submit_delete = SubmitField("DELETE")

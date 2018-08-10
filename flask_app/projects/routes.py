@@ -1,8 +1,8 @@
 from flask import render_template, url_for, flash, redirect, request, abort, Blueprint
 from flask_login import current_user, login_required
-from flask_app import db
+from flask_app import db, bcrypt
 from flask_app.models import Project, Article, Tag, User, Tube
-from flask_app.projects.forms import ProjectForm
+from flask_app.projects.forms import ProjectForm, DeleteProjectForm
 from flask_app.main.forms import SearchForm
 from flask_app.projects.utils import save_banner
 from datetime import datetime
@@ -41,6 +41,7 @@ def new_project():
 @projects.route("/project/<int:project_id>", methods = ["GET", "POST"])
 def project(project_id):
     search_form = SearchForm()
+    delete_project_form = DeleteProjectForm()
     if search_form.submit_search.data and search_form.validate_on_submit():
         search_query = search_form.search_query.data
         return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
@@ -61,7 +62,7 @@ def project(project_id):
     if current_user.is_authenticated:
         user_id = current_user.id
     else:
-        user_id = "not_authenticated"
+        user_id = None
     def toggle_colour(project_id, user_id):
         if Tube.query.filter_by(project_id = project_id, user_id = user_id).first() is not None:
             return "coloured"
@@ -73,9 +74,18 @@ def project(project_id):
         else:
             return Tube.query.filter_by(project_id = project_id).count()
 
+    if delete_project_form.submit_delete.data and delete_project_form.validate_on_submit():
+        if project.author != current_user:
+            abort(403)
+        if project.author.email == delete_project_form.email.data and project.project_title == delete_project_form.project_title.data and bcrypt.check_password_hash(project.author.password, delete_project_form.password.data):
+            return redirect(url_for("projects.delete_project", project_id = project.id))
+        else:
+            flash(f"Incorrect credentials entered.")
+            return redirect(url_for("projects.project", project_id = project.id))
+
     project_pic = url_for("static", filename = "images/project_pics/" + project.banner_image)
     profile_pic = url_for("static", filename = "images/profile_pics/" + project.author.image_file)
-    return render_template("project.html", tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, articles_intro = articles_intro, articles_main = articles_main, articles_resources = articles_resources, articles_misc = articles_misc, collabs = c, search_form = search_form, title = project.project_title, project = project, project_tags = tags, project_pic = project_pic, profile_pic = profile_pic)
+    return render_template("project.html", delete_project_form = delete_project_form, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, articles_intro = articles_intro, articles_main = articles_main, articles_resources = articles_resources, articles_misc = articles_misc, collabs = c, search_form = search_form, title = project.project_title, project = project, project_tags = tags, project_pic = project_pic, profile_pic = profile_pic)
 
 @projects.route("/project/<int:project_id>/update", methods = ["GET", "POST"])
 @login_required
@@ -125,7 +135,7 @@ def update_project(project_id):
         form.collaborators.data = project.collaborators
     return render_template("create_project.html", form = form, legend = "Update Project", search_form = search_form)
 
-@projects.route("/project/<int:project_id>/delete", methods = ["POST"])
+@projects.route("/project/<int:project_id>/delete", methods = ["POST", "GET"])
 @login_required
 def delete_project(project_id):
     project = Project.query.get_or_404(project_id)

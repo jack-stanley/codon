@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
   $(".fa-vial").click(function() {
-    if ($(this).attr("user_id") != "not_authenticated") {
+    if ($(this).attr("user_id") != "None") {
 
       var project_identity = $(this).attr("project_id")
 

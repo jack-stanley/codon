@@ -12,13 +12,15 @@ class User(db.Model, UserMixin):
     __searchable__ = ["username", "name"]
 
     id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(30), unique = True, nullable = False)
-    email = db.Column(db.String(200), unique = True, nullable = False)
-    name = db.Column(db.String(60), nullable = True)
-    organization = db.Column(db.String(160), nullable = True)
+    username = db.Column(db.Text, unique = True, nullable = False)
+    email = db.Column(db.Text, unique = True, nullable = False)
+    name = db.Column(db.Text, nullable = True)
+    date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    confirmed = db.Column(db.Text, nullable = False, default = "False")
+    organization = db.Column(db.Text, nullable = True)
     about = db.Column(db.Text, nullable = True)
-    image_file = db.Column(db.String(20), nullable = False, default = "default_pic.jpg")
-    password = db.Column(db.String(60), nullable = False)
+    image_file = db.Column(db.Text, nullable = False, default = "default_pic.jpg")
+    password = db.Column(db.Text, nullable = False)
     articles = db.relationship("Article", backref = "author", lazy = True)
     projects = db.relationship("Project", backref = "author", lazy = True)
 
@@ -35,14 +37,27 @@ class User(db.Model, UserMixin):
             return None
         return User.query.get(user_id)
 
+    def get_confirmation_token(self, expires_sec = 2592000):
+        s = Serializer(current_app.config["SECRET_KEY"], expires_sec)
+        return s.dumps({"user_id": self.id}).decode("utf-8")
+
+    @staticmethod
+    def verify_confirmation_token(token):
+        s = Serializer(current_app.config["SECRET_KEY"])
+        try:
+            user_id = s.loads(token)["user_id"]
+        except:
+            return None
+        return User.query.get(user_id)
+
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.name}', '{self.image_file}')"
+        return f"User('{self.username}', '{self.email}', '{self.name}', '{self.organization}', '{self.about}', '{self.image_file}')"
 
 class Project(db.Model):
     __searchable__ = ["project_title", "abstract"]
 
     id = db.Column(db.Integer, primary_key = True)
-    project_title = db.Column(db.String(400), nullable = False)
+    project_title = db.Column(db.Text, nullable = False)
     date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     date_edited = db.Column(db.DateTime, nullable = True)
     abstract = db.Column(db.Text, nullable = False)
@@ -51,7 +66,7 @@ class Project(db.Model):
     collaborators = db.Column(db.Text, nullable = True)
     tubes = db.relationship("Tube", backref = "overall_project", lazy = True)
     tubes_count = db.Column(db.Integer, nullable = False, default = 0)
-    banner_image = db.Column(db.String(20), nullable = False, default = "default_banner.png")
+    banner_image = db.Column(db.Text, nullable = False, default = "default_banner.png")
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
 
     def __repr__(self):
@@ -61,7 +76,7 @@ class Article(db.Model):
     __searchable__ = ["title", "content"]
 
     id = db.Column(db.Integer, primary_key = True)
-    title = db.Column(db.String(400), nullable = False)
+    title = db.Column(db.Text, nullable = False)
     date_posted = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     date_edited = db.Column(db.DateTime, nullable = True)
     content = db.Column(db.Text, nullable = True)
@@ -77,7 +92,7 @@ class Tag(db.Model):
     __searchable__ = ["tag"]
 
     id = db.Column(db.Integer, primary_key = True)
-    tag = db.Column(db.String, nullable = False)
+    tag = db.Column(db.Text, nullable = False)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)
 
     def __repr__(self):
@@ -85,6 +100,6 @@ class Tag(db.Model):
 
 class Tube(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    date = db.Column(db.DateTime, nullable = False, default = datetime.now())
+    date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = True)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)

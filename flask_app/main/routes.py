@@ -49,7 +49,7 @@ def browse():
     if current_user.is_authenticated:
         user_id = current_user.id
     else:
-        user_id = "not_authenticated"
+        user_id = None
     def toggle_colour(project_id, user_id):
         if Tube.query.filter_by(project_id = project_id, user_id = user_id).first() is not None:
             return "coloured"
@@ -76,7 +76,7 @@ def search(search_query, search_type):
     if current_user.is_authenticated:
         user_id = current_user.id
     else:
-        user_id = "not_authenticated"
+        user_id = None
     def toggle_colour(project_id, user_id):
         if Tube.query.filter_by(project_id = project_id, user_id = user_id).first() is not None:
             return "coloured"

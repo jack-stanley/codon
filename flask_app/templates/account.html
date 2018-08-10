@@ -13,10 +13,10 @@
             <h1>{{ current_user.name }}</h1>
         </div>
         <div class="twelve columns">
-          <p>{{ current_user.username }}</p>
+          <p><b>Username:</b> {{ current_user.username }}</p>
         </div>
       {% else %}
-        <div class="three columns">
+        <div class="eleven columns">
             <h1>{{ current_user.username }}</h1>
         </div>
       {% endif %}
@@ -62,19 +62,6 @@
                   </div>
                 {% else %}
                   {{ form.username }}
-                {% endif %}
-              </div>
-              <div>
-                {{ form.email.label }}
-                {% if form.email.errors %}
-                  {{ form.email(style="border-color:#f55f5f;") }}
-                  <div>
-                    {% for error in form.email.errors %}
-                      <span id="error">{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                {% else %}
-                  {{ form.email(class="u-full-width") }}
                 {% endif %}
               </div>
               <div>
@@ -128,12 +115,143 @@
                   {% endif %}
               </div>
             </fieldset>
-            <div class="update-button" style="display:none;">
+            <div class="update-button">
               {{ form.submit }}
             </div>
           </div>
         </form>
       </div>
+    </div>
+
+    <div class="row">
+      <div class="form six columns offset-by-three danger_zone">
+        <div style="padding:30px;">
+          <h2>DANGER ZONE<h2>
+        </div>
+        <form method="POST" action="" enctype="multipart/form-data">
+          {{ change_pass_form.hidden_tag() }}
+          <fieldset>
+            <name>
+              <p style="display:inline; font-size: 23px;" id="form_title">Change Password</p>
+            </name>
+            <div class="update-form">
+              <div>
+                {{ change_pass_form.email.label }}
+                {% if change_pass_form.email.errors %}
+                  {{ change_pass_form.email(style="border-color:#f55f5f;") }}
+                  <div>
+                    {% for error in change_pass_form.email.errors %}
+                      <span id="error">{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ change_pass_form.email }}
+                {% endif %}
+              </div>
+              <div>
+                {{ change_pass_form.password.label }}
+                {% if change_pass_form.password.errors %}
+                  {{ change_pass_form.password(style="border-color:#f55f5f;") }}
+                  <div>
+                    {% for error in change_pass_form.password.errors %}
+                      <span id="error">{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ change_pass_form.password(class="u-full-width") }}
+                {% endif %}
+              </div>
+              <div>
+                {{ change_pass_form.confirm_password.label }}
+                {% if change_pass_form.confirm_password.errors %}
+                  {{ change_pass_form.confirm_password(style="border-color:#f55f5f;") }}
+                  <div>
+                    {% for error in change_pass_form.confirm_password.errors %}
+                      <span id="error">{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ change_pass_form.confirm_password(class="u-full-width") }}
+                {% endif %}
+              </div>
+            </div>
+
+          </fieldset>
+            <div class="update-button">
+              {{ change_pass_form.submit_change }}
+            </div>
+        </form>
+        <hr>
+        <hr>
+        <hr>
+        <h4>DELETE Account</h4>
+        <p style="padding:30px;">WARNING: This will delete your account and EVERYTHING associated with it. This includes projects, articles, and tubes. Your collaborators will NOT have access
+          to any of your projects after you delete your account. PLEASE backup all of your important data BEFORE you delete your account. Codon cannot recover any data once your account has been deleted.</p>
+        <br>
+        <br>
+        <a href="#modal"><button class="delete_account_button" id="submit">DELETE ACCOUNT</button></a>
+      </div>
+    </div>
+
+    <div class="remodal" data-remodal-id="modal">
+      <button data-remodal-action="close" class="remodal-close"></button>
+      <h1><b>DELETE</b>&nbsp;&nbsp;account?</h1>
+      <p>
+        Are you sure you want to delete your account? This cannot be undone.<br>
+        Enter your credentials below to confirm deletion.
+      </p>
+      <br>
+      <!-- <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button> -->
+      <form method="POST" action="" enctype="multipart/form-data">
+        {{ delete_account_form.hidden_tag() }}
+        <fieldset>
+          <div class="update-form">
+            <div>
+              {{ delete_account_form.username.label }}
+              {% if delete_account_form.username.errors %}
+                {{ delete_account_form.username(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in delete_account_form.username.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ delete_account_form.username }}
+              {% endif %}
+            </div>
+            <div>
+              {{ delete_account_form.email.label }}
+              {% if delete_account_form.email.errors %}
+                {{ delete_account_form.email(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in delete_account_form.email.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ delete_account_form.email }}
+              {% endif %}
+            </div>
+            <div>
+              {{ delete_account_form.password.label }}
+              {% if delete_account_form.password.errors %}
+                {{ delete_account_form.password(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in delete_account_form.password.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ delete_account_form.password(class="u-full-width") }}
+              {% endif %}
+            </div>
+          </div>
+
+        </fieldset>
+          <div class="update-button">
+            {{ delete_account_form.submit_delete }}
+          </div>
+      </form>
     </div>
 
 

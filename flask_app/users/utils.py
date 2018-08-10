@@ -34,3 +34,13 @@ def send_reset_email(user):
     If you did not make this request, simply ignore this email."""
 
     mail.send(msg)
+
+def send_confirmation_email(user):
+    token = user.get_confirmation_token()
+    msg = Message("Codon Email Confirmation", sender="noreply@codon.com", recipients = [user.email])
+    msg.body = f"""To confirm your email, please visit the following link:
+    {url_for('users.check_confirmation', token = token, _external = True)}
+
+    If you did not sign up for an account at codon, simply ignore this email."""
+
+    mail.send(msg)

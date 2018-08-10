@@ -1,0 +1,10 @@
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+{% extends "layout_nonav.html" %}
+{% block body_content %}
+
+<h3 style="text-align:center;margin-top:40px;padding:100px;"><b>Your account is not confirmed.</b><br>You should have received an email with a link to confirm your account. If you have not received an email
+  please click <a href="{{ url_for("users.send_confirmation", user_id = user.id) }}">here</a> to resend it.</h3>
+
+
+{% endblock body_content %}
