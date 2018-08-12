@@ -24,7 +24,7 @@ def article(article_id, project_id):
     collabs = collab_user(project_id)
     project = Project.query.get_or_404(project_id)
     article = Article.query.get_or_404(article_id)
-    return render_template("article.html", collabs = collabs, title = article.title, article = article, project = project, search_form = search_form)
+    return render_template("article.html", collabs = collabs, title = f" | {article.title}", article = article, project = project, search_form = search_form)
 
 @articles.route("/project/<int:project_id>/article/new", methods = ["GET", "POST"])
 @login_required
@@ -44,7 +44,7 @@ def new_article(project_id):
         db.session.commit()
         flash(f"Your article has been created.")
         return redirect(url_for("articles.article", article_id = article.id, project_id = project.id))
-    return render_template("create_article.html", form = form, legend = "Create Article", search_form = search_form)
+    return render_template("create_article.html", title = " | New article", form = form, legend = "Create Article", search_form = search_form)
 
 @articles.route("/project/<int:project_id>/article/<int:article_id>/update", methods = ["GET", "POST"])
 @login_required
@@ -72,7 +72,7 @@ def update_article(article_id, project_id):
         form.title.data = article.title
         form.content.data = article.content
         form.section.data = article.section
-    return render_template("create_article.html", form = form, legend = "Update Article", search_form = search_form)
+    return render_template("create_article.html", title = f" | Edit '{article.title}'", form = form, legend = "Update Article", search_form = search_form)
 
 @articles.route("/project/<int:project_id>/article/<int:article_id>/delete", methods = ["POST"])
 @login_required

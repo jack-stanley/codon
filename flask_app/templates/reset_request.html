@@ -23,10 +23,10 @@
             </div>
           </fieldset>
           <div>
-            {{ form.submit }}
+            {{ form.submit(title="Request a password reset") }}
           </div>
           <div>
-            <small>Need an account? <a href="{{ url_for("users.register") }}">Register</a></small>
+            <small>Need an account? <a title="Register for codon" href="{{ url_for("users.register") }}">Register</a></small>
           </div>
         </form>
       </div>

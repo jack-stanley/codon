@@ -13,7 +13,7 @@ def index():
     if search_form.validate_on_submit():
         search_query = search_form.search_query.data
         return redirect(url_for("main.search", search_query = search_query, search_type = "project_search"))
-    return render_template("index.html", search_form = search_form)
+    return render_template("index.html", title = "Home", search_form = search_form)
 
 
 @main.route("/about", methods = ["GET", "POST"])
@@ -60,7 +60,7 @@ def browse():
             return 0
         else:
             return Tube.query.filter_by(project_id = project_id).count()
-    return render_template("browse.html", trending_projects = trending_projects, tube_count = tube_count, toggle_colour = toggle_colour, search_form = search_form, user_id = user_id, title = "Browse", projects = projects)
+    return render_template("browse.html", title = " | Browse", trending_projects = trending_projects, tube_count = tube_count, toggle_colour = toggle_colour, search_form = search_form, user_id = user_id, projects = projects)
 
 @main.route("/search/<string:search_query>/<string:search_type>", methods = ["GET", "POST"])
 def search(search_query, search_type):
@@ -91,19 +91,19 @@ def search(search_query, search_type):
     if search_type == "project_search":
         projects = Project.query.msearch(f"{search_query}").paginate(page = page, per_page = 20)
         projects_count = Project.query.msearch(f"{search_query}").count()
-        return render_template("search.html", count = projects_count, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, search_query = search_query, search_type = search_type, search_form = search_form, projects = projects)
+        return render_template("search.html", title = f" | Project search: '{search_query}'", count = projects_count, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, search_query = search_query, search_type = search_type, search_form = search_form, projects = projects)
     if search_type == "article_search":
         articles = Article.query.msearch(f"{search_query}").paginate(page = page, per_page = 20)
         articles_count = Article.query.msearch(f"{search_query}").count()
-        return render_template("search_article.html", count = articles_count, search_query = search_query, search_type = search_type, search_form = search_form, articles = articles)
+        return render_template("search_article.html", title = f" | Article search '{search_query}'", count = articles_count, search_query = search_query, search_type = search_type, search_form = search_form, articles = articles)
     if search_type == "user_search":
         users = User.query.msearch(f"{search_query}").paginate(page = page, per_page = 20)
         users_count = User.query.msearch(f"{search_query}").count()
-        return render_template("search_user.html", count = users_count, search_query = search_query, search_type = search_type, search_form = search_form, users = users)
+        return render_template("search_user.html", title = f" | User search: '{search_query}'", count = users_count, search_query = search_query, search_type = search_type, search_form = search_form, users = users)
     if search_type == "tag_search":
         tags = Tag.query.filter_by(tag = search_query).paginate(page = page, per_page = 20)
         tags_count = Tag.query.filter_by(tag = search_query).count()
-        return render_template("search_tags.html", count = tags_count, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, search_query = search_query, search_type = search_type, search_form = search_form, tags = tags)
+        return render_template("search_tags.html", title = f" | Tag search: '{search_query}'", count = tags_count, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, search_query = search_query, search_type = search_type, search_form = search_form, tags = tags)
 
 @main.route("/tubes/<int:project_id>/<int:user_id>", methods = ["POST"])
 @login_required

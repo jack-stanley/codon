@@ -5,9 +5,9 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>codon</title>
-  <meta name="description" content="the directory of biological parts">
-  <meta name="author" content="Jack Stanley">
+  <title>codon | {{ title }}</title>
+  <meta name="description" content="crowdfund science">
+  <meta name="author" content="Plasmid Group">
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -17,6 +17,7 @@
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -49,7 +50,7 @@
     {% if request.path != url_for("main.index") %}
       <div class="row subpage_logo">
         <div class="six columns">
-          <h2><a href="/">codon<img src="/static/images/favicon.png"></a></h2>
+          <h2><a title="Home" href="/">codon<img src="/static/images/favicon.png"></a></h2>
         </div>
         <div class="six columns">
           <h3><span style="color:#BF78E4;">{{ title }}</span></h3>

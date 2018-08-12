@@ -73,30 +73,35 @@
       </div>
     </div>
   <div class="three columns abstract_bar">
-    <a href="{{ url_for("users.user_projects", username = project.author.username) }}"><img class="project_profile_pic" src="{{ profile_pic }}"></img></a>
+    <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}"><img class="project_profile_pic" src="{{ profile_pic }}"></img></a>
     {% if project.author.name %}
-      <a href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.name }}</b></h4></a>
+      <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.name }}</b></h4></a>
     {% else %}
-      <a href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.username }}</b></h4></a>
+      <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.username }}</b></h4></a>
     {% endif %}
+    {% if project.author.organization %}
+      <b>Organization:</b> {{ project.author.organization }}
+    {% endif %}
+    <br><br>
     {% if collabs != [""] %}
-      Collaborators:
+      <b>Collaborators:</b>
       {% for collab in collabs %}
-        <a href="{{ url_for("users.user_projects", username = collab) }}">{{ collab }}</a> |
+        <a title="{{ collab }}" href="{{ url_for("users.user_projects", username = collab) }}">{{ collab }}</a> |
       {% endfor %}
     {% endif %}
     <br>
+    <br>
     {% if project.author == current_user or current_user.username in collabs %}
-      <a href="{{ url_for("articles.new_article", project_id = project.id) }}" <i class="fas fa-file-medical new_file"></i></a>
+      <a title="Create a new article for this project" href="{{ url_for("articles.new_article", project_id = project.id) }}" <i class="fas fa-file-medical new_file"></i></a>
     {% endif %}
     <small>Created: {{ project.date_created.strftime("%B %-d, %Y") }}</small>
     {% if project.date_edited != project.date_created %}
       <small>Last edited: {{ project.date_edited.strftime("%B %-d, %Y") }}</small>
     {% endif %}
     {% if current_user.is_authenticated %}
-      <i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
+      <i title="Give a tube to '{{ project.project_title }}'" user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
     {% else %}
-      <a href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
+      <a title="You must be logged in to give tubes" href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
     {% endif %}
     <span class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
     <hr>
@@ -104,13 +109,13 @@
     <hr>
     <span>Tags:
       {% for tag in project_tags %}
-        <a class="tag_links" href="{{ url_for("main.search", search_query = tag.tag, search_type = "tag_search") }}">{{ tag.tag }}</a>
+        <a title="Explore more projects in '{{ tag.tag }}'" class="tag_links" href="{{ url_for("main.search", search_query = tag.tag, search_type = "tag_search") }}">{{ tag.tag }}</a>
       {% endfor %}
     </span>
     <br>
     {% if project.author == current_user %}
-        <a href="{{ url_for("projects.update_project", project_id = project.id) }}"><button id="edit">Edit</button></a>
-        <a href="#modal"><button id="delete">Delete</button></a>
+        <a title="Edit '{{ project.project_title }}'" href="{{ url_for("projects.update_project", project_id = project.id) }}"><button id="edit">Edit</button></a>
+        <a title="Delete '{{ project.project_title }}'" href="#modal"><button id="delete">Delete</button></a>
     {% endif %}
   </div>
 
@@ -126,13 +131,13 @@
           <div class="five columns article_post">
             <div class="twelve columns">
               <div style="overflow: hidden; height: 100px">
-                <a href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
+                <a title="{{ article.title }}" href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
               </div>
-                {% if article.edited_by %}
-                  <span>Edited by: {{ article.edited_by }}</span>
-                {% else %}
-                  <span>Created by: {{ article.author.username }}</span>
-                {% endif %}
+              {% if article.edited_by %}
+                <a title="{{ article.edited_by }}" href="{{ url_for("users.user_projects", username = article.edited_by) }}"><span>Edited by: {{ article.edited_by }}</span></a>
+              {% else %}
+                <a title="{{ article.author.username }}" href="{{ url_for("users.user_projects", username = article.author.username) }}"><span>Created by: {{ article.author.username }}</span></a>
+              {% endif %}
                 <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
               <hr class="hr_project">
             </div>
@@ -152,13 +157,13 @@
           <div class="five columns article_post">
             <div class="twelve columns">
               <div style="overflow: hidden; height: 100px">
-                <a href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
+                <a title="{{ article.title }}" href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
               </div>
-                {% if article.edited_by %}
-                  <span>Edited by: {{ article.edited_by }}</span>
-                {% else %}
-                  <span>Created by: {{ article.author.username }}</span>
-                {% endif %}
+              {% if article.edited_by %}
+                <a title="{{ article.edited_by }}" href="{{ url_for("users.user_projects", username = article.edited_by) }}"><span>Edited by: {{ article.edited_by }}</span></a>
+              {% else %}
+                <a title="{{ article.author.username }}" href="{{ url_for("users.user_projects", username = article.author.username) }}"><span>Created by: {{ article.author.username }}</span></a>
+              {% endif %}
                 <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
               <hr class="hr_project">
             </div>
@@ -178,12 +183,12 @@
           <div class="five columns article_post">
             <div class="twelve columns">
               <div style="overflow: hidden; height: 100px">
-                <a href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
+                <a title="{{ article.title }}" href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
               </div>
                 {% if article.edited_by %}
-                  <span>Edited by: {{ article.edited_by }}</span>
+                  <a title="{{ article.edited_by }}" href="{{ url_for("users.user_projects", username = article.edited_by) }}"><span>Edited by: {{ article.edited_by }}</span></a>
                 {% else %}
-                  <span>Created by: {{ article.author.username }}</span>
+                  <a title="{{ article.author.username }}" href="{{ url_for("users.user_projects", username = article.author.username) }}"><span>Created by: {{ article.author.username }}</span></a>
                 {% endif %}
                 <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
               <hr class="hr_project">
@@ -204,13 +209,13 @@
           <div class="five columns article_post">
             <div class="twelve columns">
               <div style="overflow: hidden; height: 100px">
-                <a href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
+                <a title="{{ article.title }}" href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
               </div>
-                {% if article.edited_by %}
-                  <span>Edited by: {{ article.edited_by }}</span>
-                {% else %}
-                  <span>Created by: {{ article.author.username }}</span>
-                {% endif %}
+              {% if article.edited_by %}
+                <a title="{{ article.edited_by }}" href="{{ url_for("users.user_projects", username = article.edited_by) }}"><span>Edited by: {{ article.edited_by }}</span></a>
+              {% else %}
+                <a title="{{ article.author.username }}" href="{{ url_for("users.user_projects", username = article.author.username) }}"><span>Created by: {{ article.author.username }}</span></a>
+              {% endif %}
                 <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
               <hr class="hr_project">
             </div>

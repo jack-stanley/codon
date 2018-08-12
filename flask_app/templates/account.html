@@ -5,7 +5,7 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="six columns offset-by-three profile">
       <div class="one columns">
-          <img src="{{ profile_pic }}" class="profile_pic">
+          <img title="{{ current_user.username }}" src="{{ profile_pic }}" class="profile_pic">
       </div>
 
       {% if current_user.name %}
@@ -38,7 +38,7 @@
       </div>
       {% endif %}
       <div class="twelve columns" id="sign_out_button">
-          <p><a href="{{ url_for("users.logout") }}">Logout</a></p>
+          <p><a title="Sign out user {{ current_user.username }}" href="{{ url_for("users.logout") }}">Logout</a></p>
       </div>
     </div>
 
@@ -116,7 +116,7 @@
               </div>
             </fieldset>
             <div class="update-button">
-              {{ form.submit }}
+              {{ form.submit(title="Update account info") }}
             </div>
           </div>
         </form>
@@ -178,7 +178,7 @@
 
           </fieldset>
             <div class="update-button">
-              {{ change_pass_form.submit_change }}
+              {{ change_pass_form.submit_change(title="Change account password") }}
             </div>
         </form>
         <hr>
@@ -189,7 +189,7 @@
           to any of your projects after you delete your account. PLEASE backup all of your important data BEFORE you delete your account. Codon cannot recover any data once your account has been deleted.</p>
         <br>
         <br>
-        <a href="#modal"><button class="delete_account_button" id="submit">DELETE ACCOUNT</button></a>
+        <a href="#modal"><button title="DELETE account for {{ current_user.username }}" class="delete_account_button" id="submit">DELETE ACCOUNT</button></a>
       </div>
     </div>
 

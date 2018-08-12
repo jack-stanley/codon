@@ -147,6 +147,7 @@ a:hover {
   box-shadow: 0px 20px 70px black;
 }
 
+
 .info_container img {
   height: 130px;
   display: block;
@@ -298,30 +299,9 @@ footer img {
     }
 }
 
-.contents {
-  margin-left: 50px;
-  margin-top: 50px;
-}
-
-.contents li {
-  margin-left: 30px;
-  font-size: 18px;
-  color: #7A1EA9;
-  list-style: disc;
-}
-
-.contents li:hover {
-  color: black;
-}
-
-.contents a:hover {
-  color: black;
-  text-decoration: overline;
-}
-
 .nav_bar {
   background-color: white;
-  box-shadow: 0px 5px 5px white;
+  box-shadow: 0px 0px 20px 0px #00000017;
   position: relative;
 }
 
@@ -351,9 +331,7 @@ footer img {
   border-radius: 50%;
   position: absolute;
   right: 75px;
-  border: solid 2px;
-  border-color: grey;
-  height: 30px;
+  height: 35px;
   margin-top: 15px;
   cursor: pointer;
 }
@@ -362,10 +340,6 @@ footer img {
     .user_img {
       right: 30px;
     };
-}
-
-.user_img:hover {
-  border-color: #BF78E4;
 }
 
 .fa-user-circle {
@@ -391,7 +365,7 @@ footer img {
   padding: 20px;
   right: 3%;
   min-width: 120px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 20px 0px #00000017;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   display: none;
@@ -457,6 +431,7 @@ footer img {
   padding-left: 40px;
   padding-right: 40px;
   padding-top: 40px;
+  box-shadow: 0px 0px 20px 0px #00000017;
 }
 
 .profile h1 {
@@ -508,6 +483,7 @@ footer img {
   background-color: white;
   border-radius: 5px;
   margin-bottom: 40px;
+  box-shadow: 0px 0px 20px 0px #00000017;
 }
 
 .form form {
@@ -636,6 +612,7 @@ textarea {
   border-radius: 5px;
   padding: 30px;
   margin-right: 50px;
+  box-shadow: 0px 0px 20px 0px #00000017;
 }
 
 .browse_project p {
@@ -712,7 +689,7 @@ textarea {
   margin-bottom: 20px;
   border-radius: 5px;
   padding: 30px;
-  margin-right:
+  box-shadow: 0px 0px 20px 0px #00000017;
 }
 
 .article_contents {
@@ -722,6 +699,7 @@ textarea {
   margin-right: 20px;
   margin-left: 20px;
   border-radius: 5px;
+  box-shadow: 0px 0px 20px 0px #00000017;
 }
 
 .article_contents hr {
@@ -808,6 +786,10 @@ textarea {
 .article_body {
   font-size: 18px;
   margin-top: 20px;
+}
+
+.article_body p {
+  font-family: 'Libre Baskerville', serif !important;
 }
 
 .article_contents button {
@@ -917,6 +899,7 @@ textarea {
   margin-bottom: 50px;
   background-color: white;
   border-radius: 5px;
+  box-shadow: 0px 0px 20px 0px #00000017;
 }
 
 .article_post {
@@ -959,6 +942,7 @@ textarea {
   padding: 30px;
   text-align: center;
   margin-bottom: 30px;
+  box-shadow: 0px 0px 20px 0px #00000017;
 }
 
 .project_profile_pic {
@@ -1034,6 +1018,7 @@ textarea {
   background-color: white;
   padding: 30px;
   border-radius: 5px;
+  box-shadow: 0px 0px 20px 0px #00000017;
 }
 
 @media only screen and (max-width: 600px) {
@@ -1076,6 +1061,7 @@ textarea {
   margin-bottom: 20px;
   border-radius: 5px;
   padding: 30px;
+  box-shadow: 0px 0px 20px 0px #00000017;
 }
 
 @media only screen and (max-width: 600px) {

@@ -89,10 +89,10 @@
             </div>
           </fieldset>
           <div>
-            {{ form.submit }}
+            {{ form.submit(title="Register for codon") }}
           </div>
           <div>
-            <small>Already have an account? <a href="{{ url_for("users.login") }}">Login</a></small>
+            <small>Already have an account? <a title="Login to your codon account" href="{{ url_for("users.login") }}">Login</a></small>
           </div>
         </form>
       </div>

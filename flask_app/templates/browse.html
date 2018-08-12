@@ -8,7 +8,7 @@
         <ol>
           {% for project in trending_projects %}
             <li style="font-size:20px;">{% if current_user.is_authenticated %}
-              <i style="margin-left:20px;" user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
+              <i title="Give a tube to '{{ project.project_title }}'" style="margin-left:20px;" user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
             {% else %}
               <a href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
             {% endif %}
@@ -23,18 +23,18 @@
         <div class="twelve columns browse_project">
           <div class="one column vials">
             {% if current_user.is_authenticated %}
-              <i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
+              <i title="Give a tube to '{{ project.project_title }}'" user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
             {% else %}
-              <a href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
+              <a title="You must be logged in to give tubes" href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
             {% endif %}
             <span class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
           </div>
           <div class="six columns browse_author">
-            <a href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>
+            <a title="{{ project.project_title }}" href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>
             {% if project.author.name %}
-              <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a></p>
+              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a></p>
             {% else %}
-              <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
+              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
             {% endif %}
             {% if project.date_edited != project.date_created %}
               <br><p>{{ project.date_edited.strftime("%B %-d, %Y") }}</p>
@@ -42,7 +42,7 @@
               <br><p>{{ project.date_created.strftime("%B %-d, %Y") }}</p>
             {% endif %}
           </div>
-          <a href="{{ url_for("projects.project", project_id = project.id) }}">
+          <a title="{{ project.project_title }}" href="{{ url_for("projects.project", project_id = project.id) }}">
             <div style="background-image: url('/static/images/project_pics/{{ project.banner_image }}');" class="four columns browse_banner">
             </div>
           </a>

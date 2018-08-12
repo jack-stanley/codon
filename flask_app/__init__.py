@@ -6,6 +6,7 @@ from flask_mail import Mail
 from flask_app.config import Config
 from flask_msearch import Search
 from wtf_tinymce import wtf_tinymce
+import stripe
 
 ############
 db = SQLAlchemy()

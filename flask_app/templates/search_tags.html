@@ -5,10 +5,10 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 <div class="three columns search_type">
   <p>Search type:</p>
-  <a href="{{ url_for("main.search", search_type = "project_search", search_query = search_query) }}">Projects</a><br><br>
-  <a href="{{ url_for("main.search", search_type = "article_search", search_query = search_query) }}">Articles</a><br><br>
-  <a href="{{ url_for("main.search", search_type = "user_search", search_query = search_query) }}">Users</a><br><br>
-  <a id="selected_search" href="{{ url_for("main.search", search_type = "tag_search", search_query = search_query) }}">Tags</a><br><br>
+  <a title="Search for projects" href="{{ url_for("main.search", search_type = "project_search", search_query = search_query) }}">Projects</a><br><br>
+  <a title="Search for articles" href="{{ url_for("main.search", search_type = "article_search", search_query = search_query) }}">Articles</a><br><br>
+  <a title="Search for users" href="{{ url_for("main.search", search_type = "user_search", search_query = search_query) }}">Users</a><br><br>
+  <a title="Search for projects by tag" id="selected_search" href="{{ url_for("main.search", search_type = "tag_search", search_query = search_query) }}">Tags</a><br><br>
   <div style="padding-left:30px;">
     <span style="color:grey">Search for a specific project tag</span>
   </div>

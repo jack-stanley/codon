@@ -58,7 +58,7 @@ def unconfirmed(user_id):
     user = User.query.filter_by(id = user_id).first_or_404()
     if current_user.is_authenticated or user.confirmed == "True":
         return redirect(url_for("main.browse"))
-    return render_template("unconfirmed.html", user = user, title = "Confirm Email")
+    return render_template("unconfirmed.html", user = user, title = "Confirm email")
 
 @users.route("/send_confirmation/<user_id>", methods = ["GET", "POST"])
 def send_confirmation(user_id):
@@ -136,7 +136,7 @@ def account():
             return redirect(url_for("users.account"))
 
     profile_pic = url_for("static", filename = "images/profile_pics/" + current_user.image_file)
-    return render_template("account.html", delete_account_form = delete_account_form, change_pass_form = change_pass_form, title = "Account", profile_pic = profile_pic, form = form, search_form = search_form)
+    return render_template("account.html", delete_account_form = delete_account_form, change_pass_form = change_pass_form, title = " | Account info", profile_pic = profile_pic, form = form, search_form = search_form)
 
 @users.route("/a/<string:username>", methods = ["GET", "POST"])
 def user_projects(username):
@@ -161,7 +161,7 @@ def user_projects(username):
             return 0
         else:
             return Tube.query.filter_by(project_id = project_id).count()
-    return render_template("user_projects.html", tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, title = "Author projects", projects = projects, user = user, search_form = search_form)
+    return render_template("user_projects.html", tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, title = f" | {user.username}", projects = projects, user = user, search_form = search_form)
 
 @users.route("/reset_password", methods = ["GET", "POST"])
 def reset_request():
@@ -177,7 +177,7 @@ def reset_request():
         send_reset_email(user)
         flash(f"An email has been sent with instructions to reset your password.")
         return redirect(url_for("users.login"))
-    return render_template("reset_request.html", form = form, title = "Password Reset", search_form = search_form)
+    return render_template("reset_request.html", form = form, title = "Password reset", search_form = search_form)
 
 @users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
@@ -200,7 +200,7 @@ def reset_token(token):
 
         flash(f"Your password has been updated. You are now able to login.", "success")
         return redirect(url_for("users.login"))
-    return render_template("reset_token.html", form = form, title = "Password Reset", search_form = search_form)
+    return render_template("reset_token.html", form = form, title = "Password reset", search_form = search_form)
 
 @users.route("/delete_account/<user_id>")
 def delete_account(user_id):

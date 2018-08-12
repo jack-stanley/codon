@@ -34,17 +34,17 @@
                 {{ form.password(class="u-full-width") }}
               {% endif %}
             </div>
-            <small>Forgot password? <a href="{{ url_for("users.reset_request") }}">Reset</a></small>
+            <small>Forgot password? <a title="Reset your password" href="{{ url_for("users.reset_request") }}">Reset</a></small>
             <div style="padding-top:20px;">
               {{ form.remember(class="form-check-input") }}
               {{ form.remember.label(class="form-check-label") }}
             </div>
           </fieldset>
           <div>
-            {{ form.submit }}
+            {{ form.submit(title="Login to codon") }}
           </div>
           <div>
-            <small>Need an account? <a href="{{ url_for("users.register") }}">Register</a></small>
+            <small>Need an account? <a title="Register for an account" href="{{ url_for("users.register") }}">Register</a></small>
           </div>
         </form>
       </div>

@@ -5,9 +5,9 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>codon</title>
-  <meta name="description" content="the directory of biological parts">
-  <meta name="author" content="Jack Stanley">
+  <title>codon{{ title }}</title>
+  <meta name="description" content="crowdfund science">
+  <meta name="author" content="Plasmid Group">
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -17,6 +17,7 @@
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -48,9 +49,9 @@
     <div class="row nav_bar">
       <div class="twelve columns">
         {% if request.path == url_for("main.browse") %}
-          <a class="nav_img" href="{{ url_for("main.index") }}"><img src="/static/images/favicon.png"></a>
+          <a title="Home" class="nav_img" href="{{ url_for("main.index") }}"><img src="/static/images/favicon.png"></a>
         {% else %}
-          <a class="nav_img" href="{{ url_for("main.browse") }}"><img src="/static/images/favicon.png"></a>
+          <a title="Browse" class="nav_img" href="{{ url_for("main.browse") }}"><img src="/static/images/favicon.png"></a>
         {% endif %}
         {% if search_form %}
           <form method="POST" action="" class="search_form">
@@ -65,19 +66,20 @@
                     {% endfor %}
                   </div>
                 {% else %}
-                  {{ search_form.search_query(class="u-full-width", placeholder="Search codon") }}
+                  {{ search_form.search_query(title="Search projects, articles, users, and tags", class="u-full-width", placeholder="Search codon") }}
                 {% endif %}
               </div>
+              {{ search_form.submit_search(style="display:none") }}
             </fieldset>
           {% endif %}
           </form>
         {% if current_user.is_authenticated %}
-          <i class="fas fa-plus actions"></i>
-          <img src="/static/images/profile_pics/{{ current_user.image_file }}" class="user_img click_user"></img>
+          <i title="Create something" class="fas fa-plus actions"></i>
+          <img title="{{ current_user.username }}" src="/static/images/profile_pics/{{ current_user.image_file }}" class="user_img click_user"></img>
           <i class="fas fa-circle plus_circle"></i>
           <i class="fas fa-circle account_circle"></i>
           <div class="dropdown create_dropdown">
-            <a href="{{ url_for("projects.new_project") }}">New Project</a>
+            <a title="Create a new project" href="{{ url_for("projects.new_project") }}">New Project</a>
           </div>
           <div class="dropdown account_dropdown">
             {% if current_user.name %}
@@ -85,9 +87,9 @@
             {% else %}
               <span>{{ current_user.username }}</span><br><br>
             {% endif %}
-            <a href="{{ url_for("users.account") }}">My Account</a><br><br>
-            <a href="{{ url_for("users.user_projects", username = current_user.username) }}">My Projects</a><br><br>
-            <a href="{{ url_for("users.logout") }}">Logout</a>
+            <a title="Account info and options" href="{{ url_for("users.account") }}">My Account</a><br><br>
+            <a title="All my projects" href="{{ url_for("users.user_projects", username = current_user.username) }}">My Projects</a><br><br>
+            <a title="Sign out user {{ current_user.username }}" href="{{ url_for("users.logout") }}">Logout</a>
           </div>
         {% else %}
           <i class="fas fa-user-circle actions click_user"></i>
@@ -127,7 +129,7 @@
         <p class="footer_links"><a href="{{ url_for("main.index") }}">Home</a> | <a href="{{ url_for("main.browse") }}">Browse</a> | <a href="{{ url_for("main.about") }}">About</a></a></p>
       </div>
       <div class="social four columns">
-        <a target='_blank' href="https://github.com/steamer360/codon"><img alt="Github" src="/static/images/github.svg"></a><a target='_blank' href="https://twitter.com/codonproject"><img alt="Twitter" src="/static/images/twitter.svg"></a><a target='_blank' href="https://medium.com/codonproject/"><img alt="Blog" src="/static/images/medium.svg"></a>
+        <a title="codon Github" target='_blank' href="https://github.com/steamer360/codon"><img alt="Github" src="/static/images/github.svg"></a><a title="codon Twitter" target='_blank' href="https://twitter.com/codonproject"><img alt="Twitter" src="/static/images/twitter.svg"></a><a title="codon Blog" target='_blank' href="https://medium.com/codonproject/"><img alt="Blog" src="/static/images/medium.svg"></a>
       </div>
     </div>
   </footer>

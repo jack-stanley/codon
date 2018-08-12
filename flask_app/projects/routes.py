@@ -36,7 +36,7 @@ def new_project():
             db.session.commit()
         flash(f"Your project has been created.")
         return redirect(url_for("projects.project", project_id = project.id))
-    return render_template("create_project.html", form = form, legend = "Create Project", search_form = search_form)
+    return render_template("create_project.html", title = " | New project", form = form, legend = "Create Project", search_form = search_form)
 
 @projects.route("/project/<int:project_id>", methods = ["GET", "POST"])
 def project(project_id):
@@ -85,7 +85,7 @@ def project(project_id):
 
     project_pic = url_for("static", filename = "images/project_pics/" + project.banner_image)
     profile_pic = url_for("static", filename = "images/profile_pics/" + project.author.image_file)
-    return render_template("project.html", delete_project_form = delete_project_form, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, articles_intro = articles_intro, articles_main = articles_main, articles_resources = articles_resources, articles_misc = articles_misc, collabs = c, search_form = search_form, title = project.project_title, project = project, project_tags = tags, project_pic = project_pic, profile_pic = profile_pic)
+    return render_template("project.html", title = f" | {project.project_title}", delete_project_form = delete_project_form, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, articles_intro = articles_intro, articles_main = articles_main, articles_resources = articles_resources, articles_misc = articles_misc, collabs = c, search_form = search_form, project = project, project_tags = tags, project_pic = project_pic, profile_pic = profile_pic)
 
 @projects.route("/project/<int:project_id>/update", methods = ["GET", "POST"])
 @login_required
@@ -133,7 +133,7 @@ def update_project(project_id):
         form.abstract.data = project.abstract
         form.tags.data = t
         form.collaborators.data = project.collaborators
-    return render_template("create_project.html", form = form, legend = "Update Project", search_form = search_form)
+    return render_template("create_project.html", title = f" | Edit '{project.project_title}'", form = form, legend = "Update Project", search_form = search_form)
 
 @projects.route("/project/<int:project_id>/delete", methods = ["POST", "GET"])
 @login_required

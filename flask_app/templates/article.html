@@ -20,14 +20,14 @@
       <div class="row inner_contents">
         <div class="eight columns article_title">
           <h3>{{ article.title }}</h3>
-          <h6><a href="{{ url_for("projects.project", project_id = project.id)}}">{{ project.project_title }}</a> ({{ article.section }})</h6>
+          <h6><a title="{{ project.project_title }}" href="{{ url_for("projects.project", project_id = project.id)}}">{{ project.project_title }}</a> ({{ article.section }})</h6>
           {% if article.author == current_user or project.author == current_user or current_user.username in collabs %}
-              <a href="{{ url_for("articles.update_article", article_id = article.id, project_id = project.id) }}"><button id="edit">Edit</button></a>
-              <a href="#modal"><button id="delete">Delete</button></a>
+              <a href="{{ url_for("articles.update_article", article_id = article.id, project_id = project.id) }}"><button title="Edit '{{ article.title }}'" id="edit">Edit</button></a>
+              <a href="#modal"><button title="Delete '{{ article.title }}'" id="delete">Delete</button></a>
           {% endif %}
         </div>
         <div class="one column author_pic">
-          <a href="{{ url_for("users.user_projects", username = article.author.username) }}"><img src="{{ url_for("static", filename = "images/profile_pics/" + article.author.image_file) }}"></a>
+          <a title="{{ article.author.username }}" href="{{ url_for("users.user_projects", username = article.author.username) }}"><img src="{{ url_for("static", filename = "images/profile_pics/" + article.author.image_file) }}"></a>
         </div>
         <div class="three columns article_author">
             {% if article.author.name %}
@@ -39,7 +39,7 @@
             <br>
             <p id="date">Created on {{ article.date_posted.strftime("%B %-d, %Y") }}</p><br>
             {% if article.edited_by %}
-                <span style="color:grey">Edited by <a style="color:grey" href="{{ url_for("users.user_projects", username = article.edited_by) }}">{{ article.edited_by }}</a> on {{ article.date_edited.strftime("%B %-d, %Y") }}</span>
+                <span style="color:grey">Edited by <a title="{{ article.edited_by }}" style="color:grey" href="{{ url_for("users.user_projects", username = article.edited_by) }}">{{ article.edited_by }}</a> on {{ article.date_edited.strftime("%B %-d, %Y") }}</span>
             {% endif %}
         </div>
         <div style="margin-top:40px;">
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <div class="article_contents">
+    <!-- <div class="article_contents">
       <div id="disqus_thread"></div>
       <script>
 
@@ -74,6 +74,6 @@
       })();
       </script>
       <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
+    </div> -->
 
 {% endblock body_content %}

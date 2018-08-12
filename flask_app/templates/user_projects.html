@@ -4,19 +4,21 @@
 <!-- Primary Page Layout
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="four columns about_bar">
-    <img src="{{ url_for("static", filename = "images/profile_pics/" + user.image_file) }}">
+    <img title="user.username" src="{{ url_for("static", filename = "images/profile_pics/" + user.image_file) }}">
     {% if user.name %}
       <h3>{{ user.name }}</h3>
       <h6>({{ user.username }})</h6>
     {% else %}
     <h3>{{ user.username }}</h3>
     {% endif %}
-    <h5>About</h5>
-    {% if user.organization %}
-      <p><b>Organization:</b> {{ user.organization }}</p>
-    {% endif %}
-    {% if user.about %}
-      <p>{{ user.about }}</p>
+    {% if user.organization or user.about %}
+      <h5>About</h5>
+      {% if user.organization %}
+        <p><b>Organization:</b> {{ user.organization }}</p>
+      {% endif %}
+      {% if user.about %}
+        <p>{{ user.about }}</p>
+      {% endif %}
     {% endif %}
   </div>
     <div class="seven columns">
@@ -38,18 +40,18 @@
         <div class="twelve columns browse_project">
           <div class="one column vials">
             {% if current_user.is_authenticated %}
-              <i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
+              <i title="Give a tube to '{{ project.project_title }}'" user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
             {% else %}
-              <a href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
+              <a title="You must be logged in to give tubes" href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
             {% endif %}
             <span class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
           </div>
           <div class="six columns browse_author">
-            <a href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>
+            <a title="{{ project.project_title }}" href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>
             {% if project.author.name %}
-              <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a></p>
+              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a></p>
             {% else %}
-              <p>By <a href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
+              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
             {% endif %}
             {% if project.date_edited %}
               <br><p>Edited: {{ project.date_edited.strftime("%B %-d, %Y") }}</p>
@@ -58,11 +60,12 @@
             {% endif %}
           </div>
           <a href="{{ url_for("projects.project", project_id = project.id) }}">
-            <div style="background-image: url('/static/images/project_pics/{{ project.banner_image }}');" class="four columns browse_banner">
+            <div title="{{ project.project_title }}" style="background-image: url('/static/images/project_pics/{{ project.banner_image }}');" class="four columns browse_banner">
             </div>
           </a>
         </div>
         {% endfor %}
+      </div>
         <div class="twelve columns page_nums">
           {% for page_num in projects.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 2) %}
             {% if page_num %}
@@ -76,7 +79,6 @@
             {% endif %}
           {% endfor %}
         </div>
-      </div>
 
 
 {% endblock body_content %}
