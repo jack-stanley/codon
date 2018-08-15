@@ -1,10 +1,12 @@
 * {
   font-family: Raleway;
   overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 body, html {
   height: 100%;
+  overflow-x: hidden;
 }
 
 a {
@@ -162,7 +164,7 @@ a:hover {
   font-size: 2vw;
   text-align: center;
   margin-top: 30px;
-  letter-spacing: 5px;
+  letter-spacing: 3px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -290,6 +292,21 @@ footer img {
     }
 }
 
+.subpage_logo .stripe_badge {
+  width: 100px;
+  margin-left: 53px;
+  margin-top: 0px;
+}
+
+@media only screen and (max-width: 600px) {
+    .subpage_logo .stripe_badge {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .subpage_logo h3 {
     text-align: center;
@@ -414,7 +431,7 @@ footer img {
 
 @media only screen and (max-width: 680px) {
     .search_form {
-      margin-left: 10vw;
+      margin-left: 7vw;
     };
 }
 
@@ -577,7 +594,7 @@ textarea {
   border-style: solid;
   margin-left: 50px;
   margin-right: 50px;
-  color: #ff8080;
+  color: #ff8080 !important;
 }
 
 .danger_zone h4 {
@@ -603,6 +620,37 @@ textarea {
   font-size: 18px;
   cursor: pointer;
   text-align: center;
+}
+
+.form hr {
+  border-style: solid;
+  margin: 20px;
+}
+
+.payment_details #non_default {
+  font-size: 19px;
+  margin-left: 10px;
+}
+
+.payment_details #default {
+  margin-left: 10px;
+  font-size: 19px;
+}
+
+.payment_details #default_card {
+  color: grey;
+  background-color: lightgrey;
+  padding: 3px;
+  font-size: 19px;
+}
+
+.payment_details i {
+  color: grey;
+}
+
+.payment_details i:hover {
+  color: red;
+  padding-left: 5px;
 }
 
 .browse_project {
@@ -1086,4 +1134,69 @@ textarea {
 .about_bar h6 {
   font-size: 20px;
   text-align: center;
+}
+
+.payment_options {
+  margin-top: 40px;
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 40px;
+  box-shadow: 0px 0px 20px 0px #00000017;
+  padding: 30px;
+  text-align: center;
+}
+
+.payment_options h2 {
+  margin-bottom: 80px;
+}
+
+.payment_options h4 {
+  margin-bottom: 40px;
+}
+
+.payment_options h5 {
+  color: #BF78E4;
+}
+
+.payment_options button {
+  text-align: center;
+  background-color: #c4c1b9;
+  border: none;
+  font-size: 20px;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  margin: 30px;
+  margin-top: 0px;
+}
+
+.form-row label {
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+
+#card-element {
+  background-color: whitesmoke !important;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+#payment-form button {
+  margin-top: 40px;
+  background-color: #BF78E4;
+  width: 90px;
+  border: none;
+  border-radius: 7px;
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
+  color: whitesmoke;
+}
+
+#payment-form button:hover {
+  background-color: #9C45C9;
+}
+
+#card-errors {
+  color: #eb1c26;
 }

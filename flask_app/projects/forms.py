@@ -51,7 +51,7 @@ def limit_tags(form, field):
 class ProjectForm(FlaskForm):
     project_title = StringField("Project name*", validators = [DataRequired(), Length(max = 100)])
     abstract = TextAreaField("Project abstract*", validators = [DataRequired(), Length(max = 2000)])
-    tags = StringField("Tags (separated by comma, max. 5 tags)*", validators = [DataRequired(), limit_tags, check_unique])
+    tags = StringField("Tags (5 max, comma separated)*", validators = [DataRequired(), limit_tags, check_unique])
     collaborators = StringField("Collaborators (valid usernames separated by comma)", validators = [validate_collabs, check_unique])
     banner_image = FileField("Add project image", validators = [FileAllowed(["jpg", "png"])])
     submit = SubmitField("Submit")

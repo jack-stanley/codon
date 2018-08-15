@@ -1,0 +1,18 @@
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    {% extends "layout_nonav.html" %}
+    {% block body_content %}
+    <div class="row">
+      <div class="payment_options six columns offset-by-three">
+        <div class="twelve columns"><h2>Do you want to add a payment option to enable crowdfunding features?</h2></div>
+        <br><br>
+        <div class="twelve columns"><h4>You can always add a payment option later in your account settings. All funding information is routed through <a target="_blank" href="https://stripe.com">Stripe</a>.</h4></div>
+        <h5><b>Yes! Take me to Stripe!</b></h5>
+        <a title="Link a contributor account" href="{{ url_for("payments.add_card") }}"><button style="background-color:#BF78E4;">Link a contributor account</button></a>
+        <a title="Link a fundraiser account" href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_DOqaAjQfCvmmdtBB5cgKlaQq9gRm8cx0&scope=read_write"><button style="background-color:#BF78E4;">Link a fundraiser account</button></a>
+        <h5 style="color:#c4c1b9;">Not now, just take me to codon.</h5>
+        <a title="Go to 'Browse'" href="{{ url_for("main.browse") }}"><button>Go to codon</button></a>
+      </div>
+    </div>
+
+{% endblock body_content %}

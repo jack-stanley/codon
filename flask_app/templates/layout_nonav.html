@@ -47,7 +47,7 @@
 
   <div class="wrapper">
 
-    {% if request.path != url_for("main.index") %}
+    {% if request.path != url_for("main.index") and request.path != url_for("payments.payment_options") and request.path != url_for("payments.add_card") %}
       <div class="row subpage_logo">
         <div class="six columns">
           <h2><a title="Home" href="/">codon<img src="/static/images/favicon.png"></a></h2>
@@ -56,6 +56,18 @@
           <h3><span style="color:#BF78E4;">{{ title }}</span></h3>
         </div>
       </div>
+    {% endif %}
+
+    {% if request.path == url_for("payments.payment_options") or request.path == url_for("payments.add_card") %}
+    <div class="row subpage_logo">
+      <div class="six columns">
+        <h2><a title="Home" href="/">codon<img src="/static/images/favicon.png"></a></h2>
+        <a title="Powered by Stripe" target="_blank" href="https://stripe.com"><img class="stripe_badge" src="/static/images/stripe_badge.png"></a>
+      </div>
+      <div class="six columns">
+        <h3><span style="color:#BF78E4;">{{ title }}</span></h3>
+      </div>
+    </div>
     {% endif %}
 
     {% with messages = get_flashed_messages(with_categories = True) %}
@@ -95,7 +107,8 @@
 
   ga('create', 'UA-81242995-1', 'auto');
   ga('send', 'pageview');
-
   </script>
+
+  <script src="https://js.stripe.com/v3/"></script>
 
 </body>

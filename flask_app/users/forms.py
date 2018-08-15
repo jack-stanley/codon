@@ -6,11 +6,11 @@ from flask_login import current_user
 from flask_app.models import User
 
 class RegistrationForm(FlaskForm):
-    username = StringField("Username", validators = [DataRequired(),
+    username = StringField("Username*", validators = [DataRequired(),
         Length(min = 2, max = 30), Regexp('^\w+$', message="Username must contain only letters, numbers, or underscore")])
-    email = StringField("Email", validators = [DataRequired(), Email()])
-    name = StringField("Name (optional)", validators = [Length(max = 60)])
-    organization = StringField("Organization (optional)", validators = [Length(max = 160)])
+    email = StringField("Email*", validators = [DataRequired(), Email()])
+    name = StringField("Name", validators = [Length(max = 60)])
+    organization = StringField("Organization", validators = [Length(max = 160)])
     password = PasswordField("Password", validators = [DataRequired(),
         Length(min = 5)])
     confirm_password = PasswordField("Confirm Password",
@@ -35,11 +35,11 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 class UpdateAccountForm(FlaskForm):
-    username = StringField("Username", validators = [DataRequired(),
+    username = StringField("Username*", validators = [DataRequired(),
         Length(min = 2, max = 30)])
-    name = StringField("Name (optional)", validators = [Length(max = 60)])
-    organization = StringField("Organization (optional)", validators = [Length(max = 160)])
-    about = TextAreaField("About user (2000 characters max.)", validators = [Length(max = 2000)])
+    name = StringField("Name", validators = [Length(max = 60)])
+    organization = StringField("Organization", validators = [Length(max = 160)])
+    about = TextAreaField("About user", validators = [Length(max = 2000)])
     picture = FileField("Update profile picture", validators = [FileAllowed(["jpg", "png"])])
     submit = SubmitField("Update")
 

@@ -5,8 +5,11 @@ from flask_app.models import User, Project, Tube, Article, Tag
 from flask_app.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, ChangePasswordForm, DeleteAccountForm
 from flask_app.main.forms import SearchForm
 from flask_app.users.utils import save_picture, send_reset_email, send_confirmation_email
+import stripe, json
 
 users = Blueprint("users", __name__)
+
+stripe.api_key = "sk_test_dZBIm0mCoNKvRb3P503B2sE2"
 
 @users.route("/register", methods = ["GET", "POST"])
 def register():
@@ -45,8 +48,12 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             if user.confirmed == "True":
                 login_user(user, remember = form.remember.data)
-                next_page = request.args.get("next")
-                return redirect(next_page) if next_page else redirect(url_for("main.browse"))
+                if user.login_times:
+                    user.login_times += 1
+                    return redirect(url_for("main.browse"))
+                else:
+                    user.login_times += 1
+                    return redirect(url_for("payments.payment_options"))
             else:
                 return redirect(url_for("users.unconfirmed", user_id = user.id))
         else:
@@ -135,8 +142,17 @@ def account():
             flash(f"Incorrect credentials entered.")
             return redirect(url_for("users.account"))
 
+    if current_user.customer_id:
+            customer = stripe.Customer.retrieve(current_user.customer_id)
+    else:
+        customer = None
+    if current_user.fundraiser_id:
+        fundraiser = stripe.Account.retrieve(current_user.fundraiser_id)
+    else:
+        fundraiser = None
+
     profile_pic = url_for("static", filename = "images/profile_pics/" + current_user.image_file)
-    return render_template("account.html", delete_account_form = delete_account_form, change_pass_form = change_pass_form, title = " | Account info", profile_pic = profile_pic, form = form, search_form = search_form)
+    return render_template("account.html", customer = customer, fundraiser = fundraiser, delete_account_form = delete_account_form, change_pass_form = change_pass_form, title = " | Account info", profile_pic = profile_pic, form = form, search_form = search_form)
 
 @users.route("/a/<string:username>", methods = ["GET", "POST"])
 def user_projects(username):

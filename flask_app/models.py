@@ -23,6 +23,11 @@ class User(db.Model, UserMixin):
     password = db.Column(db.Text, nullable = False)
     articles = db.relationship("Article", backref = "author", lazy = True)
     projects = db.relationship("Project", backref = "author", lazy = True)
+    fundraiser_id = db.Column(db.Text, nullable = True)
+    fundraiser_refresh = db.Column(db.Text, nullable = True)
+    fundraiser_access = db.Column(db.Text, nullable = True)
+    customer_id = db.Column(db.Text, nullable = True)
+    login_times = db.Column(db.Integer, nullable = True)
 
     def get_reset_token(self, expires_sec = 1800):
         s = Serializer(current_app.config["SECRET_KEY"], expires_sec)

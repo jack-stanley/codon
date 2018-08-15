@@ -118,10 +118,41 @@
             <div class="update-button">
               {{ form.submit(title="Update account info") }}
             </div>
-          </div>
         </form>
       </div>
     </div>
+
+    <div class="row">
+      <div style="padding:30px;" class="form payment_details six columns offset-by-three">
+        <h3>Payment info</h3>
+        <h5>Contributor</h5>
+        {% for card in customer["sources"] %}
+          {% if card["id"] == customer["default_source"]  %}
+            <span id="default_card">Default</span>
+            <span id="default"><b>{{ card["brand"] }}</b> ending in {{ card["last4"] }} | expires on {{ card["exp_month"] }}/{{ card["exp_year"] }}</span><a title="Delete this card" href="{{ url_for("payments.delete_card", card_id = card["id"]) }}"> <i class="fas fa-backspace"></i></a>
+          {% else %}
+            <a title="Make this card the default card" href="{{ url_for("payments.default_card", card_id = card["id"]) }}"><span style="background-color:inherit;" id="default_card">Make Default</span></a>
+            <span id="non_default"><b>{{ card["brand"] }}</b> ending in {{ card["last4"] }} | expires on {{ card["exp_month"] }}/{{ card["exp_year"] }}</span><a title="Delete this card" href="{{ url_for("payments.delete_card", card_id = card["id"]) }}"> <i class="fas fa-backspace"></i></a>
+          {% endif %}
+          <br><br>
+        {% endfor %}
+        <a title="Add a new card to your account" href="{{ url_for("payments.add_card") }}"><button id="submit">Add card</button></a>
+        <hr>
+        <h5>Fundraiser</h5>
+        {% if current_user.fundraiser_id %}
+          <span style="font-size: 18px;"><b>Email connected:</b> {{ fundraiser["email"] }}</span>
+          <br><br>
+          <a title="Manage Stripe settings" target="_blank" href="https://dashboard.stripe.com"><span>Manage your stripe account settings</span></a>
+          <br>
+          <a style="color:red;" title="Disconnect" href="{{ url_for("payments.disconnect_stripe") }}"><span>Disconnect your Stripe account from codon</span></a>
+          <br><br>
+          <a title="Connect a different stripe account" href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_DOqaAjQfCvmmdtBB5cgKlaQq9gRm8cx0&scope=read_write"><button id="submit">Connect a different Stripe account</button></a>
+        {% else %}
+          <a title="Connect a stripe account for fundraising" href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_DOqaAjQfCvmmdtBB5cgKlaQq9gRm8cx0&scope=read_write"><button id="submit">Connect Stripe account</button></a>
+        {% endif %}
+      </div>
+    </div>
+
 
     <div class="row">
       <div class="form six columns offset-by-three danger_zone">

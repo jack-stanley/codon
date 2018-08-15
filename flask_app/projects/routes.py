@@ -6,6 +6,7 @@ from flask_app.projects.forms import ProjectForm, DeleteProjectForm
 from flask_app.main.forms import SearchForm
 from flask_app.projects.utils import save_banner
 from datetime import datetime
+import stripe
 
 projects = Blueprint("projects", __name__)
 
