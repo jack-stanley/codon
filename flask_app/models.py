@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
     fundraiser_refresh = db.Column(db.Text, nullable = True)
     fundraiser_access = db.Column(db.Text, nullable = True)
     customer_id = db.Column(db.Text, nullable = True)
-    login_times = db.Column(db.Integer, nullable = True)
+    login_times = db.Column(db.Integer, nullable = False, default = 0)
 
     def get_reset_token(self, expires_sec = 1800):
         s = Serializer(current_app.config["SECRET_KEY"], expires_sec)
@@ -73,6 +73,7 @@ class Project(db.Model):
     tubes_count = db.Column(db.Integer, nullable = False, default = 0)
     banner_image = db.Column(db.Text, nullable = False, default = "default_banner.png")
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
+    donations_amount = db.Column(db.Float, nullable = False, default = 0)
 
     def __repr__(self):
         return f"Project('{self.project_title}', '{self.date_created}')"

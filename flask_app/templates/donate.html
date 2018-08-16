@@ -1,0 +1,59 @@
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  {% extends "layout_nonav.html" %}
+  {% block body_content %}
+
+    <div class="row">
+      <div class="form six columns offset-by-three">
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+          <fieldset>
+            <p id="form_title">Donate to '{{ project.project_title }}'<p>
+            <div>
+              {{ form.amount.label }}
+              {% if form.amount.errors %}
+                {{ form.amount(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.amount.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.amount(class="u-full-width") }}
+              {% endif %}
+            </div>
+            <div>
+              {{ form.confirm_amount.label }}
+              {% if form.confirm_amount.errors %}
+                {{ form.confirm_amount(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.confirm_amount.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.confirm_amount(class="u-full-width") }}
+              {% endif %}
+            </div>
+            <div>
+              {{ form.card.label }}
+              {% if form.card.errors %}
+                {{ form.card(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.card.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.card(class="u-full-width") }}
+              {% endif %}
+            </div>
+          </fieldset>
+          <div>
+            {{ form.submit(title="Donate to project.project_title") }}
+          </div>
+        </form>
+      </div>
+    </div>
+
+{% endblock body_content %}

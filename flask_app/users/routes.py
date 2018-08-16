@@ -50,9 +50,11 @@ def login():
                 login_user(user, remember = form.remember.data)
                 if user.login_times:
                     user.login_times += 1
+                    db.session.commit()
                     return redirect(url_for("main.browse"))
                 else:
                     user.login_times += 1
+                    db.session.commit()
                     return redirect(url_for("payments.payment_options"))
             else:
                 return redirect(url_for("users.unconfirmed", user_id = user.id))

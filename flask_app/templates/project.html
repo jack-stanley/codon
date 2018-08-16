@@ -73,7 +73,6 @@
     </div>
 
   <div class="three columns abstract_bar">
-    <a href="">Pay example</a>
     <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}"><img class="project_profile_pic" src="{{ profile_pic }}"></img></a>
     {% if project.author.name %}
       <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.name }}</b></h4></a>
@@ -91,7 +90,6 @@
       {% endfor %}
     {% endif %}
     <br>
-    <br>
     {% if project.author == current_user or current_user.username in collabs %}
       <a title="Create a new article for this project" href="{{ url_for("articles.new_article", project_id = project.id) }}" <i class="fas fa-file-medical new_file"></i></a>
     {% endif %}
@@ -105,6 +103,8 @@
       <a title="You must be logged in to give tubes" href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
     {% endif %}
     <span class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
+    <br>
+    <a title="Donate to '{{ project.project_title }}'" href="{{ url_for("payments.donate", project_id = project.id) }}"><button>Donate</button></a>
     <hr>
     <p>{{ project.abstract }}</p>
     <hr>

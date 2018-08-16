@@ -1,0 +1,41 @@
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  {% extends "layout_nonav.html" %}
+  {% block body_content %}
+
+    <div class="row">
+      <div style="padding:30px;text-align:center;" class="form six columns offset-by-three">
+        <h1>Do you want to donate ${{ amount_display }} to '{{ project.project_title }}'?</h1>
+        <br>
+        <h4>Your receipt will be emailed to: <b>{{ current_user.email }}</b></h4>
+        <h4>Payment method: <b>{{ card["brand"] }} ending in {{ card["last4"] }}</b></h4>
+        <span><b>Please note:</b> since this is a donation, codon does not typically offer refunds or reimbursements. Please contact us if you believe there has been an error, and we will do our best to work it out.
+          Project creators are also <b>not</b> obligated to deliver anything to contributors, and codon is not liable for any unkept promises made by fundraisers.</span>
+        </span>
+        <br><br><br>
+        <h5>Enter your password to confirm your ${{ amount_display }} donation:</h5>
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+          <fieldset>
+            <div>
+              {% if form.password.errors %}
+                {{ form.password(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.password.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.password(class="u-full-width") }}
+              {% endif %}
+            </div>
+          </fieldset>
+          <div>
+            {{ form.submit(title="Confirm your donation") }}
+          </div>
+        </form>
+        <a href="{{ url_for("payments.cancel_donation", project_id = project.id) }}"><span>Cancel donation</span></a>
+      </div>
+    </div>
+
+{% endblock body_content %}
