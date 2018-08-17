@@ -61,6 +61,21 @@
               {{ form.collaborators(placeholder="user1, user2, etc") }}
             {% endif %}
           </div>
+          {% if current_user.fundraiser_id %}
+            <div>
+              {{ form.donations_goal.label }}
+              {% if form.donations_goal.errors %}
+                {{ form.donations_goal(style="border-color:#f55f5f;") }}
+                <div>
+                  {% for error in form.donations_goal.errors %}
+                    <span id="error">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.donations_goal(placeholder="2500") }}
+              {% endif %}
+            </div>
+          {% endif %}
           <div>
             {{ form.banner_image.label }}
             {{ form.banner_image }}

@@ -5,11 +5,12 @@ from flask_app.models import User, Project, Tube, Article, Tag
 from flask_app.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, ChangePasswordForm, DeleteAccountForm
 from flask_app.main.forms import SearchForm
 from flask_app.users.utils import save_picture, send_reset_email, send_confirmation_email
+from flask_app.config import Config
 import stripe, json
 
 users = Blueprint("users", __name__)
 
-stripe.api_key = "sk_test_dZBIm0mCoNKvRb3P503B2sE2"
+stripe.api_key = Config.CLIENT_SECRET
 
 @users.route("/register", methods = ["GET", "POST"])
 def register():
@@ -84,7 +85,6 @@ def check_confirmation(token):
         return redirect(url_for("main.browse"))
     user = User.verify_confirmation_token(token)
     if user is None:
-        bob = bob
         flash(f"That is an invalid or expired token. Please register again if you cannot locate your confirmation email.")
         return redirect(url_for("users.register"))
     else:

@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
-from wtforms import StringField, SubmitField, TextAreaField, ValidationError, PasswordField
+from wtforms import StringField, SubmitField, TextAreaField, ValidationError, PasswordField, DecimalField
 from flask_wtf.file import FileField, FileAllowed
-from wtforms.validators import DataRequired, Length, Email
+from wtforms.validators import DataRequired, Length, Email, NumberRange, Optional
 from flask_app.models import User
 
 def check_unique(form, field):
@@ -53,6 +53,7 @@ class ProjectForm(FlaskForm):
     abstract = TextAreaField("Project abstract*", validators = [DataRequired(), Length(max = 2000)])
     tags = StringField("Tags (5 max, comma separated)*", validators = [DataRequired(), limit_tags, check_unique])
     collaborators = StringField("Collaborators (valid usernames separated by comma)", validators = [validate_collabs, check_unique])
+    donations_goal = DecimalField("Funding goal in USD (leave blank if you don't want donations)", validators = [Optional(), NumberRange(min = 100)], places = 2)
     banner_image = FileField("Add project image", validators = [FileAllowed(["jpg", "png"])])
     submit = SubmitField("Submit")
 

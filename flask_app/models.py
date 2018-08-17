@@ -42,7 +42,7 @@ class User(db.Model, UserMixin):
             return None
         return User.query.get(user_id)
 
-    def get_confirmation_token(self, expires_sec = 2592000):
+    def get_confirmation_token(self, expires_sec = 172800):
         s = Serializer(current_app.config["SECRET_KEY"], expires_sec)
         return s.dumps({"user_id": self.id}).decode("utf-8")
 
@@ -74,6 +74,7 @@ class Project(db.Model):
     banner_image = db.Column(db.Text, nullable = False, default = "default_banner.png")
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
     donations_amount = db.Column(db.Float, nullable = False, default = 0)
+    donations_goal = db.Column(db.Float, nullable = True)
 
     def __repr__(self):
         return f"Project('{self.project_title}', '{self.date_created}')"

@@ -22,7 +22,7 @@ def new_project():
         stripped = form.tags.data.strip()
         split_tags_list = stripped.split(", ")
         if form.banner_image.data:
-            project = Project(project_title = form.project_title.data, date_edited = datetime.utcnow(), banner_image = save_banner(form.banner_image.data), abstract = form.abstract.data, author = current_user, collaborators = form.collaborators.data.strip())
+            project = Project(project_title = form.project_title.data, date_edited = datetime.utcnow(), banner_image = save_banner(form.banner_image.data), abstract = form.abstract.data, author = current_user, collaborators = form.collaborators.data.strip(), donations_goal = form.donations_goal.data)
             for item in split_tags_list:
                 tag = Tag(tag = item, overall_project = project)
             db.session.add(tag)
@@ -84,9 +84,18 @@ def project(project_id):
             flash(f"Incorrect credentials entered.")
             return redirect(url_for("projects.project", project_id = project.id))
 
+    if project.donations_goal:
+        funding_perc = int((project.donations_amount / project.donations_goal) * 100)
+        amount = int(project.donations_amount)
+        goal = int(project.donations_goal)
+    else:
+        funding_perc = None
+        amount = None
+        goal = None
+
     project_pic = url_for("static", filename = "images/project_pics/" + project.banner_image)
     profile_pic = url_for("static", filename = "images/profile_pics/" + project.author.image_file)
-    return render_template("project.html", title = f" | {project.project_title}", delete_project_form = delete_project_form, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, articles_intro = articles_intro, articles_main = articles_main, articles_resources = articles_resources, articles_misc = articles_misc, collabs = c, search_form = search_form, project = project, project_tags = tags, project_pic = project_pic, profile_pic = profile_pic)
+    return render_template("project.html", amount = amount, goal = goal, funding_perc = funding_perc, title = f" | {project.project_title}", delete_project_form = delete_project_form, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, articles_intro = articles_intro, articles_main = articles_main, articles_resources = articles_resources, articles_misc = articles_misc, collabs = c, search_form = search_form, project = project, project_tags = tags, project_pic = project_pic, profile_pic = profile_pic)
 
 @projects.route("/project/<int:project_id>/update", methods = ["GET", "POST"])
 @login_required
@@ -121,6 +130,7 @@ def update_project(project_id):
 
         project.project_title = form.project_title.data
         project.abstract = form.abstract.data
+        project.donations_goal = form.donations_goal.data
         project.date_edited = datetime.utcnow()
         project.collaborators = form.collaborators.data
         if form.banner_image.data:
@@ -133,6 +143,7 @@ def update_project(project_id):
         form.project_title.data = project.project_title
         form.abstract.data = project.abstract
         form.tags.data = t
+        form.donations_goal.data = project.donations_goal
         form.collaborators.data = project.collaborators
     return render_template("create_project.html", title = f" | Edit '{project.project_title}'", form = form, legend = "Update Project", search_form = search_form)
 

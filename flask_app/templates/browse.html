@@ -14,6 +14,17 @@
             {% endif %}
             <span style="margin-right:20px;" class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
             <a href="{{ url_for("projects.project", project_id = project.id) }}">{{ project.project_title }}</a>
+            <br>
+            {% if project.author.fundraiser_id and project.donations_goal %}
+              <div style="margin-left:20%;" id="fundraiser_circle">
+                {% if (((project.donations_amount / project.donations_goal) * 100) | int) > 100 %}
+                  <div style="width:100%;border-radius:50%;" id="inner_circle"></div>
+                {% else %}
+                  <div style="width:{{ ((project.donations_amount / project.donations_goal) * 100) | int }}%" id="inner_circle"></div>
+                {% endif %}
+              </div>
+              <span style="color:#46813A;font-size:14px;">{{ ((project.donations_amount / project.donations_goal) * 100) | int }}% funded</span>
+            {% endif %}
             </li>
           {% endfor %}
         </ol>
@@ -40,6 +51,17 @@
               <br><p>{{ project.date_edited.strftime("%B %-d, %Y") }}</p>
             {% else %}
               <br><p>{{ project.date_created.strftime("%B %-d, %Y") }}</p>
+            {% endif %}
+            <br>
+            {% if project.author.fundraiser_id and project.donations_goal %}
+              <div id="fundraiser_circle">
+                {% if (((project.donations_amount / project.donations_goal) * 100) | int) > 100 %}
+                  <div style="width:100%;border-radius:50%;" id="inner_circle"></div>
+                {% else %}
+                  <div style="width:{{ ((project.donations_amount / project.donations_goal) * 100) | int }}%" id="inner_circle"></div>
+                {% endif %}
+              </div>
+              <span style="color:#46813A;font-size:14px;">{{ ((project.donations_amount / project.donations_goal) * 100) | int }}% funded</span>
             {% endif %}
           </div>
           <a title="{{ project.project_title }}" href="{{ url_for("projects.project", project_id = project.id) }}">

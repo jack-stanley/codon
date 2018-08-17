@@ -94,9 +94,8 @@
       <a title="Create a new article for this project" href="{{ url_for("articles.new_article", project_id = project.id) }}" <i class="fas fa-file-medical new_file"></i></a>
     {% endif %}
     <small>Created: {{ project.date_created.strftime("%B %-d, %Y") }}</small>
-    {% if project.date_edited != project.date_created %}
-      <small>Last edited: {{ project.date_edited.strftime("%B %-d, %Y") }}</small>
-    {% endif %}
+    <small>Last edited: {{ project.date_edited.strftime("%B %-d, %Y") }}</small>
+    <br>
     {% if current_user.is_authenticated %}
       <i title="Give a tube to '{{ project.project_title }}'" user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
     {% else %}
@@ -104,7 +103,21 @@
     {% endif %}
     <span class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
     <br>
-    <a title="Donate to '{{ project.project_title }}'" href="{{ url_for("payments.donate", project_id = project.id) }}"><button>Donate</button></a>
+    {% if project.donations_goal and project.author.fundraiser_id %}
+      <span style="color:#46813A;font-size:20px;">{{ funding_perc }}% of funding goal reached</span>
+      <div id="funding_bar">
+        {% if funding_perc > 100 %}
+          <div style="width:100%;border-radius:20px;" id="inner_bar"></div>
+        {% else %}
+          <div style="width:{{ funding_perc }}%" id="inner_bar"></div>
+        {% endif %}
+      </div>
+      <span style="color:#46813A;font-size:30px;">${{ amount }} contributed</span>
+      <br>
+      <span>of ${{ goal }} goal</span>
+      <br>
+      <a title="Donate to '{{ project.project_title }}'" href="{{ url_for("payments.donate", project_id = project.id) }}"><button>Donate</button></a>
+    {% endif %}
     <hr>
     <p>{{ project.abstract }}</p>
     <hr>

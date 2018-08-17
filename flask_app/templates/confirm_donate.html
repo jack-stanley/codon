@@ -5,7 +5,7 @@
 
     <div class="row">
       <div style="padding:30px;text-align:center;" class="form six columns offset-by-three">
-        <h1>Do you want to donate ${{ amount_display }} to '{{ project.project_title }}'?</h1>
+        <h1>Do you want to donate ${{ amount_display }} (USD) to '{{ project.project_title }}'?</h1>
         <br>
         <h4>Your receipt will be emailed to: <b>{{ current_user.email }}</b></h4>
         <h4>Payment method: <b>{{ card["brand"] }} ending in {{ card["last4"] }}</b></h4>
@@ -13,7 +13,7 @@
           Project creators are also <b>not</b> obligated to deliver anything to contributors, and codon is not liable for any unkept promises made by fundraisers.</span>
         </span>
         <br><br><br>
-        <h5>Enter your password to confirm your ${{ amount_display }} donation:</h5>
+        <h5>Enter your password to confirm your ${{ amount_display }} (USD) donation:</h5>
         <form method="POST" action="">
           {{ form.hidden_tag() }}
           <fieldset>

@@ -731,6 +731,22 @@ textarea {
     };
 }
 
+#fundraiser_circle {
+  height: 15px;
+  width: 15px;
+  background-color: lightgrey;
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+#inner_circle {
+  height: 100%;
+  border-top-left-radius: 100%;
+  border-bottom-left-radius: 100%;
+  background-color:#46813A;
+}
+
 .trending_bar {
   background-color: white;
   margin-top: 30px;
@@ -1057,6 +1073,22 @@ textarea {
   font-size: 50px;
   margin-bottom: 40px;
   margin-top: 20px;
+}
+
+.abstract_bar #funding_bar {
+  height: 20px;
+  background-color: lightgrey;
+  margin-top: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.abstract_bar #inner_bar {
+  background-color: #46813A;
+  height: 20px;
+  border-radius: 20px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
 .search_type {

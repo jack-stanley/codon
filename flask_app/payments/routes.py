@@ -8,7 +8,7 @@ import stripe, requests, json
 
 payments = Blueprint("payments", __name__)
 
-stripe.api_key = "sk_test_dZBIm0mCoNKvRb3P503B2sE2"
+stripe.api_key = Config.CLIENT_SECRET
 
 @payments.route("/payment_options")
 @login_required
@@ -22,6 +22,8 @@ def payment_options():
 @login_required
 def record_fundraiser():
     fundraiser_auth = request.args.get("code")
+    if fundraiser_auth is None:
+        abort(404)
     data = {
             "client_secret": Config.CLIENT_SECRET,
             "code": fundraiser_auth,
@@ -81,7 +83,7 @@ def add_card():
 def delete_card(card_id):
     customer = stripe.Customer.retrieve(current_user.customer_id)
     customer.sources.retrieve(card_id).delete()
-    flash(f"Your card has been successfully deleted.")
+    flash(f"Your card has been successfully removed from your account.")
     return redirect(url_for("users.account"))
 
 @payments.route("/default_card/<card_id>")
@@ -108,6 +110,10 @@ def disconnect_stripe():
 def donate(project_id):
     project = Project.query.get_or_404(project_id)
     form = DonateForm()
+    if current_user == project.author:
+        abort(403)
+    if not (project.author.fundraiser_id and project.donations_goal):
+        abort(404)
     if current_user.customer_id:
         customer = stripe.Customer.retrieve(current_user.customer_id)
         card_list = []
@@ -131,6 +137,14 @@ def checkout_card(project_id):
     project = Project.query.get_or_404(project_id)
     form = CardForm()
     amount = request.args.get("amount")
+
+    if amount is None:
+        abort(404)
+
+    if current_user == project.author:
+        abort(403)
+    if not (project.author.fundraiser_id and project.donations_goal):
+        abort(404)
 
     if form.validate_on_submit:
         if form.card_token.data:
@@ -166,14 +180,23 @@ def checkout_card(project_id):
 def confirm_donate(project_id):
     project = Project.query.get_or_404(project_id)
     card_id = request.args.get("card_id")
+    if card_id is None:
+        abort(404)
     customer = stripe.Customer.retrieve(current_user.customer_id)
     card = customer.sources.retrieve(card_id)
+    if request.args.get("amount") is None:
+        abort(404)
     amount = int(100 * float(request.args.get("amount")))
     codon_fees = int(0.06 * amount)
     form = ConfirmDonateForm()
     amount_display = float(amount / 100)
 
     token = stripe.Token.create(customer = current_user.customer_id, card = card, stripe_account = project.author.fundraiser_id)
+
+    if current_user == project.author:
+        abort(403)
+    if not (project.author.fundraiser_id and project.donations_goal):
+        abort(404)
 
     if form.submit.data and form.validate_on_submit:
         if bcrypt.check_password_hash(current_user.password, form.password.data):
@@ -190,5 +213,10 @@ def confirm_donate(project_id):
 @payments.route("/project/<int:project_id>/cancel_donation", methods = ["POST", "GET"])
 @login_required
 def cancel_donation(project_id):
+    project = Project.query.get_or_404(project_id)
+    if current_user == project.author:
+        abort(403)
+    if not (project.author.fundraiser_id and project.donations_goal):
+        abort(404)
     flash(f"Donation cancelled.")
     return redirect(url_for("projects.project", project_id = project_id))

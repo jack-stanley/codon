@@ -45,6 +45,17 @@
         {% else %}
           <br><p>{{ project.date_created.strftime("%B %-d, %Y") }}</p>
         {% endif %}
+        <br>
+        {% if project.author.fundraiser_id and project.donations_goal %}
+          <div id="fundraiser_circle">
+            {% if (((project.donations_amount / project.donations_goal) * 100) | int) > 100 %}
+              <div style="width:100%;border-radius:50%;" id="inner_circle"></div>
+            {% else %}
+              <div style="width:{{ ((project.donations_amount / project.donations_goal) * 100) | int }}%" id="inner_circle"></div>
+            {% endif %}
+          </div>
+          <span style="color:#46813A;font-size:14px;">{{ ((project.donations_amount / project.donations_goal) * 100) | int }}% funded</span>
+        {% endif %}
       </div>
       <a href="{{ url_for("projects.project", project_id = project.id) }}">
         <div style="background-image: url('/static/images/project_pics/{{ project.banner_image }}');" class="four columns browse_banner">

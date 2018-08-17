@@ -60,6 +60,7 @@ def browse():
             return 0
         else:
             return Tube.query.filter_by(project_id = project_id).count()
+
     return render_template("browse.html", title = " | Browse", trending_projects = trending_projects, tube_count = tube_count, toggle_colour = toggle_colour, search_form = search_form, user_id = user_id, projects = projects)
 
 @main.route("/search/<string:search_query>/<string:search_type>", methods = ["GET", "POST"])

@@ -12,8 +12,8 @@ class Config:
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
 
     ### Stripe
-    CLIENT_SECRET = "sk_test_dZBIm0mCoNKvRb3P503B2sE2"
-
+    CLIENT_SECRET = "sk_live_dpdz65SPRpgQuiemNQvRH2Vc"
+    ### Whoosh Search
     MSEARCH_INDEX_NAME = "whoosh_index"
     # simple,whoosh
     MSEARCH_BACKEND = "whoosh"

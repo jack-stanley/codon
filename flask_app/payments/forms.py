@@ -14,8 +14,8 @@ class CardForm(FlaskForm):
     submit = SubmitField("Add card")
 
 class DonateForm(FlaskForm):
-    amount = DecimalField("Contribution amount*", validators = [DataRequired(), NumberRange(min = 2, max = 1000)], places = 2)
-    confirm_amount = DecimalField("Confirm contribution amount*", validators = [DataRequired(), EqualTo("amount"), NumberRange(min = 2, max = 1000)], places = 2)
+    amount = DecimalField("Contribution amount (in USD)*", validators = [DataRequired(), NumberRange(min = 2, max = 1000)], places = 2)
+    confirm_amount = DecimalField("Confirm contribution amount (in USD)*", validators = [DataRequired(), EqualTo("amount"), NumberRange(min = 2, max = 1000)], places = 2)
     card = SelectField("Choose a card*")
     submit = SubmitField("Donate")
 
