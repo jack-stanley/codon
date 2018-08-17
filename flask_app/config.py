@@ -4,7 +4,7 @@ from whoosh.analysis import StemmingAnalyzer
 class Config:
     ### Turn these into environment variables later
     SECRET_KEY = os.environ.get("SECRET_KEY")
-    SQLALCHEMY_DATABASE_URI = "postgresql://jack:1399@localhost:5432/codon"
+    SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
     MAIL_SERVER = "smtp.googlemail.com"
     MAIL_PORT = 587
     MAIL_USE_TLS = True
@@ -12,7 +12,7 @@ class Config:
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
 
     ### Stripe
-    CLIENT_SECRET = "sk_live_dpdz65SPRpgQuiemNQvRH2Vc"
+    CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
     ### Whoosh Search
     MSEARCH_INDEX_NAME = "whoosh_index"
     # simple,whoosh
