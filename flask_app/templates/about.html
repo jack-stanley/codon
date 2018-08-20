@@ -3,6 +3,99 @@
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  
+
+  <div style="margin-bottom:30px;" class="row about_row">
+    <div style="position:fixed;" class="three columns offset-by-one about_section about_contents">
+      <h3><b>Contents</b></h3>
+      <ul>
+        <h5><li><a href="#roadmap">Roadmap</a></li></h5>
+        <h5><li><a href="#stripe">Stripe info</a></li></h5>
+        <h5><li><a href="#faq">FAQ</a></li></h5>
+      </ul>
+    </div>
+    <div class="seven columns offset-by-four about_section">
+      <h3 style="margin-bottom:40px;" id="roadmap"><b>Roadmap</b></h3>
+
+        <ul class="timeline">
+          <!-- Item 1 -->
+          <li>
+            <div class="direction-l">
+              <div class="flag-wrapper">
+                <span class="hexa"></span>
+                <span class="flag">Initial coin offering</span>
+                <span class="time-wrapper"><span class="time">Jan 2019</span></span>
+              </div>
+              <div class="desc">Codon will be offering a corwdsale for the new BASE token. This will enable users to send donations more cheaply, keep document changes on the blockchain, and have a voting stake in site-wide changes (BASE will likely conform to the ERC20 standard).</div>
+            </div>
+          </li>
+
+          <!-- Item 2 -->
+          <li>
+            <div class="direction-r">
+              <div class="flag-wrapper">
+                <span class="hexa"></span>
+                <span class="flag">Project version control</span>
+                <span class="time-wrapper"><span class="time">Feb 2019</span></span>
+              </div>
+              <div class="desc">Much like Github, codon will initially be tracking project changes using a modified version of git, but we are looking to eventually transition to a blockchain based version control service. This will be dependent on the success of our ICO.</div>
+            </div>
+          </li>
+
+          <!-- Item 3 -->
+          <li>
+            <div class="direction-l">
+              <div class="flag-wrapper">
+                <span class="hexa"></span>
+                <span class="flag">Concurrent editing</span>
+                <span class="time-wrapper"><span class="time">Early Summer 2019</span></span>
+              </div>
+              <div class="desc">Although codon does currently support multiple collaborators on a single project, it is not yet possible to edit articles at the same time. This is in the works, and will behave similarly to Google Docs.</div>
+            </div>
+          </li>
+
+          <!-- Item 4 -->
+          <li>
+            <div class="direction-r">
+              <div class="flag-wrapper">
+                <span class="hexa"></span>
+                <span class="flag">Resource hosting</span>
+                <span class="time-wrapper"><span class="time">Late Summer 2019</span></span>
+              </div>
+              <div class="desc">As of now, codon only supports document hosting. As codon gains more traction, we hope to expand our servers and offer more varied hosting...including images, charts, genetic information, experimental results, and other large files.</div>
+            </div>
+          </li>
+        </ul>
+
+
+      <h3 id="stripe"><b>Stripe info</b></h3>
+      <div style="margin-left:20px;font-size:18px;">
+        <p><b>What is stripe?</b><br>
+        Stripe is a payment solutions system that processes payment info and handles delivering donations to project owners. Stripe is used by many other reputable online platforms, such as Shopify and Kickstarter. Click <a target="_blank" href="https://stripe.com/ca">here</a> for more info.</p>
+        <p><b>Do I need a Stripe account?</b><br>
+        You only need a Stripe account if you plan to accept donations for your project. If you simply want to give donations, your payment information is automatically sent to Stripe, no need to create an account.</p>
+        <p><b>Does codon store my credit card/banking information?</b><br>
+        No. Codon does not store your payment information in any way. We simply use the secure Stripe API to deal with payment processing. None of your sensitive information will touch our servers.</p>
+        <p><b>Can I request a refund?</b><br>
+        As a rule, it is not possible to refund a donation. Since these are voluntary donations, it is up to the discretion of the contributor to make sure their payment information is correct. Refunding donations after the fact would be unfair to the project owner. That being said, if there is an egregious error, please contact me directly at <a href="mailto:jackstanley@codon.network">jackstanley@codon.network</a> and I'll see if I can sort it out.</p>
+        <p><b>How can I access my collected donations?</b><br>
+        You can access your donations and change your banking settings at the <a target="_blank" href="https://dashboard.stripe.com">Stripe Dashboard</a>. Please contact Stripe for issues receiving your donations, codon has limited control over collected donations</p>
+      </div>
+      <h3 id="faq"><b>FAQ</b></h3>
+      <div style="margin-left:20px;font-size:18px;">
+        <p><b>What exactly are "tubes"?</b><br>
+        Tubes are used to indicate trending and interesting projects. All users with an account can give tubes to any projects they want. Tubes are a free way to support and give exposure to exciting projects.</p>
+        <p><b>Can multiple people work on my project?</b><br>
+        Yes! Codon allows project owners to add multiple users to their projects to work on articles. Coming soon, users will be able to edit articles collaboratively (like Google Docs). This feature is not yet available.</p>
+        <p><b>What parts of my project do collaborators have access to?</b><br>
+        Collaborators can only create, edit, and delete articles. They are not able to edit any details about the project itself, or delete the project. The project owner can also add and remove collaborators at any time at his/her discretion.</p>
+        <p><b>I'm a business or academic institution, can I get a verified account?</b><br>
+        If you would like to be verified, please contact me directly at <a href="mailto:jackstanley@codon.network">jackstanley@codon.network</a> with the proper identification. Verified accounts have a purple check mark next to their names.</p>
+        <p><b>What are the fees associated with each donation?</b><br>
+        Stripe takes a flat rate of 2.9% + 30¢ per transaction, and codon adds a 6% service fee on top of that. This is comparable to other crowdfunding services such as Kickstarter and Indiegogo. We hope to lower our fees as we gain more users.</p>
+        <p><b>Who created codon?</b><br>
+        Codon is being developed by a group of students at the University of Toronto interested in streamlining the research experience, from collecting funds to collaborating with other scientists. Please reach out directly to <a href="mailto:jackstanley@codon.network">jackstanley@codon.network</a> if you have any more questions.</p>
+      </div>
+    </div>
+  </div>
 
 {% endblock body_content %}

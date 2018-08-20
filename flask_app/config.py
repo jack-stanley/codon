@@ -6,9 +6,10 @@ class Config:
     ### Turn these into environment variables later
     SECRET_KEY = keys.sec_key
     SQLALCHEMY_DATABASE_URI = keys.db_uri
-    MAIL_SERVER = "smtp.googlemail.com"
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
+    MAIL_SERVER = "mail.privateemail.com"
+    MAIL_PORT = 465
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
     MAIL_USERNAME = keys.mail_user
     MAIL_PASSWORD = keys.mail_pass
 
@@ -20,3 +21,7 @@ class Config:
     MSEARCH_BACKEND = "whoosh"
     # auto create or update index
     MSEARCH_ENABLE = True
+    ### Recaptcha
+    RECAPTCHA_ENABLED = True
+    RECAPTCHA_PUBLIC_KEY = keys.rc_pub_key
+    RECAPTCHA_PRIVATE_KEY = keys.rc_priv_key

@@ -33,7 +33,7 @@ def browse():
     page = request.args.get("page", 1, type = int)
     projects = Project.query.order_by(Project.date_edited.desc()).paginate(page = page, per_page = 20)
 
-    since = datetime.now() - timedelta(hours = 24)
+    since = datetime.now() - timedelta(weeks = 1)
 
     if Tube.query.filter(Tube.date < since) is not None:
         tubes = Tube.query.filter(Tube.date < since)
@@ -44,7 +44,7 @@ def browse():
                 project.tubes_count -= 1
                 db.session.commit()
 
-    trending_projects = Project.query.order_by(Project.tubes_count.desc()).limit(10)
+    trending_projects = Project.query.order_by(Project.tubes_count.desc()).limit(10)    
 
     if current_user.is_authenticated:
         user_id = current_user.id

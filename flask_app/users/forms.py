@@ -4,6 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp
 from flask_login import current_user
 from flask_app.models import User
+from flask_wtf.recaptcha import RecaptchaField
 
 class RegistrationForm(FlaskForm):
     username = StringField("Username*", validators = [DataRequired(),
@@ -11,10 +12,11 @@ class RegistrationForm(FlaskForm):
     email = StringField("Email*", validators = [DataRequired(), Email()])
     name = StringField("Name", validators = [Length(max = 60)])
     organization = StringField("Organization", validators = [Length(max = 160)])
-    password = PasswordField("Password", validators = [DataRequired(),
+    password = PasswordField("Password*", validators = [DataRequired(),
         Length(min = 5)])
-    confirm_password = PasswordField("Confirm Password",
+    confirm_password = PasswordField("Confirm Password*",
         validators = [DataRequired(), Length(min = 5), EqualTo("password")])
+    recaptcha = RecaptchaField()
     submit = SubmitField("Sign Up")
 
     def validate_username(self, username):

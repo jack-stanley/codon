@@ -3,7 +3,7 @@ from flask_login import current_user
 from wtforms import StringField, SubmitField, TextAreaField, ValidationError, PasswordField, DecimalField
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired, Length, Email, NumberRange, Optional
-from flask_app.models import User
+from flask_wtf.recaptcha import RecaptchaField
 
 def check_unique(form, field):
     stripped = field.data.strip()
@@ -55,6 +55,7 @@ class ProjectForm(FlaskForm):
     collaborators = StringField("Collaborators (valid usernames separated by comma)", validators = [validate_collabs, check_unique])
     donations_goal = DecimalField("Funding goal in USD (leave blank if you don't want donations)", validators = [Optional(), NumberRange(min = 100)], places = 2)
     banner_image = FileField("Add project image", validators = [FileAllowed(["jpg", "png"])])
+    recaptcha = RecaptchaField()
     submit = SubmitField("Submit")
 
 class DeleteProjectForm(FlaskForm):

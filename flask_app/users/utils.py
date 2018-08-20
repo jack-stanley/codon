@@ -1,7 +1,7 @@
 import os
 import secrets
 from PIL import Image, ImageOps
-from flask import url_for, current_app
+from flask import url_for, current_app, render_template
 from flask_mail import Message
 from flask_app import mail
 
@@ -27,20 +27,16 @@ def save_picture(form_picture):
 
 def send_reset_email(user):
     token = user.get_reset_token()
-    msg = Message("Codon Password Reset", sender="noreply@codon.com", recipients = [user.email])
-    msg.body = f"""To reset your password, please visit the following link:
-    {url_for('users.reset_token', token = token, _external = True)}
-
-    If you did not make this request, simply ignore this email."""
+    msg = Message("Codon Password Reset", sender="noreply@codon.network", recipients = [user.email])
+    url = url_for('users.reset_token', token = token, _external = True)
+    msg.html = render_template("emails/reset_password.html", url = url)
 
     mail.send(msg)
 
 def send_confirmation_email(user):
     token = user.get_confirmation_token()
-    msg = Message("Codon Email Confirmation", sender="noreply@codon.com", recipients = [user.email])
-    msg.body = f"""To confirm your email, please visit the following link:
-    {url_for('users.check_confirmation', token = token, _external = True)}
-
-    If you did not sign up for an account at codon, simply ignore this email."""
+    msg = Message("Codon Email Confirmation", sender="noreply@codon.network", recipients = [user.email])
+    url = url_for('users.check_confirmation', token = token, _external = True)
+    msg.html = render_template("emails/confirm_account.html", url = url)
 
     mail.send(msg)

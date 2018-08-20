@@ -22,14 +22,14 @@ def new_project():
         stripped = form.tags.data.strip()
         split_tags_list = stripped.split(", ")
         if form.banner_image.data:
-            project = Project(project_title = form.project_title.data, date_edited = datetime.utcnow(), banner_image = save_banner(form.banner_image.data), abstract = form.abstract.data, author = current_user, collaborators = form.collaborators.data.strip(), donations_goal = form.donations_goal.data)
+            project = Project(project_title = form.project_title.data.strip(), date_edited = datetime.utcnow(), banner_image = save_banner(form.banner_image.data), abstract = form.abstract.data, author = current_user, collaborators = form.collaborators.data.strip(), donations_goal = form.donations_goal.data)
             for item in split_tags_list:
                 tag = Tag(tag = item, overall_project = project)
             db.session.add(tag)
             db.session.add(project)
             db.session.commit()
         else:
-            project = Project(project_title = form.project_title.data, date_edited = datetime.utcnow(), abstract = form.abstract.data, author = current_user, collaborators = form.collaborators.data.strip())
+            project = Project(project_title = form.project_title.data.strip(), date_edited = datetime.utcnow(), abstract = form.abstract.data, author = current_user, collaborators = form.collaborators.data.strip())
             for item in split_tags_list:
                 tag = Tag(tag = item, overall_project = project)
             db.session.add(tag)
@@ -128,7 +128,7 @@ def update_project(project_id):
             tag = Tag(tag = item, overall_project = project)
         db.session.add(tag)
 
-        project.project_title = form.project_title.data
+        project.project_title = form.project_title.data.strip()
         project.abstract = form.abstract.data
         project.donations_goal = form.donations_goal.data
         project.date_edited = datetime.utcnow()
