@@ -14,7 +14,8 @@ class Config:
     MAIL_PASSWORD = keys.mail_pass
 
     ### Stripe
-    CLIENT_SECRET = keys.stripe_client_key
+    CLIENT_SECRET = keys.stripe_secret_key
+    CLIENT_PUBLIC = keys.stripe_pub_key
     ### Whoosh Search
     MSEARCH_INDEX_NAME = "whoosh_index"
     # simple,whoosh

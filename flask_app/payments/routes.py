@@ -8,7 +8,9 @@ import stripe, requests, json
 
 payments = Blueprint("payments", __name__)
 
-stripe.api_key = Config.CLIENT_SECRET
+stripe_keys = {"secret_key": Config.CLIENT_SECRET, "public_key": Config.CLIENT_PUBLIC}
+
+stripe.api_key = stripe_keys["secret_key"]
 
 @payments.route("/payment_options")
 @login_required
