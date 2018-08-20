@@ -73,7 +73,7 @@ $(document).ready(function() {
 $(document).ready(function() {
   // Stripe scripts //
 
-  var stripe = Stripe('pk_live_EZhLMGAOseTvlfnVF9o6WvIL');
+  var stripe = Stripe('pk_live_tVvDIpwvoCdPIamA9TnFofTb');
   var elements = stripe.elements();
 
   // Custom styling can be passed to options when creating an Element.
