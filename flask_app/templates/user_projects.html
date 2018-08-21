@@ -6,10 +6,18 @@
   <div class="four columns about_bar">
     <img title="user.username" src="{{ url_for("static", filename = "images/profile_pics/" + user.image_file) }}">
     {% if user.name %}
-      <h3>{{ user.name }}</h3>
+      <h3>{{ user.name }}
+        {% if user.verified != "False" %}
+          &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+        {% endif %}
+      </h3>
       <h6>({{ user.username }})</h6>
     {% else %}
-    <h3>{{ user.username }}</h3>
+    <h3>{{ user.username }}
+      {% if user.verified != "False" %}
+        &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+      {% endif %}
+    </h3>
     {% endif %}
     {% if user.organization or user.about %}
       <h5>About</h5>
@@ -49,9 +57,17 @@
           <div class="six columns browse_author">
             <a title="{{ project.project_title }}" href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>
             {% if project.author.name %}
-              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a></p>
+              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a>
+                {% if project.author.verified != "False" %}
+                  &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+                {% endif %}
+              </p>
             {% else %}
-              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
+              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a>
+                {% if project.author.verified != "False" %}
+                  &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+                {% endif %}
+              </p>
             {% endif %}
             {% if project.date_edited %}
               <br><p>Edited: {{ project.date_edited.strftime("%B %-d, %Y") }}</p>

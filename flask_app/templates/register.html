@@ -87,7 +87,7 @@
                 {{ form.confirm_password(class="u-full-width") }}
               {% endif %}
             </div>
-            <div>
+            <div style="max-width: 100%">
               {{ form.recaptcha.label }}
               {% if form.recaptcha.errors %}
                 {{ form.recaptcha(style="border-color:#f55f5f;") }}

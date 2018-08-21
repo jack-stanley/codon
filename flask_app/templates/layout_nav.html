@@ -82,9 +82,17 @@
           </div>
           <div class="dropdown account_dropdown">
             {% if current_user.name %}
-              <span>{{ current_user.name }} <br>({{ current_user.username }})</span><br><br>
+              <span>{{ current_user.name }} <br>({{ current_user.username }})
+                {% if current_user.verified != "False" %}
+                  &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+                {% endif %}
+              </span><br><br>
             {% else %}
-              <span>{{ current_user.username }}</span><br><br>
+              <span>{{ current_user.username }}
+                {% if current_user.verified != "False" %}
+                  &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+                {% endif %}
+              </span><br><br>
             {% endif %}
             <a title="Account info and options" href="{{ url_for("users.account") }}">My Account</a><br><br>
             <a title="All my projects" href="{{ url_for("users.user_projects", username = current_user.username) }}">My Projects</a><br><br>

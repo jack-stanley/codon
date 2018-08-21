@@ -10,14 +10,22 @@
 
       {% if current_user.name %}
         <div class="eleven columns">
-            <h1>{{ current_user.name }}</h1>
+            <h1>{{ current_user.name }}
+              {% if current_user.verified != "False" %}
+                &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+              {% endif %}
+            </h1>
         </div>
         <div class="twelve columns">
           <p><b>Username:</b> {{ current_user.username }}</p>
         </div>
       {% else %}
         <div class="eleven columns">
-            <h1>{{ current_user.username }}</h1>
+            <h1>{{ current_user.username }}
+              {% if current_user.verified != "False" %}
+                &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+              {% endif %}
+            </h1>
         </div>
       {% endif %}
       <div class="twelve columns">

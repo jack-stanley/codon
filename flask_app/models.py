@@ -28,6 +28,7 @@ class User(db.Model, UserMixin):
     fundraiser_access = db.Column(db.Text, nullable = True)
     customer_id = db.Column(db.Text, nullable = True)
     login_times = db.Column(db.Integer, nullable = False, default = 0)
+    verified = db.Column(db.Text, nullable = False, default = "False")
 
     def get_reset_token(self, expires_sec = 1800):
         s = Serializer(current_app.config["SECRET_KEY"], expires_sec)

@@ -4,6 +4,7 @@ from wtforms import StringField, SubmitField, TextAreaField, ValidationError, Pa
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired, Length, Email, NumberRange, Optional
 from flask_wtf.recaptcha import RecaptchaField
+from flask_app.models import User
 
 def check_unique(form, field):
     stripped = field.data.strip()

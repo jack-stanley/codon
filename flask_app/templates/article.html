@@ -31,10 +31,18 @@
         </div>
         <div class="three columns article_author">
             {% if article.author.name %}
-              <p id="name">By <a style="color:black;" href="{{ url_for("users.user_projects", username = article.author.username) }}">{{ article.author.name }}</a></p>
+              <p id="name">By <a style="color:black;" href="{{ url_for("users.user_projects", username = article.author.username) }}">{{ article.author.name }}</a>
+                {% if project.author.verified != "False" %}
+                  &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+                {% endif %}
+              </p>
               <p id="username"><a style="color:grey;" href="{{ url_for("users.user_projects", username = article.author.username) }}">({{ article.author.username }})</a></p>
             {% else %}
-              <p id="name">By <a style="color:black;" href="{{ url_for("users.user_projects", username = article.author.username) }}">{{ article.author.username }}</a></p>
+              <p id="name">By <a style="color:black;" href="{{ url_for("users.user_projects", username = article.author.username) }}">{{ article.author.username }}</a>
+                {% if project.author.verified != "False" %}
+                  &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+                {% endif %}
+              </p>
             {% endif %}
             <br>
             <p id="date">Created on {{ article.date_posted.strftime("%B %-d, %Y") }}</p><br>

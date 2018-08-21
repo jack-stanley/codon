@@ -49,9 +49,17 @@
           <div class="six columns browse_author">
             <a title="{{ project.project_title }}" href="{{ url_for("projects.project", project_id = project.id) }}"><h5>{{ project.project_title }}</h5></a>
             {% if project.author.name %}
-              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a></p>
+              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.name }}</a>
+                {% if project.author.verified != "False" %}
+                  &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+                {% endif %}
+              </p>
             {% else %}
-              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a></p>
+              <p>By <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}">{{ project.author.username }}</a>
+              {% if project.author.verified != "False" %}
+                &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+              {% endif %}
+              </p>
             {% endif %}
             {% if project.date_edited != project.date_created %}
               <br><p>{{ project.date_edited.strftime("%B %-d, %Y") }}</p>

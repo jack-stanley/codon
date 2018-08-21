@@ -75,9 +75,18 @@
   <div class="three columns abstract_bar">
     <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}"><img class="project_profile_pic" src="{{ profile_pic }}"></img></a>
     {% if project.author.name %}
-      <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.name }}</b></h4></a>
+      <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.name }}</b>
+        {% if project.author.verified != "False" %}
+          &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+        {% endif %}
+      </h4></a>
+      <b>Username:</b> {{ project.author.username }}
     {% else %}
-      <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.username }}</b></h4></a>
+      <a title="{{ project.author.username }}" href="{{ url_for("users.user_projects", username = project.author.username) }}"><h4><b>By {{ project.author.username }}</b>
+        {% if project.author.verified != "False" %}
+          &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+        {% endif %}
+      </h4></a>
     {% endif %}
     {% if project.author.organization %}
       <b>Organization:</b> {{ project.author.organization }}

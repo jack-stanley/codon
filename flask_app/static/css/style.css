@@ -45,7 +45,7 @@ a:hover {
     /* Safari and Chrome */
     -o-animation: cssAnimation 0s ease-in 5s forwards;
     /* Opera */
-    animation: cssAnimation 0s ease-in 5s forwards;
+    animation: cssAnimation 0ss ease-in 5s forwards;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
 }
