@@ -49,19 +49,6 @@
               {{ form.section() }}
             {% endif %}
           </div>
-          <div>
-            {{ form.recaptcha.label }}
-            {% if form.recaptcha.errors %}
-              {{ form.recaptcha(style="border-color:#f55f5f;") }}
-              <div>
-                {% for error in form.recaptcha.errors %}
-                  <span id="error">{{ error }}</span>
-                {% endfor %}
-              </div>
-            {% else %}
-              {{ form.recaptcha(class="u-full-width") }}
-            {% endif %}
-          </div>
         </fieldset>
         <div>
           {{ form.submit(title="Post your article") }}
@@ -71,6 +58,6 @@
   </div>
 
   {{ super() }}
-  {{ tinymce.init_wtf_tinymce() }}
+  {{ tinymce.init_wtf_tinymce(default_content_css='css/style.css') }}
 
 {% endblock body_content %}

@@ -1165,12 +1165,13 @@ textarea {
 }
 
 .article_body {
-  font-size: 18px;
   margin-top: 20px;
+  padding-left: 150px;
+  padding-right: 150px;
 }
 
-.article_body p {
-  font-family: 'Libre Baskerville', serif !important;
+.article_body * {
+  font-family: 'Merriweather', serif !important;
 }
 
 .article_contents button {
@@ -1184,6 +1185,13 @@ textarea {
 @media only screen and (max-width: 600px) {
     .article_contents button {
       margin-left: 20px;
+    };
+}
+
+@media only screen and (max-width: 600px) {
+    .article_body {
+      padding-left: 5px;
+      padding-right: 5px;
     };
 }
 
@@ -1204,6 +1212,31 @@ textarea {
       padding: 10px;
     };
 }
+
+.content_editor {
+  padding-left: 10%;
+  padding-right: 10%
+}
+
+.content_editor * {
+  font-family: 'Merriweather', serif;
+}
+
+.content_editor p,
+.content_editor div,
+.content_editor li,
+.content_editor blockquote,
+.content_editor td,
+.content_editor pre {
+  font-size: 14pt;
+}
+
+.content_editor h1 {font-size:29pt;}
+.content_editor h2 {font-size:22pt;}
+.content_editor h3 {font-size:20pt;}
+.content_editor h4 {font-size:18pt;}
+.content_editor h5 {font-size:16pt;}
+.content_editor h6 {font-size:14pt;}
 
 .page_nums {
   text-align: center;
