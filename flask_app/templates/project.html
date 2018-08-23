@@ -128,7 +128,7 @@
       <a title="Donate to '{{ project.project_title }}'" href="{{ url_for("payments.donate", project_id = project.id) }}"><button>Donate</button></a>
     {% endif %}
     <hr>
-    <p>{{ project.abstract }}</p>
+    <p style="white-space: pre-wrap;">{{ project.abstract }}</p>
     <hr>
     <span>Tags:
       {% for tag in project_tags %}
