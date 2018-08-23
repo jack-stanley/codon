@@ -246,6 +246,32 @@
         {% endfor %}
       </div>
     {% endif %}
+
+    {% if articles_ref %}
+      <div class="twelve columns article_wrapper">
+        <div class="row">
+          <div class="project_heading six columns">
+            <h3><b>refellaneous</b></h3>
+          </div>
+        </div>
+        {% for article in articles_ref %}
+          <div class="five columns article_post">
+            <div class="twelve columns">
+              <div style="overflow: hidden; height: 100px">
+                <a title="{{ article.title }}" href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
+              </div>
+              {% if article.edited_by %}
+                <a title="{{ article.edited_by }}" href="{{ url_for("users.user_projects", username = article.edited_by) }}"><span>Edited by: {{ article.edited_by }}</span></a>
+              {% else %}
+                <a title="{{ article.author.username }}" href="{{ url_for("users.user_projects", username = article.author.username) }}"><span>Created by: {{ article.author.username }}</span></a>
+              {% endif %}
+                <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
+              <hr class="hr_project">
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
 
 

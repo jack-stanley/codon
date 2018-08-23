@@ -50,7 +50,8 @@ def project(project_id):
     articles_intro = Article.query.filter_by(overall_project = project, section = "Introduction").order_by(Article.date_edited.desc()).all()
     articles_main = Article.query.filter_by(overall_project = project, section = "Main").order_by(Article.date_edited.desc()).all()
     articles_resources = Article.query.filter_by(overall_project = project, section = "Resources").order_by(Article.date_edited.desc()).all()
-    articles_misc = Article.query.filter_by(overall_project = project, section = "miscellaneous").order_by(Article.date_edited.desc()).all()
+    articles_misc = Article.query.filter_by(overall_project = project, section = "Miscellaneous").order_by(Article.date_edited.desc()).all()
+    articles_ref = Article.query.filter_by(overall_project = project, section = "References").order_by(Article.date_edited.desc()).all()
     tags = Tag.query.filter_by(overall_project = project)
 
     collabs = project.collaborators
@@ -95,7 +96,7 @@ def project(project_id):
 
     project_pic = url_for("static", filename = "images/project_pics/" + project.banner_image)
     profile_pic = url_for("static", filename = "images/profile_pics/" + project.author.image_file)
-    return render_template("project.html", amount = amount, goal = goal, funding_perc = funding_perc, title = f" | {project.project_title}", delete_project_form = delete_project_form, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, articles_intro = articles_intro, articles_main = articles_main, articles_resources = articles_resources, articles_misc = articles_misc, collabs = c, search_form = search_form, project = project, project_tags = tags, project_pic = project_pic, profile_pic = profile_pic)
+    return render_template("project.html", amount = amount, goal = goal, funding_perc = funding_perc, title = f" | {project.project_title}", delete_project_form = delete_project_form, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, articles_intro = articles_intro, articles_main = articles_main, articles_resources = articles_resources, articles_misc = articles_misc, articles_ref = articles_ref, collabs = c, search_form = search_form, project = project, project_tags = tags, project_pic = project_pic, profile_pic = profile_pic)
 
 @projects.route("/project/<int:project_id>/update", methods = ["GET", "POST"])
 @login_required

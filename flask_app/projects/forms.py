@@ -50,8 +50,8 @@ def limit_tags(form, field):
         raise ValidationError(f"Too many tags entered, please only include 5 tags.")
 
 class ProjectForm(FlaskForm):
-    project_title = StringField("Project name*", validators = [DataRequired(), Length(max = 100)])
-    abstract = TextAreaField("Project abstract*", validators = [DataRequired(), Length(max = 2000)])
+    project_title = StringField("Project name*", validators = [DataRequired()])
+    abstract = TextAreaField("Project abstract*", validators = [DataRequired()])
     tags = StringField("Tags (5 max, comma separated)*", validators = [DataRequired(), limit_tags, check_unique])
     collaborators = StringField("Collaborators (valid usernames separated by comma)", validators = [validate_collabs, check_unique])
     donations_goal = DecimalField("Funding goal in USD (leave blank if you don't want donations)", validators = [Optional(), NumberRange(min = 100)], places = 2)
