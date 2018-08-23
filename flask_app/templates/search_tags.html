@@ -44,7 +44,7 @@
           </p>
         {% else %}
           <p>By <a href="{{ url_for("users.user_projects", username = tag.overall_project.author.username) }}">{{ tag.overall_project.author.username }}</a>
-            {% if project.author.verified != "False" %}
+            {% if tag.overall_project.author.verified != "False" %}
               &nbsp;<i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
             {% endif %}
           </p>
