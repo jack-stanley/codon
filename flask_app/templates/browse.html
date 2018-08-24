@@ -4,31 +4,35 @@
 <!-- Primary Page Layout
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
       <div class="four columns trending_bar">
-        <h3 style="text-align:center">Trending projects this week</h3>
+        <h3 style="text-align:center;padding-bottom:20px;">Trending projects this week</h3>
         {% if trending_projects %}
-          <ol>
             {% for project in trending_projects %}
-              <li style="font-size:20px;">{% if current_user.is_authenticated %}
-                <i title="Give a tube to '{{ project.project_title }}'" style="margin-left:20px;" user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
-              {% else %}
-                <a href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
-              {% endif %}
-              <span style="margin-right:20px;" class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
-              <a href="{{ url_for("projects.project", project_id = project.id) }}">{{ project.project_title }}</a>
-              <br>
-              {% if project.author.fundraiser_id and project.donations_goal %}
-                <div style="margin-left:20%;" id="fundraiser_circle">
-                  {% if (((project.donations_amount / project.donations_goal) * 100) | int) > 100 %}
-                    <div style="width:100%;border-radius:50%;" id="inner_circle"></div>
-                  {% else %}
-                    <div style="width:{{ ((project.donations_amount / project.donations_goal) * 100) | int }}%" id="inner_circle"></div>
+              <div class="row">
+                  <div class="three columns">
+                    {% if current_user.is_authenticated %}
+                      <i title="Give a tube to '{{ project.project_title }}'" style="font-size:25px;" user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i>
+                    {% else %}
+                      <a href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
+                    {% endif %}
+                  <span style="margin-left:20px;font-size:22px;" class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
+                </div>
+                <div style="font-size:18px;" class="eight columns offset-by-one">
+                  <a href="{{ url_for("projects.project", project_id = project.id) }}">{{ project.project_title }}</a>
+                  <br>
+                  {% if project.author.fundraiser_id and project.donations_goal %}
+                    <div style="margin-left:20%;" id="fundraiser_circle">
+                      {% if (((project.donations_amount / project.donations_goal) * 100) | int) > 100 %}
+                        <div style="width:100%;border-radius:50%;" id="inner_circle"></div>
+                      {% else %}
+                        <div style="width:{{ ((project.donations_amount / project.donations_goal) * 100) | int }}%" id="inner_circle"></div>
+                      {% endif %}
+                    </div>
+                    <span style="color:#46813A;font-size:14px;">{{ ((project.donations_amount / project.donations_goal) * 100) | int }}% funded</span>
                   {% endif %}
                 </div>
-                <span style="color:#46813A;font-size:14px;">{{ ((project.donations_amount / project.donations_goal) * 100) | int }}% funded</span>
-              {% endif %}
-              </li>
+            </div>
+            <hr style="border-style:solid;border-width:0.5px;">
             {% endfor %}
-          </ol>
         {% else %}
           <br>
           <p style="color:grey;text-align:center">No projects posted this week</p>

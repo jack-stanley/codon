@@ -81,7 +81,7 @@ a:hover {
   color: black;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .title img {
       display: block;
       margin-left: auto;
@@ -100,7 +100,7 @@ a:hover {
   margin-bottom: 40px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .hero img {
     width: 100%;
     }
@@ -166,7 +166,7 @@ a:hover {
   letter-spacing: 3px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .info_container p {
     font-size: 8vw;
     }
@@ -233,14 +233,14 @@ footer .footer_links a {
   color: black;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     footer .copyright {
     text-align: center;
     margin-left: 0px;
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .social {
       float: none;
       text-align: center;
@@ -248,7 +248,7 @@ footer .footer_links a {
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .social img{
       float: none;
       text-align: center;
@@ -284,7 +284,7 @@ footer img {
   margin-right: 200px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .subpage_logo h2 {
     text-align: center;
     margin-left: 0px;
@@ -297,7 +297,7 @@ footer img {
   margin-top: 0px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .subpage_logo .stripe_badge {
     display: block;
     margin-left: auto;
@@ -306,7 +306,7 @@ footer img {
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .subpage_logo h3 {
     text-align: center;
     margin-right: 0px;
@@ -337,7 +337,7 @@ footer img {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .nav_bar .actions {
       right: 80px;
     };
@@ -352,7 +352,7 @@ footer img {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .user_img {
       right: 30px;
     };
@@ -363,7 +363,7 @@ footer img {
   right: 75px !important;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .fa-user-circle {
       right: 30px !important;
     };
@@ -399,7 +399,7 @@ footer img {
   display: none;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .nav_bar .plus_circle {
       right: 110px;
     };
@@ -411,7 +411,7 @@ footer img {
   display: none;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .nav_bar .account_circle {
       right: 10px;
     };
@@ -775,7 +775,7 @@ footer img {
   padding-top: 10px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .profile h1 {
     text-align: center;
     margin-left: 0px;
@@ -1013,7 +1013,7 @@ textarea {
   -webkit-filter: brightness(70%);
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .browse_banner {
       margin-top: 30px;
       margin-bottom: 30px;
@@ -1042,7 +1042,7 @@ textarea {
   color: lightgrey;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .vials span {
       margin-left: 20px;
     };
@@ -1093,20 +1093,20 @@ textarea {
   padding: 50px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .article_title {
       text-align: center;
     };
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .article_contents {
       margin-right: 0px;
       margin-left: 0px;
     };
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .inner_contents {
       padding: 10px;
     };
@@ -1116,7 +1116,7 @@ textarea {
   font-size: 17px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .article_author {
       text-align: center;
       margin-top: 20px;
@@ -1156,7 +1156,7 @@ textarea {
   margin-right: -60px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .author_pic img {
       margin-right: auto;
       margin-top: 40px;
@@ -1183,13 +1183,13 @@ textarea {
   background-color: whitesmoke;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .article_contents button {
       margin-left: 20px;
     };
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .article_body {
       padding-left: 5px;
       padding-right: 5px;
@@ -1208,7 +1208,7 @@ textarea {
   padding: 50px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     #disqus_thread {
       padding: 10px;
     };
@@ -1280,7 +1280,7 @@ textarea {
   padding: 50px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .project_header {
       padding-left: 30px;
     };
@@ -1453,7 +1453,7 @@ textarea {
   box-shadow: 0px 0px 20px 0px #00000017;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .search_type {
       position: static;
     };
@@ -1463,7 +1463,7 @@ textarea {
   color: black;
   padding-left: 30px;
   font-size: 20px;
-  padding-right: 60%;
+  padding-right: 50%;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -1496,7 +1496,7 @@ textarea {
   box-shadow: 0px 0px 20px 0px #00000017;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
     .about_bar {
       position: static
     };

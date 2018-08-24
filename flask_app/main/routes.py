@@ -44,7 +44,7 @@ def browse():
                 project.tubes_count -= 1
                 db.session.commit()
 
-    trending_projects = Project.query.order_by(Project.tubes_count.desc()).limit(10)    
+    trending_projects = Project.query.order_by(Project.tubes_count.desc()).limit(3)    
 
     if current_user.is_authenticated:
         user_id = current_user.id

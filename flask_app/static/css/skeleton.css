@@ -48,8 +48,8 @@
     padding: 0; }
 }
 
-/* For devices larger than 600px */
-@media (min-width: 600px) {
+/* For devices larger than 1200px */
+@media (min-width: 1200px) {
   .container {
     width: 80%; }
   .column,
