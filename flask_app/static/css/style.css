@@ -1172,6 +1172,7 @@ textarea {
 
 .article_body * {
   font-family: 'Merriweather', serif !important;
+  line-height: 2.5;
 }
 
 .article_contents button {
@@ -1220,6 +1221,7 @@ textarea {
 
 .content_editor * {
   font-family: 'Merriweather', serif;
+  line-height: 2.5;
 }
 
 .content_editor p,

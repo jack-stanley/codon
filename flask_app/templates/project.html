@@ -143,135 +143,33 @@
   </div>
 
 <div class="seven columns article_container">
-  {% if articles_intro %}
-      <div class="twelve columns article_wrapper">
-        <div class="row">
-          <div class="project_heading six columns">
-            <h3><b>Introduction</b></h3>
-          </div>
-        </div>
-        {% for article in articles_intro %}
-          <div class="five columns article_post">
-            <div class="twelve columns">
-              <div style="overflow: hidden; height: 100px">
-                <a title="{{ article.title }}" href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
-              </div>
-              {% if article.edited_by %}
-                <a title="{{ article.edited_by }}" href="{{ url_for("users.user_projects", username = article.edited_by) }}"><span>Edited by: {{ article.edited_by }}</span></a>
-              {% else %}
-                <a title="{{ article.author.username }}" href="{{ url_for("users.user_projects", username = article.author.username) }}"><span>Created by: {{ article.author.username }}</span></a>
-              {% endif %}
-                <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
-              <hr class="hr_project">
+  {% for section in sections_list %}
+    {% if section[0] %}
+        <div class="twelve columns article_wrapper">
+          <div class="row">
+            <div class="project_heading six columns">
+              <h3><b>{{ section[1] }}</b></h3>
             </div>
           </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    {% if articles_main %}
-      <div class="twelve columns article_wrapper">
-        <div class="row">
-          <div class="project_heading six columns">
-            <h3><b>Main</b></h3>
-          </div>
-        </div>
-        {% for article in articles_main %}
-          <div class="five columns article_post">
-            <div class="twelve columns">
-              <div style="overflow: hidden; height: 100px">
-                <a title="{{ article.title }}" href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
-              </div>
-              {% if article.edited_by %}
-                <a title="{{ article.edited_by }}" href="{{ url_for("users.user_projects", username = article.edited_by) }}"><span>Edited by: {{ article.edited_by }}</span></a>
-              {% else %}
-                <a title="{{ article.author.username }}" href="{{ url_for("users.user_projects", username = article.author.username) }}"><span>Created by: {{ article.author.username }}</span></a>
-              {% endif %}
-                <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
-              <hr class="hr_project">
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    {% if articles_resources %}
-      <div class="twelve columns article_wrapper">
-        <div class="row">
-          <div class="project_heading six columns">
-            <h3><b>Resources</b></h3>
-          </div>
-        </div>
-        {% for article in articles_resources %}
-          <div class="five columns article_post">
-            <div class="twelve columns">
-              <div style="overflow: hidden; height: 100px">
-                <a title="{{ article.title }}" href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
-              </div>
+          {% for article in section[0] %}
+            <div class="five columns article_post">
+              <div class="twelve columns">
+                <div style="overflow: hidden; height: 100px">
+                  <a title="{{ article.title }}" href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
+                </div>
                 {% if article.edited_by %}
                   <a title="{{ article.edited_by }}" href="{{ url_for("users.user_projects", username = article.edited_by) }}"><span>Edited by: {{ article.edited_by }}</span></a>
                 {% else %}
                   <a title="{{ article.author.username }}" href="{{ url_for("users.user_projects", username = article.author.username) }}"><span>Created by: {{ article.author.username }}</span></a>
                 {% endif %}
-                <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
-              <hr class="hr_project">
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    {% if articles_misc %}
-      <div class="twelve columns article_wrapper">
-        <div class="row">
-          <div class="project_heading six columns">
-            <h3><b>Miscellaneous</b></h3>
-          </div>
-        </div>
-        {% for article in articles_misc %}
-          <div class="five columns article_post">
-            <div class="twelve columns">
-              <div style="overflow: hidden; height: 100px">
-                <a title="{{ article.title }}" href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
+                  <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
+                <hr class="hr_project">
               </div>
-              {% if article.edited_by %}
-                <a title="{{ article.edited_by }}" href="{{ url_for("users.user_projects", username = article.edited_by) }}"><span>Edited by: {{ article.edited_by }}</span></a>
-              {% else %}
-                <a title="{{ article.author.username }}" href="{{ url_for("users.user_projects", username = article.author.username) }}"><span>Created by: {{ article.author.username }}</span></a>
-              {% endif %}
-                <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
-              <hr class="hr_project">
             </div>
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    {% if articles_ref %}
-      <div class="twelve columns article_wrapper">
-        <div class="row">
-          <div class="project_heading six columns">
-            <h3><b>refellaneous</b></h3>
-          </div>
+          {% endfor %}
         </div>
-        {% for article in articles_ref %}
-          <div class="five columns article_post">
-            <div class="twelve columns">
-              <div style="overflow: hidden; height: 100px">
-                <a title="{{ article.title }}" href="{{ url_for("articles.article", article_id = article.id, project_id = project.id) }}"><h6>{{ article.title }}</h6></a>
-              </div>
-              {% if article.edited_by %}
-                <a title="{{ article.edited_by }}" href="{{ url_for("users.user_projects", username = article.edited_by) }}"><span>Edited by: {{ article.edited_by }}</span></a>
-              {% else %}
-                <a title="{{ article.author.username }}" href="{{ url_for("users.user_projects", username = article.author.username) }}"><span>Created by: {{ article.author.username }}</span></a>
-              {% endif %}
-                <span>{{ article.date_edited.strftime("%B %-d, %Y") }}</span>
-              <hr class="hr_project">
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
+      {% endif %}
+    {% endfor %}
   </div>
 
 
