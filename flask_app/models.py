@@ -111,3 +111,7 @@ class Tube(db.Model):
     date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = True)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable = False)
+
+class VerificationComp(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    count = db.Column(db.Integer, nullable = False)

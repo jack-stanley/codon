@@ -970,6 +970,24 @@ textarea {
   padding-left: 5px;
 }
 
+.competition {
+  margin-left: 80px;
+  margin-right: 80px;
+  margin-top: 30px;
+  text-align: center;
+}
+.competition_notice {
+  border-radius: 5px;
+  border-color: #7A1EA9;
+  border-style: solid;
+  padding: 30px;
+  border-width: 1px;
+}
+
+.competition_notice p {
+  font-size: 18px;
+}
+
 .browse_project {
   background-color: white;
   margin-top: 30px;
@@ -1173,6 +1191,18 @@ textarea {
 .article_body * {
   font-family: 'Merriweather', serif !important;
   line-height: 2.5;
+}
+
+.article_body img {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.article_body figcaption {
+  color: grey;
+  text-align: center;
+  font-style: italic;
+  background-color: whitesmoke;
 }
 
 .article_contents button {

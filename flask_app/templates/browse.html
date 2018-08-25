@@ -3,6 +3,16 @@
 
 <!-- Primary Page Layout
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      <div class="row competition">
+        <div class="twelve columns competition_notice">
+          <h2>Competition Notice!</h2>
+          <p>The first 100 users to submit a project in the format of <a href="https://codon.network/project/1">this one</a> will receive a verification badge on their profile! This entitles the user to more perks down the road, and extra credibility for their own projects! Read the rules in our blog post <a target="_blank" href="https://medium.com/codonproject/lets-get-it-started-verification-competition-happening-now-a5c37905b8f4">here</a>.
+          </p>
+          <p><b>There are currently {{ comp_count.count }} verification badges left!</b>
+            <i style="color:#AD5DD6;"class="fas fa-check-circle"></i>
+          </p>
+        </div>
+      </div>
       <div class="four columns trending_bar">
         <h3 style="text-align:center;padding-bottom:20px;">Trending projects this week</h3>
         {% if trending_projects %}
@@ -31,7 +41,11 @@
                   {% endif %}
                 </div>
             </div>
-            <hr style="border-style:solid;border-width:0.5px;">
+            {% if project != trending_projects[-1] %}
+              <br>
+              <hr style="border-style:solid;margin-left:40%;margin-right:40%;">
+              <br>
+            {% endif %}
             {% endfor %}
         {% else %}
           <br>

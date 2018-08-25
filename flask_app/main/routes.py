@@ -1,5 +1,5 @@
 from flask import render_template, request, Blueprint, url_for, redirect
-from flask_app.models import Project, Article, User, Tag, Tube
+from flask_app.models import Project, Article, User, Tag, Tube, VerificationComp
 from flask_app.main.forms import SearchForm
 from flask_login import current_user, login_required
 from flask_app import db
@@ -44,7 +44,7 @@ def browse():
                 project.tubes_count -= 1
                 db.session.commit()
 
-    trending_projects = Project.query.order_by(Project.tubes_count.desc()).limit(3)    
+    trending_projects = Project.query.order_by(Project.tubes_count.desc()).limit(3)
 
     if current_user.is_authenticated:
         user_id = current_user.id
@@ -61,7 +61,9 @@ def browse():
         else:
             return Tube.query.filter_by(project_id = project_id).count()
 
-    return render_template("browse.html", title = " | Browse", trending_projects = trending_projects, tube_count = tube_count, toggle_colour = toggle_colour, search_form = search_form, user_id = user_id, projects = projects)
+    comp_count = VerificationComp.query.filter_by(id = 1).first()
+
+    return render_template("browse.html", title = " | Browse", comp_count = comp_count, trending_projects = trending_projects, tube_count = tube_count, toggle_colour = toggle_colour, search_form = search_form, user_id = user_id, projects = projects)
 
 @main.route("/search/<string:search_query>/<string:search_type>", methods = ["GET", "POST"])
 def search(search_query, search_type):
