@@ -1203,6 +1203,7 @@ textarea {
   text-align: center;
   font-style: italic;
   background-color: whitesmoke;
+  font-size: 12pt;
 }
 
 .article_contents button {
