@@ -24,7 +24,7 @@
                     {% else %}
                       <a href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
                     {% endif %}
-                  <span style="margin-left:20px;font-size:22px;" class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
+                  <span style="margin-left:10px;font-size:27px;color:grey;" class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
                 </div>
                 <div style="font-size:18px;" class="eight columns offset-by-one">
                   <a href="{{ url_for("projects.project", project_id = project.id) }}">{{ project.project_title }}</a>

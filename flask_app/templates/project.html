@@ -103,6 +103,7 @@
     {% if project.author == current_user or current_user.username in collabs %}
       <a title="Create a new article for this project" href="{{ url_for("articles.new_article", project_id = project.id) }}" <i class="fas fa-file-medical new_file"></i></a>
     {% endif %}
+    <br>
     <small>Created: {{ project.date_created.strftime("%B %-d, %Y") }}</small>
     <small>Last edited: {{ project.date_edited.strftime("%B %-d, %Y") }}</small>
     <br>
@@ -111,7 +112,7 @@
     {% else %}
       <a title="You must be logged in to give tubes" href="{{ url_for("users.login") }}"><i user_id="{{ user_id }}" project_id="{{ project.id }}" class="fas fa-vial {{ toggle_colour(project.id, user_id) }}"></i></a>
     {% endif %}
-    <span class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
+    <span style="margin-left:10px;font-size:27px" class="{{ toggle_colour(project.id, user_id) }}">{{ tube_count(project.id) }}</span>
     <br>
     {% if project.donations_goal and project.author.fundraiser_id %}
       <span style="color:#46813A;font-size:20px;">{{ funding_perc }}% of funding goal reached</span>

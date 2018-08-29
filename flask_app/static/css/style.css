@@ -1307,7 +1307,7 @@ textarea {
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-   -webkit-filter: brightness(70%);
+   -webkit-filter: brightness(40%);
    margin-bottom: 40px;
 }
 

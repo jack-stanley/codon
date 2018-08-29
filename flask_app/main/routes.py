@@ -92,12 +92,12 @@ def search(search_query, search_type):
             return Tube.query.filter_by(project_id = project_id).count()
 
     if search_type == "project_search":
-        projects = Project.query.msearch(f"{search_query}").paginate(page = page, per_page = 20)
-        projects_count = Project.query.msearch(f"{search_query}").count()
+        projects = Project.query.filter(Project.project_title.ilike(f"%{search_query}%")).paginate(page = page, per_page = 20)
+        projects_count = Project.query.filter(Project.project_title.ilike(f"%{search_query}%")).count()
         return render_template("search.html", title = f" | Project search: '{search_query}'", count = projects_count, tube_count = tube_count, toggle_colour = toggle_colour, user_id = user_id, search_query = search_query, search_type = search_type, search_form = search_form, projects = projects)
     if search_type == "article_search":
-        articles = Article.query.msearch(f"{search_query}").paginate(page = page, per_page = 20)
-        articles_count = Article.query.msearch(f"{search_query}").count()
+        articles = Article.query.filter(Article.title.ilike(f"%{search_query}%")).paginate(page = page, per_page = 20)
+        articles_count = Article.query.filter(Article.title.ilike(f"%{search_query}%")).count()
         return render_template("search_article.html", title = f" | Article search '{search_query}'", count = articles_count, search_query = search_query, search_type = search_type, search_form = search_form, articles = articles)
     if search_type == "user_search":
         users = User.query.msearch(f"{search_query}").paginate(page = page, per_page = 20)
